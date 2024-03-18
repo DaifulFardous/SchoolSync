@@ -29,17 +29,17 @@ function Login() {
   };
 
   return (
-    <div>
-      <div className="fixed top-0 left-0 w-[65vw] h-screen bg-whitesmoke-200 shadow-lg justify-center items-center pb-0">
+    <div className="flex justify-center items-center h-screen overflow-hidden">
+      <div className="w-[60vw] h-full bg-whitesmoke-200 shadow-lg flex items-center justify-center">
         <div>
-          <img src={login} alt="" className="w-[45vw] ml-32 my-20" />
+          <img src={login} alt="" className="w-[40vw] mx-auto" />
         </div>
       </div>
 
-      <div className="absolute top-0 right-0 w-full sm:w-[35vw] md:w-[40vw] lg:w-[35vw] xl:w-[25vw] h-screen bg-white">
-        <div className="absolute sm:top-0 lg:top-[10px] right-0 w-full sm:w-[35vw] md:w-[30vw] lg:w-[25vw] xl:w-[20vw] h-screen bg-white">
-          <div className="text-base font-poppins flex justify-center items-center mb-4 mt-52 left-[0.5rem]">
-            <div className="flex flex-col space-y-4 sm:left-0 md:left-[-0.5rem] lg:left-[-1rem] xl:left-[-1.5rem] pl-[1rem]">
+      <div className="w-[40vw] h-full bg-white">
+        <div className="w-[30vw] h-full bg-white mx-auto">
+          <div className="text-base font-poppins flex justify-center items-center mb-4 mt-52">
+            <div className="flex flex-col space-y-4 pl-[1rem]">
               <div className="flex sm:flex-col md:flex-col lg:flex-col xl:flex-col items-start">
                 <label htmlFor="input1" className="text-gray-800 pb-1 text-sm">
                   Email ID
