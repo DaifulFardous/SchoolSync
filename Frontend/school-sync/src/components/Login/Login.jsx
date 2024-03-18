@@ -14,14 +14,14 @@ function Login() {
     setPassword(e.target.value);
   };
   const handleApi = () => {
-    console.log({ email, password });
+    //console.log({ email, password });
     axios
       .post("http://127.0.0.1:8000/api/login", {
         email: email,
         password: password,
       })
       .then((result) => {
-        console.log(result);
+        console.log(result.data.token);
       })
       .catch((error) => {
         console.log(error);
