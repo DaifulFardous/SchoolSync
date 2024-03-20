@@ -9,6 +9,7 @@ import ProfilePage from "./components/Profile/Profile";
 import Sidenav from "./components/SideNav/Sidenav";
 import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
+import AdaptiveLearning from './components/AdaptiveLearning/AdaptiveLearning';
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/uppernav" element={<Uppernav />} />
         <Route path="/courses" element={<Courselist />} />
         <Route path="/courses-details" element={<CourseDet />} />
+        <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
       </Routes>
     </BrowserRouter>
   );
