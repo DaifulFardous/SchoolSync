@@ -19,3 +19,9 @@ body {
 .form-gap {
   padding-top: 70px;
 }
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10; /* Adjust the z-index value as needed */
+}

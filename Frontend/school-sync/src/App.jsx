@@ -10,6 +10,8 @@ import Sidenav from "./components/SideNav/Sidenav";
 import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
 import AdaptiveLearning from './components/AdaptiveLearning/AdaptiveLearning';
+import mcqList from './components/AdaptiveLearning/MCQ/McqList';
+import McqList from "./components/AdaptiveLearning/MCQ/McqList";
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +26,7 @@ function App() {
         <Route path="/courses" element={<Courselist />} />
         <Route path="/courses-details" element={<CourseDet />} />
         <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
+        <Route path="/mcqList" element={<McqList />} />
       </Routes>
     </BrowserRouter>
   );

@@ -26,7 +26,7 @@ const LandingPage = () => {
                   className="w-10 inline-block items-center"
                 />{" "}
                 <span className="text-red no-underline text-3xl">
-                  S<span className="text-[#263238]">School-Sync</span>
+                  S<span className="text-[#263238]">chool-Sync</span>
                 </span>
               </a>
             </div>
