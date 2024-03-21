@@ -13,6 +13,7 @@ import fac3 from "../../assets/images/fac3.png";
 import fac4 from "../../assets/images/fac4.png";
 import fac5 from "../../assets/images/fac5.png";
 import fac6 from "../../assets/images/fac6.png";
+import { motion, AnimatePresence } from 'framer-motion';
 
 const imageUrls = [
   Math,
@@ -43,21 +44,34 @@ function Courselist() {
           <div className='p-6'>
             <Uppernav />
           </div>
-          <div className='flex flex-col'>
-            <div className='bg-white h-40vh w-50vw rounded-xl ml-6 mt-\[-4\] pb-10'>
-              <div className='flex space-x-96 mt-6'>
-                <div className='flex space-x-36 pl-8'>
-                  <span className='font-semibold'>All Courses (12)</span>
-                  <span className='font-semibold'>Ongoing (7)</span>
-                  <span className='font-semibold'>Completed (5)</span>
-                </div>
-                <div className='pl-12'>
-                  <a href="" className='text-black no-underline font-semibold'>See All</a>
-                </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white h-40vh w-50vw rounded-xl ml-6 mt-[-4] pb-10"
+          >
+            <div className='flex space-x-96 mt-6'>
+              <div className='flex space-x-36 pl-8'>
+                <span className='font-semibold'>All Courses (12)</span>
+                <span className='font-semibold'>Ongoing (7)</span>
+                <span className='font-semibold'>Completed (5)</span>
               </div>
-              <div className="grid grid-cols-3 gap-6 justify-center pl-7 mt-10">
+              <div className='pl-12'>
+                <a href="" className='text-black no-underline font-semibold'>See All</a>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-6 justify-center pl-7 mt-10">
+              <AnimatePresence>
                 {[...Array(6)].map((_, index) => (
-                  <div key={index} className="w-80 bg-white rounded-lg shadow-lg overflow-hidden">
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -50 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-80 bg-white rounded-lg shadow-lg overflow-hidden"
+                  >
                     <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
                       <img src={imageUrls[index]} alt="Card Image" className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg" />
                       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
@@ -78,11 +92,11 @@ function Courselist() {
                         {index === 5 && 'Social Science'}
                       </h2>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </AnimatePresence>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
       <Footer className='pt-10' />

@@ -4,7 +4,7 @@ const Service = () => {
   return (
     <div className="container-xxl py-5">
       <div className="container">
-        <h1 className="text-3xl font-bold text-center mb-8">Why choose us</h1>
+        <h1 className="text-3xl font-bold text-center mb-8">Why choose us?</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="wow fadeInUp" data-wow-delay="0.1s">
             <div className="service-item text-center pt-3 bg-white/90 transition-all duration-500 hover:bg-sky-600">
