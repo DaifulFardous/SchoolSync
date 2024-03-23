@@ -8,6 +8,7 @@ import Login from "./components/Login/Login";
 import ProfilePage from "./components/Profile/Profile";
 import Sidenav from "./components/SideNav/Sidenav";
 import Signup from "./components/Signup/Signup";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Uppernav from "./components/UpperNav/Uppernav";
 import AdaptiveLearning from './components/AdaptiveLearning/AdaptiveLearning';
 import mcqList from './components/AdaptiveLearning/MCQ/McqList';
@@ -27,6 +28,7 @@ function App() {
         <Route path="/courses-details" element={<CourseDet />} />
         <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
         <Route path="/mcqList" element={<McqList />} />
+        <Route path="/home" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
