@@ -14,7 +14,12 @@ function CourseDetails() {
           <Sidenav />
         </div>
         <div className='w-full h-screen relative ml-64 p-6'>
-          <Uppernav />
+          <div>
+            {/* Uppernav component wrapped in a separate div */}
+            <div>
+              <Uppernav />
+            </div>
+          </div>
           <div className='pt-6'>
             <div className='w-full h-3/5 relative'>
               <div className='w-full h-full relative'>

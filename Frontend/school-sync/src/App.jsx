@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 import ProfilePage from "./components/Profile/Profile";
 import Sidenav from "./components/SideNav/Sidenav";
 import Signup from "./components/Signup/Signup";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Uppernav from "./components/UpperNav/Uppernav";
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/courses-details" element={<CourseDet />} />
         <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
         <Route path="/mcqList" element={<McqList />} />
+        <Route path="/home" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
