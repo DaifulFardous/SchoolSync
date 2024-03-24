@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import signup from "../../assets/images/signup.png";
 
 // const InputField = ({ type, placeholder, className }) => {
@@ -17,6 +18,15 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigateTo = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigateTo("/");
+    }
+  }, [navigateTo]);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -41,7 +51,11 @@ const Signup = () => {
           password: password,
         })
         .then((result) => {
-          console.log(result.data.message);
+          if (result.data.token) {
+            const token = result.data.token;
+            localStorage.setItem("token", token);
+            navigateTo("/");
+          }
         })
         .catch((error) => {
           console.log(error);

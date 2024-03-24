@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('registration',[UserController::class,'registration']);
 Route::post('login',[UserController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
+    Route::get('logout',[UserController::class,'logout']);
     Route::get('user/details',[UserController::class,'getDetails']);
     Route::get('enroll/course/{id}',[EnrollmentController::class,'enroll']);
 });
