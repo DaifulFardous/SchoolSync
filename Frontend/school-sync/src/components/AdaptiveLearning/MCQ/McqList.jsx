@@ -7,11 +7,16 @@ export default function McqList() {
       question: "What is this?",
       options: ["Bird", "Fish", "Car", "Bike"],
     },
+    {
+      question: "What is this?",
+      options: ["Bird", "Fish", "Car", "Bike"],
+    },
   ];
+  const suggestedOptions = 'Plane, Roads, Cross';
   return (
-    <div className="flex bg-pink-100 bg-opacity-20">
+    <div className="flex bg-pink-100 bg-opacity-20 w-full">
       <Sidenav />
-      <div className="m-5 w-full">
+      <div className="w-[75%]">
         {questions.map((question, index) => (
           <MCQ
             key={index}
@@ -19,6 +24,7 @@ export default function McqList() {
             question={question.question}
             options={question.options}
             meaning={''}
+            suggestedOptions={suggestedOptions}
           />
         ))}
       </div>
