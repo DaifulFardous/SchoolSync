@@ -13,27 +13,26 @@ import fac3 from "../../assets/images/fac3.png";
 import fac4 from "../../assets/images/fac4.png";
 import fac5 from "../../assets/images/fac5.png";
 import fac6 from "../../assets/images/fac6.png";
+import { RiArrowLeftDoubleFill, RiArrowRightDoubleLine } from "react-icons/ri";
 import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
-const imageUrls = [
-  Math,
-  Chemistry,
-  Physics,
-  ICT,
-  English,
-  ss,
-];
-
-const circularImageUrls = [
-  fac1,
-  fac2,
-  fac3,
-  fac4,
-  fac5,
-  fac6,
-];
+const imageUrls = [Math, Chemistry, Physics, ICT, English, ss];
+const circularImageUrls = [fac1, fac2, fac3, fac4, fac5, fac6];
 
 function Courselist() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handlePrevious = () => {
+    setCurrentIndex((currentIndex - 1 + imageUrls.length) % imageUrls.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((currentIndex + 1) % imageUrls.length);
+  };
+
   return (
     <div className='bg-opacity-100 bg-gray-200 h-screen'>
       <div className='flex'>
@@ -53,53 +52,128 @@ function Courselist() {
           >
             <div className='flex space-x-96 mt-6'>
               <div className='flex space-x-36 pl-8'>
-                <span className='font-semibold'>All Courses (12)</span>
-                <span className='font-semibold'>Ongoing (7)</span>
-                <span className='font-semibold'>Completed (5)</span>
-              </div>
-              <div className='pl-12'>
-                <a href="" className='text-black no-underline font-semibold'>See All</a>
+                <span className='font-semibold text-xl'>My Courses</span>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-6 justify-center pl-7 mt-10">
-              <AnimatePresence>
-                {[...Array(6)].map((_, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-80 bg-white rounded-lg shadow-lg overflow-hidden"
-                  >
-                    <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
-                      <img src={imageUrls[index]} alt="Card Image" className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg" />
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
+            <div className="flex justify-center mt-10 relative">
+              <RiArrowLeftDoubleFill
+                className="absolute left-0 pt-16 text-gray-600 hover:text-gray-800 cursor-pointer"
+                onClick={handlePrevious}
+                size={50}
+              />
+              <div className="flex space-x-12">
+                {[0, 1, 2].map((offset) => (
+                  <Link to="/courses-details" key={offset} className=' no-underline'>
+                    <motion.div
+                      key={offset}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -50 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-80 bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                    >
+                      <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
                         <img
-                          src={circularImageUrls[index]}
-                          alt="Circular Image"
-                          className="rounded-full w-13 h-13"
+                          src={imageUrls[(currentIndex + offset) % imageUrls.length]}
+                          alt="Card Image"
+                          className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg"
                         />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
+                          <img
+                            src={circularImageUrls[(currentIndex + offset) % circularImageUrls.length]}
+                            alt="Circular Image"
+                            className="rounded-full w-13 h-13"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-3">
-                      <h2 className="text-xl font-bold mb-2 top-4">
-                        {index === 0 && 'Maths'}
-                        {index === 1 && 'Physics'}
-                        {index === 2 && 'Chemistry'}
-                        {index === 3 && 'ICT'}
-                        {index === 4 && 'English'}
-                        {index === 5 && 'Social Science'}
-                      </h2>
-                    </div>
-                  </motion.div>
+                      <div className="p-3">
+                        <h2 className="text-xl font-bold mb-2 top-4 no-underline">
+                          {(currentIndex + offset) % imageUrls.length === 0 && 'Maths'}
+                          {(currentIndex + offset) % imageUrls.length === 1 && 'Physics'}
+                          {(currentIndex + offset) % imageUrls.length === 2 && 'Chemistry'}
+                          {(currentIndex + offset) % imageUrls.length === 3 && 'ICT'}
+                          {(currentIndex + offset) % imageUrls.length === 4 && 'English'}
+                          {(currentIndex + offset) % imageUrls.length === 5 && 'Social Science'}
+                        </h2>
+                      </div>
+                    </motion.div>
+                  </Link>
                 ))}
-              </AnimatePresence>
+              </div>
+              <RiArrowRightDoubleLine
+                className="absolute right-0 pt-16 text-gray-600 hover:text-gray-800 cursor-pointer"
+                onClick={handleNext}
+                size={50}
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white h-40vh w-50vw rounded-xl ml-6 mt-[-4] pb-10"
+          >
+            <div className='flex space-x-96 mt-6'>
+              <div className='flex space-x-36 pl-8'>
+                <span className='font-semibold text-xl'>Popular Courses</span>
+              </div>
+            </div>
+            <div className="flex justify-center mt-10 relative">
+              <RiArrowLeftDoubleFill
+                className="absolute left-0 pt-16 text-gray-600 hover:text-gray-800 cursor-pointer"
+                onClick={handlePrevious}
+                size={50}
+              />
+              <div className="flex space-x-12">
+                {[0, 1, 2].map((offset) => (
+                  <Link to="/courses-details" key={offset} className=' no-underline'>
+                    <motion.div
+                      key={offset}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -50 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-80 bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                    >
+                      <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
+                        <img
+                          src={imageUrls[(currentIndex + offset) % imageUrls.length]}
+                          alt="Card Image"
+                          className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg"
+                        />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
+                          <img
+                            src={circularImageUrls[(currentIndex + offset) % circularImageUrls.length]}
+                            alt="Circular Image"
+                            className="rounded-full w-13 h-13"
+                          />
+                        </div>
+                      </div>
+                      <div className="p-3">
+                        <h2 className="text-xl font-bold mb-2 top-4 no-underline">
+                          {(currentIndex + offset) % imageUrls.length === 0 && 'Maths'}
+                          {(currentIndex + offset) % imageUrls.length === 1 && 'Physics'}
+                          {(currentIndex + offset) % imageUrls.length === 2 && 'Chemistry'}
+                          {(currentIndex + offset) % imageUrls.length === 3 && 'ICT'}
+                          {(currentIndex + offset) % imageUrls.length === 4 && 'English'}
+                          {(currentIndex + offset) % imageUrls.length === 5 && 'Social Science'}
+                        </h2>
+                      </div>
+                    </motion.div>
+                  </Link>
+                ))}
+              </div>
+              <RiArrowRightDoubleLine
+                className="absolute right-0 pt-16 text-gray-600 hover:text-gray-800 cursor-pointer"
+                onClick={handleNext}
+                size={50}
+              />
             </div>
           </motion.div>
         </div>
       </div>
-      <Footer className='pt-10' />
+      <Footer className='pt-7' />
     </div>
   );
 }

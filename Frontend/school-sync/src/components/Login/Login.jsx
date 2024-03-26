@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import login from "../../assets/images/log.png";
+import logo from "../../assets/images/Group.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -36,9 +37,15 @@ function Login() {
         </div>
       </div>
 
-      <div className="w-[40vw] h-full bg-white">
+      <div className="w-[40vw] h-full bg-white flex flex-col justify-center items-center">
+        <div className="p-3 pb-4 pt-14 flex">
+          <img src={logo} className="w-[6vw]" alt="" />
+          <span className="text-red no-underline text-[1.5rem] font-bold">
+            S<span className="text-[#263238]">chool <br />Sync</span>
+          </span>
+        </div>
         <div className="w-[30vw] h-full bg-white mx-auto">
-          <div className="text-base font-poppins flex justify-center items-center mb-4 mt-52">
+          <div className="text-base font-poppins flex justify-center items-center mb-4 mt-4">
             <div className="flex flex-col space-y-4 pl-[1rem]">
               <div className="flex sm:flex-col md:flex-col lg:flex-col xl:flex-col items-start">
                 <label htmlFor="input1" className="text-gray-800 pb-1 text-sm">
