@@ -6,10 +6,10 @@ function Dashboard() {
   return (
     <div className='bg-opacity-100 bg-gray-200 min-h-screen'>
         <div className='flex'>
-        <div className='fixed'>
+        <div className='fixed w-64'>
             <Sidenav/>
         </div>
-        <div className='p-6 pl-80 fixed'>
+        <div className='p-6 pl-72 fixed'>
             <Uppernav/>
         </div>
 
