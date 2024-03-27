@@ -15,9 +15,9 @@ function Profile() {
           <div className='p-6'>
             <Uppernav />
           </div>
-          <div className='flex'>
-            <div className='flex flex-col pt-2 pl-6 gap-y-5'>
-              <div className='w-2/6 rounded-lg bg-white pl-3 flex flex-col items-center pb-12'>
+          <div className='flex gap-5'>
+            <div className='w-2/6 flex flex-col pt-2 pl-6 gap-y-5'>
+              <div className='rounded-lg bg-white pl-3 flex flex-col items-center pb-12'>
                 <h4 className='text-black pt-3 text-center'>Personal Account</h4>
                 <div className='mt-3 flex items-center justify-center'>
                   <img src={profilePicture} alt="Profile Picture" className="rounded-full h-32 w-32" />
@@ -27,7 +27,7 @@ function Profile() {
                   Change personal details
                 </button>
               </div>
-              <div className='w-2/6 rounded-lg bg-white pl-3 flex flex-col pb-12'>
+              <div className='rounded-lg bg-white pl-3 flex flex-col pb-12'>
                 <h4 className='text-black pt-3 pl-4 text-start'>Additional Info</h4>
                 <p className='w-4/5 pl-4 font-thin text-gray-500 font-poppins'>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit pariatur cum ipsa. Dolorem minus esse corrupti quasi. Fugiat possimus laudantium id?
