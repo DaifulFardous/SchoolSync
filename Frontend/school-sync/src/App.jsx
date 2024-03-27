@@ -1,18 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"; // Import Router, Route, Switch from react-router-dom
 import "./App.css";
+import AdaptiveLearning from "./components/AdaptiveLearning/AdaptiveLearning";
+import McqList from "./components/AdaptiveLearning/MCQ/McqList";
 import CourseDet from "./components/Courses/Course-details";
 import Courselist from "./components/Courses/Courselist";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Forgot from "./components/ForgotPass/Forgot";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Login from "./components/Login/Login";
 import ProfilePage from "./components/Profile/Profile";
 import Sidenav from "./components/SideNav/Sidenav";
 import Signup from "./components/Signup/Signup";
-import Dashboard from "./components/Dashboard/Dashboard";
 import Uppernav from "./components/UpperNav/Uppernav";
-import AdaptiveLearning from './components/AdaptiveLearning/AdaptiveLearning';
-import mcqList from './components/AdaptiveLearning/MCQ/McqList';
-import McqList from "./components/AdaptiveLearning/MCQ/McqList";
 function App() {
   return (
     <BrowserRouter>
