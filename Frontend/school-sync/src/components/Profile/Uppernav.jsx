@@ -1,13 +1,23 @@
-import React from 'react';
-import { HiSearch } from "react-icons/hi";
-import round from "../../assets/images/round.png";
-import bell from "../../assets/images/bell.png";
-import down from "../../assets/images/down.png";
-import mail from "../../assets/images/mail.png";
+import React, { useState } from 'react';
+import { HiSearch } from 'react-icons/hi';
+import round from '../../assets/images/round.png';
+import bell from '../../assets/images/bell.png';
+import down from '../../assets/images/down.png';
+import mail from '../../assets/images/mail.png';
+import { FaUserCircle, FaCog, FaSignOutAlt, FaBell } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { HiOutlineAcademicCap } from "react-icons/hi2";
+import { HiMiniQuestionMarkCircle } from "react-icons/hi2";
 
 const Uppernav = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
-    <div className="w-[62.938rem] flex flex-col items-start justify-start max-w-full text-left text-[2.125rem] text-black font-istok-web">
+    <div className="w-full flex flex-col items-start justify-start max-w-[62.938rem] text-left text-[2.125rem] text-black font-istok-web">
       <h1 className="pb-4 m-0 w-[20.688rem] h-[2.375rem] relative text-inherit font-bold font-inherit inline-block shrink-0 max-w-full mq450:text-[1.25rem] mq1050:text-[1.688rem]">
         My Profile
       </h1>
@@ -25,7 +35,6 @@ const Uppernav = () => {
               fontSize: '12px',
               color: 'rgba(0, 0, 0, 0.36)',
             }}
-            
           />
         </div>
         <div className="pt-[-8] w-[25.25rem] flex flex-row items-center justify-start gap-[0rem_5.438rem] max-w-full mq450:flex-wrap mq450:gap-[0rem_5.438rem]">
@@ -44,29 +53,65 @@ const Uppernav = () => {
             />
           </div>
           <div className="flex-1 flex flex-row items-center justify-start gap-[0rem_1rem] min-w-[10.313rem] pt-[-4]">
-            <img
-              className="h-[4.313rem] w-[4.5rem] relative rounded-81xl object-cover"
-              loading="eager"
-              alt=""
-              src={round}
-            />
+            <Link to="/profile">
+              <img
+                className="h-[4.313rem] w-[4.5rem] relative rounded-81xl object-cover"
+                loading="eager"
+                alt=""
+                src={round}
+              />
+            </Link>
             <div className="flex-1 flex flex-col items-start justify-start pt-[0.375rem] px-[0rem] pb-[0rem]">
               <div className="self-stretch flex flex-col items-start justify-start">
                 <div className="self-stretch flex flex-row items-start justify-start relative">
-                  <b className="h-[1.5rem] flex-1 relative inline-block">
-                    Alma Morse
-                  </b>
-                  <img
-                    className="h-[1.063rem] w-[0.938rem] absolute my-0 mx-[!important] top-[0rem] right-[0.938rem] object-cover"
-                    loading="eager"
-                    alt=""
-                    src={down}
-                  />
+                  <b className="h-[1.5rem] flex-1 relative inline-block">Alma Morse</b>
+                  <div className="relative inline-block">
+                    <button onClick={toggleDropdown} className=' cursor-pointer'>
+                      <img
+                        className="h-[1.063rem] w-[0.938rem] object-cover"
+                        loading="eager"
+                        alt=""
+                        src={down}
+                      />
+                    </button>
+                    {isDropdownOpen && (
+                      <div className="absolute right-0 z-10 mt-6 w-52 bg-white rounded-md shadow-lg">
+                        <div className="py-1 no-underline">
+                          <a
+                            href="/profile"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
+                          >
+                            <FaUserCircle className="inline-block mr-2" />
+                            Profile
+                          </a>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
+                          >
+                            <HiMiniQuestionMarkCircle className="inline-block mr-2" />
+                            Help
+                          </a>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
+                          >
+                            <HiOutlineAcademicCap className="inline-block mr-2" />
+                            My Courses
+                          </a>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
+                          >
+                            <FaSignOutAlt className="inline-block mr-2" />
+                            Logout
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-row items-start justify-start py-[0rem] px-[0.063rem] mt-[-0.312rem] text-[0.75rem] text-darkslategray-100">
-                  <div className="h-[1.5rem] relative inline-block">
-                    Student
-                  </div>
+                  <div className="h-[1.5rem] relative inline-block">Student</div>
                 </div>
               </div>
             </div>
