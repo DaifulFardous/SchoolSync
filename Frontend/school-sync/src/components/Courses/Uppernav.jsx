@@ -78,7 +78,7 @@ const Uppernav = () => {
                       <div className="absolute right-0 z-10 mt-6 w-52 bg-white rounded-md shadow-lg">
                         <div className="py-1 no-underline">
                           <a
-                            href="#"
+                            href="/profile"
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
                           >
                             <FaUserCircle className="inline-block mr-2" />
