@@ -65,7 +65,7 @@ const Uppernav = () => {
               <div className="self-stretch flex flex-col items-start justify-start">
                 <div className="self-stretch flex flex-row items-start justify-start relative">
                   <b className="h-[1.5rem] flex-1 relative inline-block">Alma Morse</b>
-                  <div className="relative inline-block">
+                  <div className="relative inline-block bg-gray-200">
                     <button onClick={toggleDropdown} className=' cursor-pointer'>
                       <img
                         className="h-[1.063rem] w-[0.938rem] object-cover"

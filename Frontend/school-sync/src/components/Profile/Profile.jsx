@@ -5,6 +5,8 @@ import profilePicture from '../../assets/images/pp.png';
 import { FaPlus } from 'react-icons/fa';
 import { MdInfoOutline } from "react-icons/md";
 import { motion } from "framer-motion";
+import { LuCamera } from "react-icons/lu";
+import { Link } from 'react-router-dom';
 
 const fadeInVariant = {
   hidden: { opacity: 0 },
@@ -68,12 +70,17 @@ function Profile() {
               >
                 <h4 className='text-black pt-3 text-center'>Personal Account</h4>
                 <div className='mt-3 flex items-center justify-center'>
-                  <img src={profilePicture} alt="Profile Picture" className="rounded-full h-32 w-32" />
+                  <button className="relative rounded-full h-32 w-32 cursor-pointer">
+                    <img src={profilePicture} alt="Profile Picture" className="rounded-full h-32 w-32" />
+                    <LuCamera className="absolute inset-0 m-auto text-white opacity-0 transition-opacity duration-300 hover:opacity-100" size={32} />
+                  </button>
                 </div>
                 <h2 className='text-black pt-2 text-center'>Shovon Islam</h2>
-                <button className='bg-white px-2 py-2 border-2 border-blue-700 text-blue-500 font-semibold rounded-md w-3/5 h-1/5 cursor-pointer hover:bg-blue-50'>
-                  Change personal details
-                </button>
+                <Link to="/edit">
+                  <button className='bg-white px-6 py-2 border-2 border-blue-700 text-blue-500 font-semibold rounded-md w-5/5 h-3/5 cursor-pointer hover:bg-blue-50'>
+                    Change personal details
+                  </button>
+                </Link>
               </motion.div>
               <motion.div
                 className='rounded-lg bg-white pl-3 flex flex-col pb-12'
