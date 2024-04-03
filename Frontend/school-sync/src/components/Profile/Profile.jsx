@@ -7,14 +7,34 @@ import profilePicture from '../../assets/images/pp.png';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { MdInfoOutline } from "react-icons/md";
 import { LuCamera } from "react-icons/lu";
+import cardImage from "../../assets/images/card_image.jpg";
 
 function Profile() {
   const [showModal, setShowModal] = useState(false);
+  const [showProjectModal, setShowProjectModal] = useState(false);
   const [modalContent, setModalContent] = useState({
     title: '',
     text: '',
   });
   const [initialLoad, setInitialLoad] = useState(true);
+
+  const projectCards = [
+    {
+      title: 'Project Title 1',
+      description: 'Project description goes here.',
+      additionalDetails: 'Additional project details.',
+    },
+    {
+      title: 'Project Title 2',
+      description: 'Project description goes here.',
+      additionalDetails: 'Additional project details.',
+    },
+    {
+      title: 'Project Title 3',
+      description: 'Project description goes here.',
+      additionalDetails: 'Additional project details.',
+    },
+  ];
 
   useEffect(() => {
     setInitialLoad(false);
@@ -25,10 +45,14 @@ function Profile() {
     setModalContent({ title, text });
   };
 
+  const toggleProjectModal = () => {
+    setShowProjectModal(!showProjectModal);
+  };
+
   return (
     <>
       <motion.div
-        className={`bg-gray-200 min-h-screen pb-10 ${showModal ? 'opacity-30' : ''}`}
+        className={`bg-gray-200 min-h-screen pb-10 ${showModal || showProjectModal ? 'opacity-30' : ''}`}
         initial={initialLoad ? "hidden" : "visible"}
         animate="visible"
         variants={{
@@ -69,7 +93,6 @@ function Profile() {
                   <button onClick={() => toggleModal('Add Additional Info', 'Please provide the necessary information for additional info.')} className='bg-white px-2 py-2 ml-4 border-2 border-blue-700 text-blue-500 font-semibold rounded-md w-3/5 h-1/5 cursor-pointer hover:bg-blue-50 flex'>
   <FaPlus className='mr-2' /> Add Additional Info
 </button>
-
                 </div>
               </div>
               <div className='w-4/6 flex flex-col gap-3 pr-6'>
@@ -93,7 +116,7 @@ function Profile() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                       </div>
                       <div className='pt-4'>
-                        <a href="" className='no-underline text-blue-600 hover:underline hover:text-blue-900'>
+                        <a href="#" className='no-underline text-blue-600 hover:underline hover:text-blue-900' onClick={toggleProjectModal}>
                           Browse Projects
                         </a>
                       </div>
@@ -195,6 +218,52 @@ function Profile() {
             >
               Save
             </button>
+          </div>
+        </div>
+      )}
+      {showProjectModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white p-12 rounded-lg shadow-lg relative w-1/2 h-3/4 overflow-y-auto">
+            <button
+              className="absolute top-4 right-4 text-red-600 hover:text-gray-700"
+              onClick={toggleProjectModal}
+            >
+              <FaTimes />
+            </button>
+            <div className="bg-blue-900 text-white p-6 rounded-t-lg">
+              <h2 className="text-2xl font-semibold">Projects</h2>
+              <p className="text-white">This is information about your projects.</p>
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Filter by role:</h3>
+              <div className="grid grid-cols-4 gap-4 font-semibold">
+                <button className="btn bg-white font-semibold cursor-pointer text-black rounded-xl px-4 py-2 border border-black hover:bg-gray-200">Button 1</button>
+                <button className="btn bg-white font-semibold text-black cursor-pointer rounded-xl px-4 py-2 border border-black hover:bg-gray-200">Button 2</button>
+                <button className="btn bg-white text-black rounded-xl font-semibold cursor-pointer px-4 py-2 border border-black hover:bg-gray-200">Button 3</button>
+                <button className="btn bg-white text-black cursor-pointer rounded-xl font-semibold px-4 py-2 border border-black hover:bg-gray-200">Button 4</button>
+                <button className="btn bg-white text-black rounded-xl cursor-pointer px-4 py-2 font-semibold border border-black hover:bg-gray-200">Button 5</button>
+                <button className="btn bg-white text-black rounded-xl px-4 py-2 cursor-pointer border font-semibold border-black hover:bg-gray-200">Button 6</button>
+                <button className="btn bg-white text-black rounded-xl px-4 py-2 border cursor-pointer font-semibold border-black hover:bg-gray-200">Button 7</button>
+                <button className="btn bg-white text-black rounded-xl px-4 py-2 border border-black cursor-pointer font-semibold hover:bg-gray-200">Button 8</button>
+              </div>
+              <div className="flex flex-col gap-4 mt-8">
+                {projectCards.map((card, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex items-center bg-white border border-gray-300 rounded-lg p-4 cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <img src={cardImage} alt="Card Image" className="w-48 h-32 object-cover rounded-lg" />
+                    <div className="ml-4">
+                      <h4 className="text-lg font-semibold">{card.title}</h4>
+                      <p className="text-gray-600">{card.description}</p>
+                      <p className="text-gray-600">{card.additionalDetails}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}

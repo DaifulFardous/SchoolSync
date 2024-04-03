@@ -38,3 +38,6 @@ body {
   height: 1px; /* Set the height of the line */
   border: none; /* Remove the default border */
 }
+.btn {
+  font-weight: 600; /* Semi-bold font */
+}
