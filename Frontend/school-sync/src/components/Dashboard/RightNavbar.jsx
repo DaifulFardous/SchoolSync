@@ -5,7 +5,7 @@ const RightNavbar = () => {
     return (
         <div>
              <div>
-                <h1 className='font-bold my-4 mx-2'>April 2024</h1>
+                <h2 className='font-bold my-4 mx-2'>April 2024</h2>
                 <div className='flex space-x-4 ml-2'>
                     <div className='w-1/6 bg-slate-50 text-center border-2 rounded-md'>
                         <p >Fri</p>
@@ -25,8 +25,8 @@ const RightNavbar = () => {
                     </div>
                 </div>
             </div>
-            <div className='space-y-3 ml-2 rounded-lg'>
-                <h1 className='font-bold my-4 mx-2'>Schedule</h1>
+            <div className='space-y-3 ml-2 rounded-lg pb-5'>
+                <h2 className='font-bold my-4'>Schedule</h2>
               <div className='flex items-center bg-slate-50 w-full divide-x-2 rounded-lg'>
                   <div>
                     <h1 className='font-bold lg:mr-6 md:mr-2 mr-1 p-2 text-xl'>1</h1>
@@ -65,7 +65,7 @@ const RightNavbar = () => {
             </div>
         </div>
         <div className='ml-2'>
-            <h1 className='font-bold my-4 mx-2'>Upcoming Events</h1>
+            <h2 className='font-bold my-4'>Upcoming Events</h2>
             <div className='flex items-center'>
                 <div>
                     <RiPresentationFill className='text-cyan-500 size-12' />
