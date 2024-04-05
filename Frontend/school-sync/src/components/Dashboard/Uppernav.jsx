@@ -19,7 +19,7 @@ const Uppernav = () => {
   return (
     <div className="w-full flex flex-col items-start justify-start max-w-[62.938rem] text-left text-[2.125rem] text-black font-istok-web">
       <h1 className="pb-4 m-0 w-[20.688rem] h-[2.375rem] relative text-inherit font-bold font-inherit inline-block shrink-0 max-w-full mq450:text-[1.25rem] mq1050:text-[1.688rem]">
-        My Profile
+        Dashboard
       </h1>
       <div className="self-stretch flex flex-row items-center justify-between gap-[1.25rem] max-w-full mt-[-0.125rem] text-[0.875rem] mq1050:flex-wrap">
         <div className="w-[29.188rem] flex flex-col items-start justify-start pt-[0rem] px-[0rem] pb-[0.188rem] box-border max-w-full">
