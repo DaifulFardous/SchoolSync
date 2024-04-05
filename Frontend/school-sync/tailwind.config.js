@@ -65,6 +65,8 @@ module.exports = {
     preflight: false,
   },
   plugins: [
-    
+    require("daisyui"),
+    // eslint-disable-next-line no-undef
+    require('flowbite/plugin')
   ],
 };

@@ -16,7 +16,7 @@ export default function Sidenav() {
         </div>
         <div className="flex flex-col flex-grow p-4 w-[17vw] border-r shadow-sm">
           <div className="mb-[4vh]">
-            <a href="#" className="flex items-center py-[1.2vh] px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b from-white to-white hover:from-blue-500 hover:to-white-300 no-underline font-medium">
+            <a href="/home" className="flex items-center py-[1.2vh] px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b from-white to-white hover:from-blue-500 hover:to-white-300 no-underline font-medium">
               <HiOutlineViewGrid className="mr-[0.5vw] w-[1.5vw] h-[1.5vw]" /> Dashboard
             </a>
             <a href="#" className="flex items-center py-[1.2vh] px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b from-white to-white hover:from-blue-500 hover:to-white-300 no-underline font-medium mt-[1.2vh]">
@@ -28,7 +28,7 @@ export default function Sidenav() {
             <a href="#" className="flex items-center py-[1.2vh] px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b from-white to-white hover:from-blue-500 hover:to-white-300 no-underline font-medium mt-[1.2vh]">
               <HiCalendarDays className="mr-[0.5vw] w-[1.5vw] h-[1.5vw]" /> Academic Calender
             </a>
-            <a href="#" className="flex items-center py-[1.2vh] px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b from-white to-white hover:from-blue-500 hover:to-white-300 no-underline font-medium mt-[1.2vh]">
+            <a href="/courses" className="flex items-center py-[1.2vh] px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b from-white to-white hover:from-blue-500 hover:to-white-300 no-underline font-medium mt-[1.2vh]">
               <HiOutlineNewspaper className="mr-[0.5vw] w-[1.5vw] h-[1.5vw]" /> Courses
             </a>
             <a href="#" className="flex items-center py-[1.2vh] px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b from-white to-white hover:from-blue-500 hover:to-white-300 no-underline font-medium mt-[1.2vh]">
