@@ -1,28 +1,42 @@
 import axios from "axios";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../../assets/images/log.png";
 import logo from "../../assets/images/Group.png";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigateTo = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigateTo("/");
+    }
+  }, [navigateTo]);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
+
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
+
   const handleApi = () => {
-    //console.log({ email, password });
     axios
       .post("http://127.0.0.1:8000/api/login", {
         email: email,
         password: password,
       })
       .then((result) => {
-        console.log(result.data.token);
+        if (result.data.token) {
+          const token = result.data.token;
+          localStorage.setItem("token", token);
+          navigateTo("/");
+        }
       })
       .catch((error) => {
         console.log(error);

@@ -1,5 +1,6 @@
+import axios from "axios";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import chatbot from "../../assets/images/AI_chatbot.png";
 import quiz from "../../assets/images/Quiz_Generate.png";
 import learning from "../../assets/images/adaptive_learning-removebg-preview.png";
@@ -10,6 +11,20 @@ import student from "../../assets/images/student.png";
 import teacher from "../../assets/images/teacher.png";
 import Footer from "./Footer/Footer";
 const LandingPage = () => {
+  const token = localStorage.getItem("token");
+  const navigateTo = useNavigate();
+  const handleLogout = () => {
+    axios
+      .get("http://127.0.0.1:8000/api/logout")
+      .then((result) => {
+        console.log(result);
+        localStorage.removeItem("token");
+        navigateTo("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
       <section className="bg-whitesmoke-200">
@@ -30,11 +45,25 @@ const LandingPage = () => {
                 </span>
               </a>
             </div>
-            <Link to="/login">
-              <button className="text-lg bg-[#FF4800] text-white px-5 py-2 rounded-md cursor-pointer">
-                Login
-              </button>
-            </Link>
+            {token ? (
+              <>
+                <div className="flex justify-end">
+                  <span className="mr-2">Hello Buddy!</span>
+                  <button
+                    className="px-3 py-1 bg-blue-500 text-white rounded-md text-sm"
+                    onClick={handleLogout}
+                  >
+                    logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <Link to="/login">
+                <button className="text-lg bg-[#FF4800] text-white px-5 py-2 rounded-md cursor-pointer">
+                  Login
+                </button>
+              </Link>
+            )}
           </nav>
         </header>
       </section>
