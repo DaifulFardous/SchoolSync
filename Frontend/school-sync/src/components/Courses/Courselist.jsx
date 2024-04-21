@@ -22,6 +22,35 @@ import { Link } from 'react-router-dom';
 const imageUrls = [Math, Chemistry, Physics, ICT, English, ss];
 const circularImageUrls = [fac1, fac2, fac3, fac4, fac5, fac6];
 
+const CourseCard = ({ imageUrl, circularImageUrl, title }) => (
+  <motion.div
+    key={title}
+    initial={{ opacity: 0, y: 50 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -50 }}
+    transition={{ duration: 0.5 }}
+    className="w-80 bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-all duration-300"
+  >
+    <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
+      <img
+        src={imageUrl}
+        alt="Card Image"
+        className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg"
+      />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
+        <img
+          src={circularImageUrl}
+          alt="Circular Image"
+          className="rounded-full w-13 h-13"
+        />
+      </div>
+    </div>
+    <div className="p-3">
+      <h2 className="text-xl font-bold mb-2 top-4 no-underline">{title}</h2>
+    </div>
+  </motion.div>
+);
+
 function Courselist() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -62,43 +91,27 @@ function Courselist() {
                 size={50}
               />
               <div className="flex space-x-12">
-                {[0, 1, 2].map((offset) => (
-                  <Link to="/courses-details" key={offset} className=' no-underline'>
-                    <motion.div
-                      key={offset}
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -50 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-80 bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-all duration-300"
-                    >
-                      <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
-                        <img
-                          src={imageUrls[(currentIndex + offset) % imageUrls.length]}
-                          alt="Card Image"
-                          className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg"
-                        />
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
-                          <img
-                            src={circularImageUrls[(currentIndex + offset) % circularImageUrls.length]}
-                            alt="Circular Image"
-                            className="rounded-full w-13 h-13"
-                          />
-                        </div>
-                      </div>
-                      <div className="p-3">
-                        <h2 className="text-xl font-bold mb-2 top-4 no-underline">
-                          {(currentIndex + offset) % imageUrls.length === 0 && 'Maths'}
-                          {(currentIndex + offset) % imageUrls.length === 1 && 'Physics'}
-                          {(currentIndex + offset) % imageUrls.length === 2 && 'Chemistry'}
-                          {(currentIndex + offset) % imageUrls.length === 3 && 'ICT'}
-                          {(currentIndex + offset) % imageUrls.length === 4 && 'English'}
-                          {(currentIndex + offset) % imageUrls.length === 5 && 'Social Science'}
-                        </h2>
-                      </div>
-                    </motion.div>
-                  </Link>
-                ))}
+                <Link to="/courses-details" className=' no-underline'>
+                  <CourseCard
+                    imageUrl={imageUrls[currentIndex]}
+                    circularImageUrl={circularImageUrls[currentIndex]}
+                    title={["Maths", "Physics", "Chemistry", "ICT", "English", "Social Science"][currentIndex]}
+                  />
+                </Link>
+                <Link to="/courses-details" className=' no-underline'>
+                  <CourseCard
+                    imageUrl={imageUrls[(currentIndex + 1) % imageUrls.length]}
+                    circularImageUrl={circularImageUrls[(currentIndex + 1) % circularImageUrls.length]}
+                    title={["Maths", "Physics", "Chemistry", "ICT", "English", "Social Science"][(currentIndex + 1) % imageUrls.length]}
+                  />
+                </Link>
+                <Link to="/courses-details" className=' no-underline'>
+                  <CourseCard
+                    imageUrl={imageUrls[(currentIndex + 2) % imageUrls.length]}
+                    circularImageUrl={circularImageUrls[(currentIndex + 2) % circularImageUrls.length]}
+                    title={["Maths", "Physics", "Chemistry", "ICT", "English", "Social Science"][(currentIndex + 2) % imageUrls.length]}
+                  />
+                </Link>
               </div>
               <RiArrowRightDoubleLine
                 className="absolute right-0 pt-16 text-gray-600 hover:text-gray-800 cursor-pointer"
@@ -128,39 +141,11 @@ function Courselist() {
               <div className="flex space-x-12">
                 {[0, 1, 2].map((offset) => (
                   <Link to="/courses-details" key={offset} className=' no-underline'>
-                    <motion.div
-                      key={offset}
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -50 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-80 bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-all duration-300"
-                    >
-                      <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
-                        <img
-                          src={imageUrls[(currentIndex + offset) % imageUrls.length]}
-                          alt="Card Image"
-                          className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg"
-                        />
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
-                          <img
-                            src={circularImageUrls[(currentIndex + offset) % circularImageUrls.length]}
-                            alt="Circular Image"
-                            className="rounded-full w-13 h-13"
-                          />
-                        </div>
-                      </div>
-                      <div className="p-3">
-                        <h2 className="text-xl font-bold mb-2 top-4 no-underline">
-                          {(currentIndex + offset) % imageUrls.length === 0 && 'Maths'}
-                          {(currentIndex + offset) % imageUrls.length === 1 && 'Physics'}
-                          {(currentIndex + offset) % imageUrls.length === 2 && 'Chemistry'}
-                          {(currentIndex + offset) % imageUrls.length === 3 && 'ICT'}
-                          {(currentIndex + offset) % imageUrls.length === 4 && 'English'}
-                          {(currentIndex + offset) % imageUrls.length === 5 && 'Social Science'}
-                        </h2>
-                      </div>
-                    </motion.div>
+                    <CourseCard
+                      imageUrl={imageUrls[(currentIndex + offset) % imageUrls.length]}
+                      circularImageUrl={circularImageUrls[(currentIndex + offset) % circularImageUrls.length]}
+                      title={["Maths", "Physics", "Chemistry", "ICT", "English", "Social Science"][(currentIndex + offset) % imageUrls.length]}
+                    />
                   </Link>
                 ))}
               </div>
