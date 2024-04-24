@@ -61,14 +61,14 @@ function Profile() {
         }}
       >
         <div className='flex'>
-          <div className='fixed w-64'>
+          <div className='fixed h-screen'>
             <Sidenav />
           </div>
           <div className='flex flex-col ml-64'>
-            <div className='p-6'>
+            <div className='p-6 ml-6'>
               <Uppernav />
             </div>
-            <div className='flex gap-5'>
+            <div className='flex gap-12 pl-7'>
               <div className='w-2/6 flex flex-col pt-2 pl-6 gap-y-5'>
                 <div className='rounded-lg bg-white pl-3 flex flex-col items-center pb-12'>
                   <h4 className='text-black pt-3 text-center'>Personal Account</h4>
@@ -115,11 +115,15 @@ function Profile() {
                       <div className='pb-6 font-light font-serif text-gray-800 pl-6'>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                       </div>
-                      <div className='pt-4'>
-                        <a href="#" className='no-underline text-blue-600 hover:underline hover:text-blue-900' onClick={toggleProjectModal}>
-                          Browse Projects
-                        </a>
-                      </div>
+                      <div className="pt-4 pl-14 w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
+  <a
+    href="#"
+    className="no-underline text-blue-600 hover:underline hover:text-blue-900"
+    onClick={toggleProjectModal}
+  >
+    Browse Projects
+  </a>
+</div>
                     </div>
                   </div>
                 </div>
