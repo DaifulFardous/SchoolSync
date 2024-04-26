@@ -13,6 +13,7 @@ import Edit from "./components/Profile/Details_edit";
 import Sidenav from "./components/SideNav/Sidenav";
 import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
+import Chatbot from "./components/Chatbot/Chatbot";
 function App() {
   return (
     <BrowserRouter>
@@ -30,6 +31,7 @@ function App() {
         <Route path="/mcqList" element={<McqList />} />
         <Route path="/home" element={<Dashboard />} />
         <Route path="/edit" element={<Edit />} />
+        <Route path="/chatbot" element={<Chatbot />} />
       </Routes>
     </BrowserRouter>
   );
