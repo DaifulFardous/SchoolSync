@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GoPencil } from "react-icons/go";
 import { IoIosLink } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-
+import "./prompt.css";
 const Prompt = ({
   prompt,
   onUpdateName,
@@ -16,7 +16,11 @@ const Prompt = ({
   const [messages, setMessages] = useState(chatHistory || []);
   const [isEditingName, setIsEditingName] = useState(false);
   const { register, handleSubmit, reset } = useForm();
-
+  
+  const handleKeyDown = (event) => {
+    event.target.style.height = 'auto'
+    event.target.style.height = event.target.scrollHeight + 'px';
+  }
   const handleSendMessage = (message) => {
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -100,15 +104,18 @@ const Prompt = ({
         ))}
       </div>
       <form className="w-[90%] relative" onSubmit={handleSubmit(onSubmit)}>
-        <input
-          className="w-full py-5 pl-5 pr-16 border border-gray-800 rounded-lg text-[#084062] shadow-2xl"
+        <textarea
+          className={`w-full resize-none max-h-[200px] pr-16 border border-gray-800 rounded-lg text-[#084062] shadow-2xl`}
           type="text"
           placeholder="How can I help you?"
           {...register("message")}
+          onKeyDown={handleKeyDown}
+
         />
+
         <button
           type="submit"
-          className="absolute top-2 right-[-70px] w-12 h-12 rounded-full bg-[#084062] text-lg flex items-center justify-center cursor-pointer"
+          className="absolute top-4 right-[-70px] w-8 h-8 rounded-full bg-[#084062] text-lg flex items-center justify-center cursor-pointer"
         >
           <IoSend className="text-white" />
         </button>
