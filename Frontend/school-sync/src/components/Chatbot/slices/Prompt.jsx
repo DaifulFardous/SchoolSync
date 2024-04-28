@@ -65,7 +65,7 @@ const Prompt = ({
             <div className="title text-2xl">{promptName}</div>
           )}
           <button
-            className="w-8 h-8 rounded-full bg-[#084062] text-lg flex items-center justify-center cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#084062] text-white text-lg flex items-center justify-center cursor-pointer"
             onClick={isEditingName ? handleSaveName : handleEditName}
           >
             {isEditingName ? <IoSend /> : <GoPencil />}

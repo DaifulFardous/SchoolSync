@@ -7,13 +7,13 @@ import Profile from "./slices/Profile";
 
 const Chatbot = () => {
   const [prompts, setPrompts] = useState([]);
+  const [messages, setMessages] = useState({});
   const [currentPrompt, setCurrentPrompt] = useState(null);
 
   const addNewPrompt = () => {
     const newPrompt = {
       id: prompts.length + 1,
-      name: "Untitled Prompt",
-      messages: [],
+      name: "Untitled Prompt"
     };
     setPrompts([...prompts, newPrompt]);
     setCurrentPrompt(newPrompt);
@@ -36,19 +36,19 @@ const Chatbot = () => {
 
   const handleSendMessage = (message) => {
     if (currentPrompt) {
-      const updatedPrompts = prompts.map((prompt) =>
-        prompt.id === currentPrompt.id
-          ? {
-              ...prompt,
-              messages: [
-                ...prompt.messages,
-                { text: message, sender: "user" },
-                { text: "This is a dummy reply.", sender: "ChatGPT" },
-              ],
-            }
-          : prompt
-      );
-      setPrompts(updatedPrompts);
+      const promptId = currentPrompt.id;
+      const newMessage = { text: message, sender: "user" };
+
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [promptId]: [...(prevMessages[promptId] || []), newMessage]
+      }));
+
+      const dummyReply = { text: "This is a dummy reply.", sender: "ChatGPT" };
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [promptId]: [...(prevMessages[promptId] || []), dummyReply]
+      }));
     }
   };
 
@@ -74,6 +74,7 @@ const Chatbot = () => {
             onUpdateName={handleUpdateName}
             onDeletePrompt={handleDeletePrompt}
             onSendMessage={handleSendMessage}
+            chatHistory={messages[currentPrompt.id] || []} 
           />
         )}
       </div>
