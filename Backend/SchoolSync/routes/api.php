@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\InstructorController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\EnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,10 @@ Route::post('login',[UserController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
     Route::get('logout',[UserController::class,'logout']);
     Route::get('user/details',[UserController::class,'getDetails']);
+    Route::get('/courses', [CourseController::class, 'getActiveCourses']);
+    Route::get('/courses/{id}', [CourseController::class, 'details']);
     Route::get('enroll/course/{id}',[EnrollmentController::class,'enroll']);
+    Route::get('/enrolled-courses', [EnrollmentController::class, 'getEnrolledCourses']);
 });
 
 //instructor_routes
@@ -40,6 +44,9 @@ Route::post('instructor/login',[InstructorController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function() {
     Route::get('instructor/details',[InstructorController::class,'getDetails']);
     Route::post('create/course',[CourseController::class,'create']);
+    Route::get('/courses', [CourseController::class, 'getActiveCourses']);
+    Route::get('/courses/{id}', [CourseController::class, 'details']);
+    Route::post('/contents/create', [ContentController::class, 'create']);
 });
 
 //admin_routes
@@ -48,6 +55,7 @@ Route::post('admin/login',[AdminController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:admin']], function() {
     Route::get('admin/details',[AdminController::class,'getDetails']);
     Route::post('create/category',[CategoryController::class,'create']);
+    Route::get('/courses', [CourseController::class, 'getAllCourses']);
     Route::get('course/status/{id}',[CourseController::class,'status']);
 });
 

@@ -17,4 +17,13 @@ class EnrollmentController extends Controller
             'message' => 'Successfully Enrolled'
         ]);
     }
+    public function getEnrolledCourses()
+    {
+        // Retrieve enrolled courses for the authenticated user
+        $userId = auth()->id();
+        $enrolledCourses = Enrollment::with('course')->where('user_id', $userId)->get();
+
+        // Return enrolled courses as JSON response
+        return response()->json($enrolledCourses);
+    }
 }
