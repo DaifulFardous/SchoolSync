@@ -33,9 +33,10 @@ Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
     Route::get('logout',[UserController::class,'logout']);
     Route::get('user/details',[UserController::class,'getDetails']);
     Route::get('/courses', [CourseController::class, 'getActiveCourses']);
-    Route::get('/courses/{id}', [CourseController::class, 'details']);
+    Route::get('/course/{id}', [CourseController::class, 'details']);
     Route::get('enroll/course/{id}',[EnrollmentController::class,'enroll']);
     Route::get('/enrolled-courses', [EnrollmentController::class, 'getEnrolledCourses']);
+    Route::get('/course/{$id}/contents', [ContentController::class, 'showCourseContents']);
 });
 
 //instructor_routes
@@ -45,8 +46,8 @@ Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function
     Route::get('instructor/details',[InstructorController::class,'getDetails']);
     Route::post('create/course',[CourseController::class,'create']);
     Route::get('/courses', [CourseController::class, 'getActiveCourses']);
-    Route::get('/courses/{id}', [CourseController::class, 'details']);
-    Route::post('/contents/create', [ContentController::class, 'create']);
+    Route::get('/course/{id}', [CourseController::class, 'details']);
+    Route::post('/content/create', [ContentController::class, 'create']);
 });
 
 //admin_routes
