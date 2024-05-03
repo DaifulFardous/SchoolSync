@@ -56,16 +56,16 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-wrap">
-      <div className="absolute top-0 left-0 bg-white-200 w-full md:w-1/2 h-screen shadow-lg">
+    <div className="flex flex-wrap justify-center items-center h-screen">
+      <div className="absolute top-0 left-0 bg-white-200 w-full h-screen shadow-lg md:w-1/2">
         <div className="flex justify-center items-center h-24 pt-16">
           <img src={logo} className="w-[6vw]" alt="" />
           <span className="text-red no-underline text-[1.5rem] font-bold">
             S<span className="text-[#263238]">chool <br />Sync</span>
           </span>
         </div>
-        <div className="md:fixed md:top-56 md:left-20">
-          <div className="font-sans">
+        <div className="md:flex md:flex-col md:mt-8">
+          <div className="sm:flex sm:flex-col sm:items-center md: block font-sans">
             <div className="flex flex-wrap mb-4">
               <input
                 type="text"
@@ -93,7 +93,7 @@ const Signup = () => {
                 onChange={handlePassword}
               />
             </div>
-            <div className="flex flex-wrap mt-12">
+            <div className="flex flex-wrap mt-12 pb-16">
               <input
                 type="password"
                 placeholder="Enter your password again"
@@ -102,14 +102,14 @@ const Signup = () => {
                 onChange={handleConfirmPassword}
               />
             </div>
-            <div className=" mt-12">
-              <input
-                type="button"
-                value="Sign Up"
-                className="absolute top-[360px] left-[253px] font-semibold text-white text-center inline-block w-[158px] h-11 bg-blue-500 cursor-pointer rounded-[8.08px] shadow-2xl mt-8"
-                onClick={handleApi}
-              />
-            </div>
+          </div>
+          <div className="mt-12 flex justify-center md:mt-0">
+            <input
+              type="button"
+              value="Sign Up"
+              className="font-semibold text-white text-center inline-block w-[158px] h-11 bg-blue-500 cursor-pointer rounded-[8.08px] shadow-2xl sm:my-8"
+              onClick={handleApi}
+            />
           </div>
         </div>
       </div>
