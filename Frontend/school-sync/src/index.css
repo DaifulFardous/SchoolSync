@@ -25,3 +25,19 @@ body {
   left: 0;
   z-index: 10; /* Adjust the z-index value as needed */
 }
+.rounded-full:hover img {
+  filter: brightness(0);
+}
+
+.rounded-full:hover .absolute {
+  opacity: 1;
+}
+
+.bg-gray-700 {
+  background-color: #4b5563; /* This is the hex code for the gray-700 color from Tailwind CSS */
+  height: 1px; /* Set the height of the line */
+  border: none; /* Remove the default border */
+}
+.btn {
+  font-weight: 600; /* Semi-bold font */
+}

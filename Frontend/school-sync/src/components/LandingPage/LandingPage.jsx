@@ -5,7 +5,7 @@ import chatbot from "../../assets/images/AI_chatbot.png";
 import quiz from "../../assets/images/Quiz_Generate.png";
 import learning from "../../assets/images/adaptive_learning-removebg-preview.png";
 import logo from "../../assets/images/logo.png";
-import overview from "../../assets/images/overview.png";
+import overview from "../../assets/images/Overview.png";
 import parents from "../../assets/images/parents.png";
 import student from "../../assets/images/student.png";
 import teacher from "../../assets/images/teacher.png";

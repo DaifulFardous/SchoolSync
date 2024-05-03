@@ -9,9 +9,11 @@ import Forgot from "./components/ForgotPass/Forgot";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Login from "./components/Login/Login";
 import ProfilePage from "./components/Profile/Profile";
+import Edit from "./components/Profile/Details_edit";
 import Sidenav from "./components/SideNav/Sidenav";
 import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
+import Chatbot from "./components/Chatbot/Chatbot";
 function App() {
   return (
     <BrowserRouter>
@@ -28,6 +30,8 @@ function App() {
         <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
         <Route path="/mcqList" element={<McqList />} />
         <Route path="/home" element={<Dashboard />} />
+        <Route path="/edit" element={<Edit />} />
+        <Route path="/chatbot" element={<Chatbot />} />
       </Routes>
     </BrowserRouter>
   );
