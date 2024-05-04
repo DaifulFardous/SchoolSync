@@ -45,7 +45,7 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center h-screen overflow-hidden">
-  <div className="w-full md:w-[60vw] h-full bg-whitesmoke-200 shadow-lg flex items-center justify-center md:block">
+  <div className="w-full md:w-[60vw] h-full bg-whitesmoke-200 shadow-lg flex items-center justify-center md:block hidden">
     <div className="md:w-[40vw] mx-auto">
       <img src={login} alt="" className="w-full md:w-[40vw] mx-auto" />
     </div>
@@ -60,7 +60,7 @@ function Login() {
     <div className="w-full md:w-[30vw] h-full bg-white mx-auto">
       <div className="text-base font-poppins flex justify-center items-center mb-4 mt-4">
         <div className="flex flex-col space-y-4 pl-[1rem]">
-          <div className="flex sm:flex-col md:flex-col lg:flex-col xl:flex-col">
+          <div className="flex flex-col items-start">
             <label htmlFor="input1" className="text-gray-800 pb-1 text-sm">
               Email ID
             </label>
@@ -84,28 +84,30 @@ function Login() {
               onChange={handlePassword}
             />
           </div>
-          <div className="remember-me flex items-center justify-center sm:flex-col md:flex-row">
-            <input
-              className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              type="checkbox"
-              value=""
-              id="exampleCheck3"
-              defaultChecked
-            />
-            <label
-              className="inline-block pl-[0.15rem] font-poppins"
-              htmlFor="exampleCheck3"
-            >
-              Remember me
-            </label>
-            <div className="forgot-password ml-auto sm:mt-2 md:mt-0">
-              <Link to="/Forgot">
-                <span className="ml-auto text-mini-1 [text-decoration:underline] text-midnightblue">
-                  Forgot password?
-                </span>
-              </Link>
-            </div>
-          </div>
+          <div className="remember-me flex items-center justify-between sm:flex-row md:flex-row">
+  <div className="flex items-center">
+    <input
+      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+      type="checkbox"
+      value=""
+      id="exampleCheck3"
+      defaultChecked
+    />
+    <label
+      className="inline-block pl-[0.15rem] sm: pl-0 font-poppins text-xs"
+      htmlFor="exampleCheck3"
+    >
+      Remember me
+    </label>
+  </div>
+  <div className="forgot-password ml-2 sm:pl-6">
+    <Link to="/Forgot">
+      <span className="text-xs [text-decoration:underline] text-midnightblue">
+        Forgot Password?
+      </span>
+    </Link>
+  </div>
+</div>
           <div className="pt-8">
             <button
               type="button"
@@ -115,7 +117,7 @@ function Login() {
               Login now
             </button>
           </div>
-          <div className="divider flex items-center justify-center mt-4 sm:mt-0 w-full sm:w-full md:w-[432px] h-[21px] text-mini-1 text-silver relative left-1">
+          <div className="divider flex items-center justify-center mt-4 sm:mt-0 w-full sm:w-full md:w-[432px] h-[21px] text-mini-1 text-silver relative left-1 md:block hidden">
             <div className="divider-line absolute top-[11.1px] left-[-4px] box-border w-[200px] h-px border-t-[1px] border-solid border-silver" />
             <div className="divider-line absolute top-[11.1px] left-[244.4px] box-border w-[195px] h-px border-t-[1px] border-solid border-silver" />
             <div className="divider-text absolute top-[0px] left-[210px]">
