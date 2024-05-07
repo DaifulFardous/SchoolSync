@@ -18,7 +18,7 @@ const PromptsList = ({ prompts, setCurrentPrompt, addNewPrompt }) => {
       <div>
         {prompts.map((prompt) => (
           <div
-            key={prompt.id}
+            key={prompt.ID}
             className="py-2 px-5 hover:bg-gray-700 cursor-pointer"
             onClick={() => handlePromptClick(prompt)}
           >
