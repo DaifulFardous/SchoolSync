@@ -13,7 +13,7 @@ const Chatbot = () => {
   const addNewPrompt = () => {
     const newPrompt = {
       id: prompts.length + 1,
-      name: "Untitled Prompt"
+      name: "Untitled Prompt",
     };
     setPrompts([...prompts, newPrompt]);
     setCurrentPrompt(newPrompt);
@@ -41,13 +41,13 @@ const Chatbot = () => {
 
       setMessages((prevMessages) => ({
         ...prevMessages,
-        [promptId]: [...(prevMessages[promptId] || []), newMessage]
+        [promptId]: [...(prevMessages[promptId] || []), newMessage],
       }));
 
       const dummyReply = { text: "This is a dummy reply.", sender: "ChatGPT" };
       setMessages((prevMessages) => ({
         ...prevMessages,
-        [promptId]: [...(prevMessages[promptId] || []), dummyReply]
+        [promptId]: [...(prevMessages[promptId] || []), dummyReply],
       }));
     }
   };
@@ -63,7 +63,6 @@ const Chatbot = () => {
         <div className="header flex-none flex flex-col gap-5 my-5">
           <div className="text-3xl font-bold">AI Chatbot</div>
           <div className="sub-header flex gap-2">
-            <Search />
             <Profile />
           </div>
         </div>
@@ -74,7 +73,7 @@ const Chatbot = () => {
             onUpdateName={handleUpdateName}
             onDeletePrompt={handleDeletePrompt}
             onSendMessage={handleSendMessage}
-            chatHistory={messages[currentPrompt.id] || []} 
+            chatHistory={messages[currentPrompt.id] || []}
           />
         )}
       </div>

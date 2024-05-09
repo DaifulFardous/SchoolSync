@@ -10,7 +10,7 @@ const SignUp = () => {
     password: "",
     address: "",
     contact: "",
-    image: null, // Store the image file
+    image: null,
   });
 
   const handleChange = (e) => {
@@ -70,6 +70,7 @@ const SignUp = () => {
               name={field.name}
               placeholder={field?.placeholder}
               value={field.name !== "image" ? formData[field.name] : null}
+              required
               onChange={handleChange}
               className="border-0 border-black py-3 px-5 rounded-sm md:w-[300px] lg:w-[400px] bg-[#EEEEEE] placeholder-gray-500 focus:outline-none"
             />
@@ -86,7 +87,7 @@ const SignUp = () => {
         {error && <p className="text-red-500">{error}</p>}
       </div>
       <div className="bg-[#F4F4F4] w-[50%] h-full md:flex items-center justify-center hidden">
-        <img src={signup} alt="" srcset="" />
+        <img src={signup} alt="" />
       </div>
     </div>
   );
