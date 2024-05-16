@@ -1,128 +1,52 @@
-import Sidenav from './../SideNav/Sidenav';
-import Uppernav from './../Courses/Uppernav';
-import Footer from '../LandingPage/Footer/Footer';
-import Math from "../../assets/images/Math.png";
-import Chemistry from "../../assets/images/chem.png";
-import Physics from "../../assets/images/phy.png";
-import ICT from "../../assets/images/ICT.png";
-import English from "../../assets/images/Eng.png";
-import ss from "../../assets/images/ss.png";
-import fac1 from "../../assets/images/fac1.png";
-import fac2 from "../../assets/images/fac2.png";
-import fac3 from "../../assets/images/fac3.png";
-import fac4 from "../../assets/images/fac4.png";
-import fac5 from "../../assets/images/fac5.png";
-import fac6 from "../../assets/images/fac6.png";
-import { RiArrowLeftDoubleFill, RiArrowRightDoubleLine } from "react-icons/ri";
-import { motion } from 'framer-motion';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import Sidenav from "../SideNav/Sidenav";
+import CouresesHeader from "./Slices/CoursesHeader";
+import Modal from "./Slices/Modal";
 
-const courseCards = [
-  { imageUrl: Math, circularImageUrl: fac1, title: 'Maths' },
-  { imageUrl: Chemistry, circularImageUrl: fac2, title: 'Chemistry' },
-  { imageUrl: Physics, circularImageUrl: fac3, title: 'Physics' },
-  { imageUrl: ICT, circularImageUrl: fac4, title: 'ICT' },
-  { imageUrl: English, circularImageUrl: fac5, title: 'English' },
-  { imageUrl: ss, circularImageUrl: fac6, title: 'Social Science' }
-];
+const Courselist = () => {
+  const [modal, setModal] = useState(false);
+  const [courses, setCourses] = useState([]);
 
-const CourseCard = ({ card }) => (
-  <motion.div
-    key={card.title}
-    initial={{ opacity: 0, y: 50 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -50 }}
-    transition={{ duration: 0.5 }}
-    className="w-80 bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-all duration-300"
-  >
-    <div className="h-36 bg-gray-300 relative rounded-bl-30p rounded-br-30p">
-      <img
-        src={card.imageUrl}
-        alt="Card Image"
-        className="h-full w-full object-cover rounded-t-lg rounded-bl-lg rounded-br-lg"
-      />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 ml-28">
-        <img
-          src={card.circularImageUrl}
-          alt="Circular Image"
-          className="rounded-full w-13 h-13"
-        />
-      </div>
-    </div>
-    <div className="p-3">
-      <h2 className="text-xl font-bold mb-2 top-4 no-underline">{card.title}</h2>
-    </div>
-  </motion.div>
-);
-
-const CourseSlider = ({ title }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handlePrevious = () => {
-    setCurrentIndex((currentIndex - 1 + courseCards.length) % courseCards.length);
+  const closeModal = () => {
+    setModal(false);
   };
 
-  const handleNext = () => {
-    setCurrentIndex((currentIndex + 1) % courseCards.length);
+  const addCourse = (course) => {
+    setCourses([...courses, course]);
   };
-
-  const renderIndices = { 0: 0, 1: 1, 2: 2 };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="bg-white h-40vh w-50vw rounded-xl ml-6 mt-[-4] pb-10"
-    >
-      <div className='flex space-x-96 mt-6'>
-        <div className='flex space-x-36 pl-8'>
-          <span className='font-semibold text-xl'>{title}</span>
+    <div className="flex">
+      <Sidenav />
+      <div className="bg-[#E5EAEA] flex-1 p-5 flex flex-col items-center">
+        <CouresesHeader />
+        <div className="w-full mb-5">
+          <button
+            className="bg-rose-600 px-5 py-2 rounded text-lg"
+            onClick={() => setModal(true)}
+          >
+            Create course
+          </button>
         </div>
-      </div>
-      <div className="flex justify-center mt-10 relative">
-        <RiArrowLeftDoubleFill
-          className="absolute left-0 pt-16 text-gray-600 hover:text-gray-800 cursor-pointer"
-          onClick={handlePrevious}
-          size={50}
-        />
-        <div className="flex space-x-12">
-          {Object.keys(renderIndices).map((key) => (
-            <Link to="/courses-details" key={key} className=' no-underline'>
-              <CourseCard card={courseCards[(currentIndex + renderIndices[key]) % courseCards.length]} />
-            </Link>
+        {modal && <Modal closeModal={closeModal} addCourse={addCourse} />}
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {courses.map((course, index) => (
+            <div key={index} className="bg-white p-5 rounded shadow">
+              <h3 className="text-xl font-bold mb-2">{course.name}</h3>
+              <p>{course.description}</p>
+              <button onClick={()=>
+                {
+                  // show a teacher list
+                }
+              }
+              className="px-5 py-3 bg-red-500 rounded my-2"
+              >Assign teacher</button>
+            </div>
           ))}
         </div>
-        <RiArrowRightDoubleLine
-          className="absolute right-0 pt-16 text-gray-600 hover:text-gray-800 cursor-pointer"
-          onClick={handleNext}
-          size={50}
-        />
       </div>
-    </motion.div>
-  );
-};
-
-function Courselist() {
-  return (
-    <div className='bg-opacity-100 bg-gray-200 h-screen'>
-      <div className='flex'>
-        <div className='flex h-screen'>
-          <Sidenav />
-        </div>
-        <div className='flex flex-col w-full pr-2'>
-          <div className='p-6'>
-            <Uppernav />
-          </div>
-          <CourseSlider title="My Courses" />
-          <CourseSlider title="Popular Courses" />
-        </div>
-      </div>
-      <Footer className='pt-7' />
     </div>
   );
-}
+};
 
 export default Courselist;

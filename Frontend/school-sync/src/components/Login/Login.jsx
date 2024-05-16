@@ -40,10 +40,10 @@ const Login = () => {
 
   return (
     <div className="h-screen flex">
-      <div className="bg-[#F4F4F4] w-[70%] h-full md:flex items-center justify-center hidden">
+      <div className="bg-[#F4F4F4] w-[60%] h-full md:flex items-center justify-center hidden">
         <img src={loginImage} alt="" />
       </div>
-      <div className="flex flex-col items-center justify-center h-full gap-5 p-5 rounded-md md:w-[30%] w-full shadow-2xl relative">
+      <div className="flex flex-col items-center justify-center h-full gap-5 p-5 rounded-md md:w-[40%] w-full shadow-2xl relative">
         <div className="flex gap-5 items-center justify-center">
           <img src={logo} alt="" />
           <div className="w-min text-wrap text-2xl font-bold">

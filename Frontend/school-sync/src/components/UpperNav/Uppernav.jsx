@@ -1,5 +1,4 @@
 import React from 'react';
-import { HiSearch } from "react-icons/hi";
 import round from "../../assets/images/round.png";
 import bell from "../../assets/images/bell.png";
 import down from "../../assets/images/down.png";

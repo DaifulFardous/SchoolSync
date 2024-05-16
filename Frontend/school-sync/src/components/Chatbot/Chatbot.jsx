@@ -53,7 +53,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="bg-[#E5EAEA] text-black flex gap-10">
+    <div className="bg-[#E5EAEA] text-black flex gap-10 md:flex-row flex-col">
       <PromptsList
         prompts={prompts}
         setCurrentPrompt={setCurrentPrompt}
@@ -62,7 +62,7 @@ const Chatbot = () => {
       <div className="main-body flex-1 flex flex-col">
         <div className="header flex-none flex flex-col gap-5 my-5">
           <div className="text-3xl font-bold">AI Chatbot</div>
-          <div className="sub-header flex gap-2">
+          <div className="sub-header px-20">
             <Profile />
           </div>
         </div>

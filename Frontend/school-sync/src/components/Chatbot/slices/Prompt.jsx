@@ -51,7 +51,7 @@ const Prompt = ({
   };
 
   return (
-    <div className="h-full bg-white my-5 w-[95%] p-5 rounded-md text-[#084062] flex flex-col">
+    <div className="md:h-full bg-white my-5 w-[95%] p-5 rounded-md text-[#084062] flex flex-col"> 
       <div className="flex justify-between">
         <div className="prompt-header flex gap-2 items-center">
           {isEditingName ? (
@@ -73,14 +73,14 @@ const Prompt = ({
         </div>
         <div className="utils flex gap-5">
           <div className="flex gap-2 items-center text-sm">
-            <button className="w-8 h-8 rounded-full bg-[#084062] text-lg flex items-center justify-center cursor-pointer">
+            <button className="w-8 h-8 rounded-full bg-[#084062] text-white text-lg flex items-center justify-center cursor-pointer">
               <IoIosLink />
             </button>
             <div>Share link to Prompt</div>
           </div>
           <div className="flex gap-2 items-center text-sm">
             <button
-              className="w-8 h-8 rounded-full bg-[#084062] text-lg flex items-center justify-center cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[#084062] text-white text-lg flex items-center justify-center cursor-pointer"
               onClick={handleDeletePrompt}
             >
               <MdOutlineDelete />
@@ -103,9 +103,9 @@ const Prompt = ({
           </div>
         ))}
       </div>
-      <form className="w-[90%] relative" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-[90%] flex items-center gap-5" onSubmit={handleSubmit(onSubmit)}>
         <textarea
-          className={`w-full resize-none max-h-[200px] pr-16 border border-gray-800 rounded-lg text-[#084062] shadow-2xl`}
+          className={`w-full resize-none max-h-[200px] text-[18px] px-5 flex items-center border border-gray-800 rounded-lg text-[#084062] shadow-2xl`}
           type="text"
           placeholder="How can I help you?"
           {...register("message")}
@@ -115,7 +115,7 @@ const Prompt = ({
 
         <button
           type="submit"
-          className="absolute top-4 right-[-70px] w-8 h-8 rounded-full bg-[#084062] text-lg flex items-center justify-center cursor-pointer"
+          className="w-8 h-8 rounded-full bg-[#084062] text-lg flex items-center justify-center cursor-pointer"
         >
           <IoSend className="text-white" />
         </button>
