@@ -1,13 +1,15 @@
-import React, { useState, useContext } from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import logo from "../../assets/images/logo.png";
+import signup from "../../assets/images/signup.png";
 import { AuthContext } from "../../authContext/authContext";
-import signup from '../../assets/images/signup.png';
-import logo from '../../assets/images/logo.png'
 const SignUp = () => {
   const { signUp, error } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    confirm_password: "",
     address: "",
     contact: "",
     image: null,
@@ -33,10 +35,42 @@ const SignUp = () => {
     e.preventDefault();
     console.log("Sending data: ", formData);
     signUp(formData);
+
+    if (formData.password != formData.confirm_password) {
+      console.log("passwords dont match");
+      return;
+    }
+
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    data.append("address", formData.address);
+    data.append("contact", formData.contact);
+    if (formData.image) {
+      data.append("image", formData.image);
+    }
+
+    try {
+      const result = await axios.post(
+        "http://127.0.0.1:8000/api/registration",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(result.data.message);
+    } catch (error) {
+      console.error(error);
+    }
+
     setFormData({
       name: "",
       email: "",
       password: "",
+      confirm_password: "",
       address: "",
       contact: "",
       image: null,
@@ -47,6 +81,11 @@ const SignUp = () => {
     { name: "name", placeholder: "Name", type: "text" },
     { name: "email", placeholder: "Email", type: "email" },
     { name: "password", placeholder: "Password", type: "password" },
+    {
+      name: "confirm_password",
+      placeholder: "Confirm Password",
+      type: "password",
+    },
     { name: "address", placeholder: "Address", type: "text" },
     { name: "contact", placeholder: "Contact", type: "text" },
     { name: "image", type: "file" },
@@ -57,7 +96,9 @@ const SignUp = () => {
       <div className="flex flex-col items-center justify-center h-full gap-5 p-5 rounded-md md:w-[50%] shadow-2xl relative">
         <div className="flex gap-5 items-center justify-center">
           <img src={logo} alt="" />
-        <div className="w-min text-wrap text-2xl font-bold"><span className="text-red-500">S</span>chool Sync</div>
+          <div className="w-min text-wrap text-2xl font-bold">
+            <span className="text-red-500">S</span>chool Sync
+          </div>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -76,12 +117,12 @@ const SignUp = () => {
             />
           ))}
           <div className="md:col-span-2 flex justify-center">
-          <button
-            type="submit"
-            className="border w-min text-nowrap py-2 px-8 shadow-2xl rounded-md bg-[#3DA8E4] hover:bg-[#56b7f0] text-white text-xl hover:text-black"
-          >
-            Sign Up
-          </button>
+            <button
+              type="submit"
+              className="border w-min text-nowrap py-2 px-8 shadow-2xl rounded-md bg-[#3DA8E4] hover:bg-[#56b7f0] text-white text-xl hover:text-black"
+            >
+              Sign Up
+            </button>
           </div>
         </form>
         {error && <p className="text-red-500">{error}</p>}
