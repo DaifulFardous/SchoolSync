@@ -100,6 +100,7 @@ const Courselist = () => {
             closeModal={closeEnrollModal}
             enrollStudents={enrollStudents}
             courseIndex={selectedCourseIndex}
+            enrolledStudents={courses[selectedCourseIndex].students}
           />
         )}
         {studentsModal && (
