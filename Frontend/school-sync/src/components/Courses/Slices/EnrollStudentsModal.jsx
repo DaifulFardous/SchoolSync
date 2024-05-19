@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import studentsData from "../../../data/Student";
 
-const EnrollStudentsModal = ({ closeModal, enrollStudents, courseIndex }) => {
+const EnrollStudentsModal = ({
+  closeModal,
+  enrollStudents,
+  courseIndex,
+  enrolledStudents,
+}) => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   const handleStudentSelection = (student) => {
@@ -23,16 +28,20 @@ const EnrollStudentsModal = ({ closeModal, enrollStudents, courseIndex }) => {
         <h2 className="text-xl font-bold mb-4">Enroll Students</h2>
         <div className="max-h-60 overflow-y-auto mb-4">
           {studentsData.map((student) => (
-            <div key={student.id} className="flex items-center mb-2">
-              <input
-                type="checkbox"
-                value={student.id}
-                onChange={() => handleStudentSelection(student)}
-                checked={selectedStudents.some((s) => s.id === student.id)}
-                className="mr-2"
-              />
-              <span>{student.name}</span>
-            </div>
+            <React.Fragment key={student.id}>
+            {!enrolledStudents.some((enrolledStudent) => enrolledStudent.id === student.id) && (
+              <div className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  value={student.id}
+                  onChange={() => handleStudentSelection(student)}
+                  checked={selectedStudents.some((s) => s.id === student.id)}
+                  className="mr-2"
+                />
+                <span>{student.name}</span>
+              </div>
+            )}
+          </React.Fragment>
           ))}
         </div>
         <button
