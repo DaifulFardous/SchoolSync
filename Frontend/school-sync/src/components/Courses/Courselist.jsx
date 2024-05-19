@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import teachersData from "../../data/Teacher";
 import Sidenav from "../SideNav/Sidenav";
 import CouresesHeader from "./Slices/CoursesHeader";
-import Modal from "./Slices/Modal";
 import EnrollStudentsModal from "./Slices/EnrollStudentsModal";
 import EnrolledStudentsModal from "./Slices/EnrolledStudentsModal";
-import teachersData from "../../data/Teacher";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import Modal from "./Slices/Modal";
 
 const Courselist = () => {
   const [modal, setModal] = useState(false);
@@ -174,7 +174,8 @@ const Courselist = () => {
                       <strong>Course Name:</strong> {course.name}
                     </div>
                     <div>
-                      <strong>Description:</strong> {course.description}
+                      <strong>Short Description:</strong>{" "}
+                      {course.short_description}
                     </div>
                     {course.teacher && (
                       <div>
