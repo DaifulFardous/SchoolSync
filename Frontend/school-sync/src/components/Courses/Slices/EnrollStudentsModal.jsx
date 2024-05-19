@@ -29,7 +29,7 @@ const EnrollStudentsModal = ({
         <div className="max-h-60 overflow-y-auto mb-4">
           {studentsData.map((student) => (
             <React.Fragment key={student.id}>
-            {!enrolledStudents.some((enrolledStudent) => enrolledStudent.id === student.id) && (
+            {!enrolledStudents || !enrolledStudents.some((enrolledStudent) => enrolledStudent.id === student.id) ? (
               <div className="flex items-center mb-2">
                 <input
                   type="checkbox"
@@ -40,7 +40,8 @@ const EnrollStudentsModal = ({
                 />
                 <span>{student.name}</span>
               </div>
-            )}
+            ):
+            <></>}
           </React.Fragment>
           ))}
         </div>
