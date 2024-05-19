@@ -15,6 +15,10 @@ import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Chatbot from "./components/Chatbot/Chatbot";
 import { AuthProvider } from "./authContext/authContext";
+import InstructorLogin from './components/Login/Instructor Login/InstructorLogin';
+import AdminLogin from "./components/Login/Admin Login/AdminLogin";
+import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSignUp";
+import AdminSignUp from "./components/Signup/Admin Signup/AdminSignUp";
 function App() {
   return (
     <BrowserRouter>
@@ -22,7 +26,11 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/instructor-login" element={<InstructorLogin />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/instructor-signup" element={<InstructorSignUp />} />
+          <Route path="/admin-signup" element={<AdminSignUp />} />
           <Route path="/Forgot" element={<Forgot />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/sidenav" element={<Sidenav />} />
