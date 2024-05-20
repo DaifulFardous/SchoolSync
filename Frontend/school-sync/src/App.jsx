@@ -15,6 +15,7 @@ import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Chatbot from "./components/Chatbot/Chatbot";
 import { AuthProvider } from "./authContext/authContext";
+import Course from "./components/studentCourses/Course";
 function App() {
   return (
     <BrowserRouter>
@@ -34,6 +35,7 @@ function App() {
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/studentCourses" element={<Course />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

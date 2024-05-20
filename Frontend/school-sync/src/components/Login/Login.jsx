@@ -52,7 +52,7 @@ const Login = () => {
     { name: "password", placeholder: "Password", type: "password" },
   ];
 
-  return (
+  return ( 
     <div className="h-screen flex">
       <div className="bg-[#F4F4F4] w-[60%] h-full md:flex items-center justify-center hidden">
         <img src={loginImage} alt="" />
