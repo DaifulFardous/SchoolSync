@@ -3,7 +3,7 @@ import ICT from "../../../assets/images/ICT.png";
 import fac from "../../../assets/images/fac1.png";
 const CourseCard = ({ courseName, courseDetails, courseInstructor }) => {
   return (
-    <div className="h-[300px] max-w-[350px] rounded-xl bg-white relative flex flex-col gap-5">
+    <div className="h-[300px] max-w-[350px] rounded-xl bg-white relative flex flex-col gap-5 shadow-xl">
       <img src={ICT} alt="ICT" className="h-[150px]" />
       <div className="text-2xl font-bold px-5"> {courseName}</div>
       <img
