@@ -4,9 +4,9 @@ import { FaBell, FaEnvelope } from "react-icons/fa";
 import InputBox from "./InputBox";
 const Search = () => {
   return (
-    <div className="search flex gap-5 justify-between items-center sm:w-[70%]">
+    <div className="flex gap-5 justify-between items-center sm:w-[70%] w-min">
       <InputBox />
-      <div className="notifications flex gap-5 text-gray-600 text-2xl">
+      <div className="hidden sm:flex gap-5 text-gray-600 text-2xl">
         <FaBell />
         <FaEnvelope />
       </div>

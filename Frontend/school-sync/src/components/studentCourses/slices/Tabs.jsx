@@ -1,6 +1,6 @@
 const Tabs = ({ onClick }) => {
   return (
-    <div className="flex md:gap-10 gap-5 md:text-xl font-semibold pb-10">
+    <div className="flex flex-1 md:gap-10 gap-5 md:text-xl sm:text-sm text-xs font-semibold pb-10">
       <div onClick={() => onClick("All Courses")} className="cursor-pointer">
         All Courses
       </div>

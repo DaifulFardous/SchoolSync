@@ -36,11 +36,11 @@ const Course = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex gap-5 bg-[#E5EAEA]">
       <Sidenav />
-      <div className="bg-[#E5EAEA] flex-1 p-10 flex flex-col gap-5">
-        <div className="text-4xl font-bold">Courses</div>
-        <div className="flex justify-between gap-5">
+      <div className="flex-1 overflow-y-auto h-screen px-2">
+        <div className="text-4xl font-bold mb-5">Courses</div>
+        <div className="flex justify-between gap-5 mb-5">
           <Search />
           <Profile />
         </div>
@@ -69,7 +69,5 @@ const Course = () => {
     </div>
   );
 };
-
-
 
 export default Course;
