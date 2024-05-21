@@ -5,14 +5,36 @@ import Search from "../common/Search";
 import CourseCard from "./slices/CourseCard";
 import dummyData from "../../data/Course";
 import Tabs from "./slices/Tabs";
+import Pagination from "./slices/Pagination";
+
 const Course = () => {
   const [courses, setCourses] = useState([]);
-  const [tab, setTab] = useState('All courses');
-  //fetch the course data from database which will have teacher info including image of the teacher and course
+  const [tab, setTab] = useState("All courses");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [coursesPerPage] = useState(10);
+
   useEffect(() => {
     // using dummy courses
     setCourses(dummyData);
   }, [tab]);
+
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () => {
+    if (currentPage < Math.ceil(courses.length / coursesPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className="flex">
       <Sidenav />
@@ -23,9 +45,9 @@ const Course = () => {
           <Profile />
         </div>
         <div className="bg-white p-5 rounded">
-          <Tabs onClick={setTab}/>
+          <Tabs onClick={setTab} />
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 grid-cols-1 gap-5">
-            {courses.map((course, index) => (
+            {currentCourses.map((course, index) => (
               <CourseCard
                 key={index}
                 courseDetails={course.courseDetails}
@@ -34,10 +56,20 @@ const Course = () => {
               />
             ))}
           </div>
+          <Pagination
+            coursesPerPage={coursesPerPage}
+            totalCourses={courses.length}
+            paginate={paginate}
+            currentPage={currentPage}
+            nextPage={nextPage}
+            prevPage={prevPage}
+          />
         </div>
       </div>
     </div>
   );
 };
+
+
 
 export default Course;

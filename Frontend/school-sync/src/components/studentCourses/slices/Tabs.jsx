@@ -1,5 +1,3 @@
-import React from "react";
-
 const Tabs = ({ onClick }) => {
   return (
     <div className="flex md:gap-10 gap-5 md:text-xl font-semibold pb-10">
