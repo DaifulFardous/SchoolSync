@@ -1,12 +1,15 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../../../authContext/authContext";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import loginImage from "../../../assets/images/log.png";
 import logo from "../../../assets/images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../authContext/authContext";
+import { useToken } from "../../../authContext/tokenContext";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { signIn, error } = useContext(AuthContext);
+  const { setToken } = useToken();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,6 +30,24 @@ const AdminLogin = () => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
     signIn(formData.email, formData.password);
+
+    axios
+      .post("http://127.0.0.1:8000/api/admin/login", {
+        email: formData.email,
+        password: formData.password,
+      })
+      .then((result) => {
+        console.log(result.data.token);
+        setToken(result.data.token);
+
+        signIn(formData.email, formData.password);
+
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     setFormData({
       email: "",
       password: "",

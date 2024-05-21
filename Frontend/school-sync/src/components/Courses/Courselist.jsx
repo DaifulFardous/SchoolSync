@@ -113,7 +113,7 @@ const Courselist = () => {
           />
         )}
         <div className="grid grid-cols-5 gap-5 w-full bg-black bg-opacity-5 p-5 place-content-center place-items-center">
-          <div className="font-bold">Course Name</div>
+          <div className="font-bold">Course Name </div>
           <div className="font-bold">Assigned Teacher</div>
           <div className="font-bold">Enroll Students</div>
           <div className="font-bold">Total Enrolled Students</div>

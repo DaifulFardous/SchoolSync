@@ -1,20 +1,19 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../../authContext/authContext";
 
 const Modal = ({ closeModal, addCourse }) => {
-  const [FormData, setFormData] = useState({
-    name: "",
-    short_description: "",
-    long_description: "",
-    image: null,
-  });
-
   const modalRef = useRef();
   const [courseName, setCourseName] = useState("");
-  const [short_description, setShortDescription] = useState("");
-  const [long_description, setLongDescription] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
+  const [longDescription, setLongDescription] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const [error, setError] = useState(null);
+
+  const { signOut } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -30,11 +29,12 @@ const Modal = ({ closeModal, addCourse }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(token);
 
     const data = new FormData();
     data.append("name", courseName);
-    data.append("short_description", short_description);
-    data.append("long_description", long_description);
+    data.append("short_description", shortDescription);
+    data.append("long_description", longDescription);
     data.append("image", image);
 
     try {
@@ -44,23 +44,38 @@ const Modal = ({ closeModal, addCourse }) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log(result.data.message);
+      console.log(result);
+
+      addCourse({
+        name: courseName,
+        short_description: shortDescription,
+        long_description: longDescription,
+        image: URL.createObjectURL(image),
+      });
+
+      // Reset form after successful submission
+      setCourseName("");
+      setShortDescription("");
+      setLongDescription("");
+      setImage(null);
+      setImagePreview("");
+
+      closeModal();
     } catch (error) {
       console.error(error);
+
+      if (error.response && error.response.status === 401) {
+        // Handle unauthorized error
+        setError("Unauthorized. Please log in again.");
+        signOut(); // Sign out the user
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
-
-    setFormData({
-      name: "",
-      short_description: "",
-      long_description: "",
-      image: null,
-    });
-
-    addCourse({ name: courseName, description: courseDescription, image });
-    closeModal();
   };
 
   const handleImageChange = (e) => {
@@ -93,14 +108,14 @@ const Modal = ({ closeModal, addCourse }) => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="courseDescription"
+              htmlFor="shortDescription"
             >
               Short Description
             </label>
             <textarea
-              id="courseDescription"
+              id="shortDescription"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              value={short_description}
+              value={shortDescription}
               onChange={(e) => setShortDescription(e.target.value)}
               required
             ></textarea>
@@ -108,14 +123,14 @@ const Modal = ({ closeModal, addCourse }) => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="courseDescription"
+              htmlFor="longDescription"
             >
               Long Description
             </label>
             <textarea
-              id="courseDescription"
+              id="longDescription"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              value={long_description}
+              value={longDescription}
               onChange={(e) => setLongDescription(e.target.value)}
               required
             ></textarea>

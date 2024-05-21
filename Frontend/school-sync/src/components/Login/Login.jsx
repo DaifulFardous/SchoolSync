@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../../assets/images/log.png";
@@ -27,19 +26,19 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
-    signIn(formData.email, formData.password);
+    signIn("student", formData.email, formData.password);
 
-    axios
-      .post("http://127.0.0.1:8000/api/login", {
-        email: formData.email,
-        password: formData.password,
-      })
-      .then((result) => {
-        console.log(result.data.token);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .post("http://127.0.0.1:8000/api/login", {
+    //     email: formData.email,
+    //     password: formData.password,
+    //   })
+    //   .then((result) => {
+    //     console.log(result.data.token);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
     setFormData({
       email: "",
