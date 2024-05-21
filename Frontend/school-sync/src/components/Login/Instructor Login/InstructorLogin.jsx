@@ -27,7 +27,7 @@ const InstructorLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
-    signIn(formData.email, formData.password);
+    signIn("instructor", formData);
 
     axios
       .post("http://127.0.0.1:8000/api/instructor/login", {
@@ -36,6 +36,7 @@ const InstructorLogin = () => {
       })
       .then((result) => {
         console.log(result.data.token);
+        localStorage.setItem("token", result.data.token);
       })
       .catch((error) => {
         console.log(error);

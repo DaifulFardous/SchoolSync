@@ -68,45 +68,46 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signIn = async (stakeholderType, email, password) => {
-    let endpoint = "";
-    switch (stakeholderType) {
-      case "student":
-        endpoint = "http://127.0.0.1:8000/api/login";
-        break;
-      case "instructor":
-        endpoint = "http://127.0.0.1:8000/api/instructor/login";
-        break;
-      case "admin":
-        endpoint = "http://127.0.0.1:8000/api/admin/login";
-        break;
-      default:
-        setError("Invalid stakeholder type.");
-        return;
-    }
+  const signIn = async (stakeholderType, formData) => {
+    // const data = new FormData();
+    // Object.keys(formData).forEach((key) => {
+    //   if (formData[key]) {
+    //     data.append(key, formData[key]);
+    //   }
+    // });
 
-    try {
-      const response = await axios.post(
-        endpoint,
-        { email: email, password: password },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+    // let endpoint = "";
+    // switch (stakeholderType) {
+    //   case "student":
+    //     endpoint = "http://127.0.0.1:8000/api/login";
+    //     break;
+    //   case "instructor":
+    //     endpoint = "http://127.0.0.1:8000/api/instructor/login";
+    //     break;
+    //   case "admin":
+    //     console.log("admin");
+    //     endpoint = "http://127.0.0.1:8000/api/admin/login";
 
-      const { token } = response.data;
-      setToken(token);
-      localStorage.setItem("token", token);
+    //     break;
+    //   default:
+    //     setError("Invalid stakeholder type.");
+    //     return;
+    // }
 
-      setUser({ email });
-      setError(null);
-      navigate("/home");
-    } catch (error) {
-      setError("Error signing in. Please try again.");
-      console.error("Error signing in:", error);
-    }
+    // try {
+    //   const response = await axios.post(endpoint, data, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
+
+    //   const { token } = response.data;
+    //   setToken(token);
+    //   localStorage.setItem("token", token);
+    const { email } = formData;
+    setUser({ email });
+    setError(null);
+    navigate("/home");
   };
 
   const signOut = () => {

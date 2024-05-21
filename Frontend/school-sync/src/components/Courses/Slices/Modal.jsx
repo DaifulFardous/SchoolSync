@@ -29,7 +29,7 @@ const Modal = ({ closeModal, addCourse }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(token);
+    // console.log(localStorage.getItem("token"));
 
     const data = new FormData();
     data.append("name", courseName);
@@ -49,6 +49,10 @@ const Modal = ({ closeModal, addCourse }) => {
         }
       );
       console.log(result);
+      console.log("Headers:", {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      });
 
       addCourse({
         name: courseName,

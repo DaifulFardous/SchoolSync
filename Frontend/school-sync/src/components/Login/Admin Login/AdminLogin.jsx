@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom";
 import loginImage from "../../../assets/images/log.png";
 import logo from "../../../assets/images/logo.png";
 import { AuthContext } from "../../../authContext/authContext";
-import { useToken } from "../../../authContext/tokenContext";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { signIn, error } = useContext(AuthContext);
-  const { setToken } = useToken();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,7 +28,7 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
-    signIn(formData.email, formData.password);
+    signIn("admin", formData);
 
     axios
       .post("http://127.0.0.1:8000/api/admin/login", {
@@ -38,9 +37,7 @@ const AdminLogin = () => {
       })
       .then((result) => {
         console.log(result.data.token);
-        setToken(result.data.token);
-
-        signIn(formData.email, formData.password);
+        localStorage.setItem("token", result.data.token);
 
         navigate("/home");
       })
