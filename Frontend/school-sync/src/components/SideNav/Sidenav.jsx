@@ -1,9 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import logo from "../../assets/images/Group.png";
-import { HiOutlineViewGrid, HiTrendingUp, HiOutlinePencilAlt, HiOutlineNewspaper, HiQuestionMarkCircle, HiOutlineCog, HiLogout } from 'react-icons/hi';
-import { HiCalendarDays, HiDocumentText, HiMiniUsers, HiComputerDesktop } from "react-icons/hi2";
+import {
+  HiOutlineViewGrid,
+  HiTrendingUp,
+  HiOutlinePencilAlt,
+  HiOutlineNewspaper,
+  HiQuestionMarkCircle,
+  HiOutlineCog,
+  HiLogout,
+} from "react-icons/hi";
+import {
+  HiCalendarDays,
+  HiDocumentText,
+  HiMiniUsers,
+  HiComputerDesktop,
+} from "react-icons/hi2";
 import { LuShieldQuestion } from "react-icons/lu";
 import { HiMenu } from "react-icons/hi";
+import Logo from "../common/Logo";
+
+const navItems = [
+  { href: "/home", icon: <HiOutlineViewGrid />, label: "Dashboard" },
+  { href: "/home", icon: <HiTrendingUp />, label: "Progress Tracking" },
+  { href: "/home", icon: <HiOutlinePencilAlt />, label: "Exams" },
+  { href: "/home", icon: <HiCalendarDays />, label: "Academic Calender" },
+  { href: "/home", icon: <HiOutlineNewspaper />, label: "Courses" },
+  { href: "/home", icon: <HiQuestionMarkCircle />, label: "Suggestions" },
+  { href: "/home", icon: <HiDocumentText />, label: "Assignments" },
+  { href: "/home", icon: <HiMiniUsers />, label: "Attendance" },
+  { href: "/home", icon: <HiComputerDesktop />, label: "AI Chatbot" },
+  { href: "/home", icon: <LuShieldQuestion />, label: "Help" },
+  { href: "/home", icon: <HiOutlineCog />, label: "Settings" },
+  { href: "/home", icon: <HiLogout />, label: "Logout" },
+];
 
 export default function Sidenav() {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -13,73 +42,42 @@ export default function Sidenav() {
   };
 
   return (
-    <aside className={`h-screen overflow-hidden border-r shadow-sm ${isExpanded ? 'w-[80vw] sm:w-[19vw]' : 'w-[20vw] sm:w-[5vw]'}`}>
-  <nav className='h-full flex flex-col bg-white'>
-    <div className='p-3 pb-2 flex justify-between sm:gap-y-2 pr-3'>
-      <div className='flex items-center'>
-        <img src={logo} className={`w-[20vw] sm:w-[6vw] ${isExpanded ? 'block' : 'hidden'}`} alt="" />
-        <span className={`text-red no-underline text-[5vw] sm:text-[1.5rem] pl-[3vw] sm:pl-[1vw] font-bold ${isExpanded ? 'block' : 'hidden'}`}>
-          S<span className="text-[#263238]">chool <br />Sync</span>
-        </span>
-      </div>
-      <button onClick={toggleSidebar} className="focus:outline-none bg-white cursor-pointer">
-        <HiMenu className="w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] pt-3" />
-      </button>
-    </div>
-    <div className={`flex gap-x-4 flex-col flex-grow p-4 ${isExpanded ? 'w-[70vw] sm:w-[17vw]' : 'w-[10vw] sm:w-[3vw]'} border-r shadow-sm`}>
-      <div className="mb-[10vh] sm:mb-[4vh] pt-5">
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiOutlineViewGrid className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Dashboard</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiTrendingUp className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Progress Tracking</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiOutlinePencilAlt className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Exams</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiCalendarDays className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Academic Calender</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiOutlineNewspaper className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Courses</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiQuestionMarkCircle className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Suggestions</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiDocumentText className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Assignments</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiMiniUsers className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Attendance</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiComputerDesktop className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>AI Chatbot</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <LuShieldQuestion className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Help</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiOutlineCog className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Settings</span>
-        </a>
-        <a href="/home" className={`flex items-center pb-6 py-[2vh] sm:py-[1.2vh] px-[2vw] sm:px-[0.5vw] rounded-lg text-blue-800 bg-gradient-to-b hover:from-blue-500 hover:to-white-300 no-underline font-medium ${isExpanded ? 'justify-start' : 'justify-center'} relative`}>
-          <HiLogout className={`mr-[2vw] sm:mr-[0.5vw] w-[5vw] sm:w-[1.5vw] h-[5vw] sm:h-[1.5vw] ${isExpanded ? 'block' : 'mx-auto'}`} />
-          <span className={`${isExpanded ? 'block' : 'hidden'} absolute left-[10vw] sm:left-[3vw] px-2 py-1`}>Logout</span>
-        </a>
-        
-      </div>
-    </div>
-  </nav>
-</aside>
+    <aside
+      className={`bg-white  py-5 px-5 sm:px-10 flex justify-center h-screen shadow-xl ${
+        isExpanded ? " w-1 sm:w-[20%]" : "w-1"
+      }`}
+    >
+      <nav className="flex flex-col flex-1">
+        <div
+          className={`flex justify-center ${
+            isExpanded ? "sm:justify-between" : "sm:justify-center"
+          }`}
+        >
+          <div className={`${isExpanded ? "hidden sm:block" : "hidden"}`}>
+            <Logo />
+          </div>
+          <button
+            onClick={toggleSidebar}
+            className={`text-xl ${isExpanded ? "" : ""}`}
+          >
+            <HiMenu />
+          </button>
+        </div>
+        <div className={`flex flex-col h-[70%] justify-around`}>
+          {navItems.map((item, index) => (
+            <a
+              href={item.href}
+              key={index}
+              className="flex gap-5 text-2xl py-2 sm:px-5 items-center sm:justify-start hover:bg-gray-200 text-[#6956E5]"
+            >
+              {item.icon}
+              <span className={`${isExpanded ? "hidden sm:block" : "hidden"}`}>
+                {item.label}
+              </span>
+            </a>
+          ))}
+        </div>
+      </nav>
+    </aside>
   );
 }

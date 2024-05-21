@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import PromptsList from "./slices/PromptsList";
 import Prompt from "./slices/Prompt";
-import Search from "./slices/Search";
 import Profile from "./slices/Profile";
 
 const Chatbot = () => {
