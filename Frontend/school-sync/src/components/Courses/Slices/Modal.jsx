@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
 import axios from "axios";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../authContext/authContext";
 
 const AddCoursePage = () => {
   const { signOut } = useContext(AuthContext);
-  const [courseName, setCourseName] = useState("");
+  const [name, setName] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [longDescription, setLongDescription] = useState("");
@@ -13,7 +13,6 @@ const AddCoursePage = () => {
   const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
-  console.log(token)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,7 +22,7 @@ const AddCoursePage = () => {
       return;
     }
     const formData = new FormData();
-    formData.append("name", courseName);
+    formData.append("name", name);
     formData.append("category_id", categoryID);
     formData.append("short_description", shortDescription);
     formData.append("long_description", longDescription);
@@ -38,7 +37,7 @@ const AddCoursePage = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer 8|F2Et67cgxU8uom4K71n1OwpK41lEuGYK0OMMmvOKe01be5b4`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -47,7 +46,7 @@ const AddCoursePage = () => {
         // Course created successfully
         console.log("Course created:", response.data);
         // Reset form
-        setCourseName("");
+        setName("");
         setCategoryID("");
         setShortDescription("");
         setLongDescription("");
@@ -79,38 +78,42 @@ const AddCoursePage = () => {
       <h1>Add New Course</h1>
       {error && <div className="text-red-500">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <label>Course Name:</label>
+        <label htmlFor="name">Course Name:</label>
         <input
           type="text"
-          value={courseName}
-          onChange={(e) => setCourseName(e.target.value)}
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
-        <label>Category ID:</label>
+        <label htmlFor="categoryID">Category ID:</label>
         <input
           type="text"
+          id="categoryID"
           value={categoryID}
           onChange={(e) => setCategoryID(e.target.value)}
           required
         />
-        <label>Short Description:</label>
+        <label htmlFor="shortDescription">Short Description:</label>
         <textarea
+          id="shortDescription"
           value={shortDescription}
           onChange={(e) => setShortDescription(e.target.value)}
           required
         ></textarea>
-        <label>Long Description:</label>
+        <label htmlFor="longDescription">Long Description:</label>
         <textarea
+          id="longDescription"
           value={longDescription}
           onChange={(e) => setLongDescription(e.target.value)}
           required
         ></textarea>
-        <label>Course Image:</label>
+        <label htmlFor="image">Course Image:</label>
         <input
           type="file"
+          id="image"
           accept="image/*"
           onChange={handleImageChange}
-          required
         />
         {imagePreview && <img src={imagePreview} alt="Course Preview" />}
         <button type="submit">Submit</button>
