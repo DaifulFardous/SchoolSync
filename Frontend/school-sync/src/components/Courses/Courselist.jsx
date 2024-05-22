@@ -119,7 +119,7 @@ const Courselist = () => {
           <div className="font-bold">Total Enrolled Students</div>
           <div className="font-bold"></div>
           <>
-            {courses.map((course, index) => (
+            {courses.map((course, index = index + 1) => (
               <React.Fragment key={index}>
                 <div className="col-span-5 border-t w-full"></div>
                 <div>{course.name}</div>

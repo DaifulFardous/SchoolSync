@@ -5,11 +5,12 @@ import { AuthContext } from "../../../authContext/authContext";
 const Modal = ({ closeModal, addCourse }) => {
   const modalRef = useRef();
   const [courseName, setCourseName] = useState("");
+  const [categoryID, setCategoryID] = useState("");
+
   const [shortDescription, setShortDescription] = useState("");
   const [longDescription, setLongDescription] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const [error, setError] = useState(null);
 
   const { signOut } = useContext(AuthContext);
   const token = localStorage.getItem("token");
@@ -31,8 +32,24 @@ const Modal = ({ closeModal, addCourse }) => {
     event.preventDefault();
     // console.log(localStorage.getItem("token"));
 
+    try {
+      const userData = await axios.get(
+        "http://127.0.0.1:8000/api/admin/details",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(userData.data);
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+    }
+
     const data = new FormData();
     data.append("name", courseName);
+    data.append("category_id", categoryID);
+    data.append("instructor_id", 1233);
     data.append("short_description", shortDescription);
     data.append("long_description", longDescription);
     data.append("image", image);
@@ -109,6 +126,23 @@ const Modal = ({ closeModal, addCourse }) => {
               required
             />
           </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold m-1"
+              htmlFor="courseName"
+            >
+              Categoy ID
+            </label>
+            <input
+              type="text"
+              id="categoryID"
+              className="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+              value={categoryID}
+              onChange={(e) => setCategoryID(e.target.value)}
+              required
+            />
+          </div>
+
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
