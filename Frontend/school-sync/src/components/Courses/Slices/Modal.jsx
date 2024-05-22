@@ -6,7 +6,7 @@ const Modal = ({ closeModal, addCourse }) => {
   const modalRef = useRef();
   const [courseName, setCourseName] = useState("");
   const [categoryID, setCategoryID] = useState("");
-
+  const [error, setError] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [longDescription, setLongDescription] = useState("");
   const [image, setImage] = useState(null);
@@ -30,21 +30,6 @@ const Modal = ({ closeModal, addCourse }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log(localStorage.getItem("token"));
-
-    try {
-      const userData = await axios.get(
-        "http://127.0.0.1:8000/api/admin/details",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(userData.data);
-    } catch (error) {
-      console.log("Error fetching user data:", error);
-    }
 
     const data = new FormData();
     data.append("name", courseName);
@@ -52,10 +37,32 @@ const Modal = ({ closeModal, addCourse }) => {
     data.append("instructor_id", 1233);
     data.append("short_description", shortDescription);
     data.append("long_description", longDescription);
-    data.append("image", image);
+    if (image) {
+      data.append("image", image);
+    }
+
+    // const headers = {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-type": "multipart/form-data",
+    //   },
+    //   withCredentials: true,
+    // };
+    // try {
+    //   const result = await axios.post(
+    //     "http://127.0.0.1:8000/api/create/course",
+    //     data,
+
+    //     headers
+    //   );
+    //   console.log(result);
+    //   console.log("Headers:", {
+    //     "Content-Type": "multipart/form-data",
+    //     Authorization: `Bearer ${token}`,
+    //   });
 
     try {
-      const result = await axios.post(
+      const respose = await axios.post(
         "http://127.0.0.1:8000/api/create/course",
         data,
         {
@@ -65,38 +72,34 @@ const Modal = ({ closeModal, addCourse }) => {
           },
         }
       );
-      console.log(result);
-      console.log("Headers:", {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      });
 
-      addCourse({
-        name: courseName,
-        short_description: shortDescription,
-        long_description: longDescription,
-        image: URL.createObjectURL(image),
-      });
+      if (respose.status === 200) {
+        console.log("Course created:", respose.data);
+        addCourse({
+          name: courseName,
+          short_description: shortDescription,
+          long_description: longDescription,
+          image: URL.createObjectURL(image),
+        });
 
-      // Reset form after successful submission
-      setCourseName("");
-      setShortDescription("");
-      setLongDescription("");
-      setImage(null);
-      setImagePreview("");
-
-      closeModal();
+        // Reset form after successful submission
+        setCourseName("");
+        setShortDescription("");
+        setLongDescription("");
+        setImage(null);
+        setImagePreview("");
+      }
     } catch (error) {
-      console.error(error);
-
+      console.error("Error creating course:", error);
       if (error.response && error.response.status === 401) {
-        // Handle unauthorized error
         setError("Unauthorized. Please log in again.");
-        signOut(); // Sign out the user
+        signOut();
       } else {
         setError("An error occurred. Please try again.");
       }
     }
+
+    closeModal();
   };
 
   const handleImageChange = (e) => {

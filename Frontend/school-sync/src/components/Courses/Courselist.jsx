@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import teachersData from "../../data/Teacher";
+import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
 import CouresesHeader from "./Slices/CoursesHeader";
 import EnrollStudentsModal from "./Slices/EnrollStudentsModal";
@@ -15,10 +16,70 @@ const Courselist = () => {
   const [teachers, setTeachers] = useState([]);
   const [expandedRowIndex, setExpandedRowIndex] = useState(null);
   const [studentsModal, setStudentsModal] = useState(false);
+  const [error, setError] = useState("");
+  const { signOut } = useContext(AuthContext);
+
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   useEffect(() => {
-    setTeachers(teachersData);
+    fetchCourses();
   }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/courses", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log("fetched Courses:", response.data);
+
+        setCourses(response.data);
+      }
+    } catch (error) {
+      console.log("Failed to fetch courses", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
+  useEffect(() => {
+    // setTeachers(teachersData);
+    fetchInstructors();
+  }, []);
+
+  const fetchInstructors = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/all/instructor",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Fetched Instructors:", response.data);
+        setTeachers(response.data);
+      }
+    } catch (error) {
+      console.log("Failed to fetch Instructors", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
 
   const closeModal = () => {
     setModal(false);

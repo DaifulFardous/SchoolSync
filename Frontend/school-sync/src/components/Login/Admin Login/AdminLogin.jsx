@@ -30,20 +30,22 @@ const AdminLogin = () => {
     console.log("Sending login data: ", formData);
     signIn("admin", formData);
 
-    axios
-      .post("http://127.0.0.1:8000/api/admin/login", {
+    try {
+      const result = await axios.post("http://127.0.0.1:8000/api/admin/login", {
         email: formData.email,
         password: formData.password,
-      })
-      .then((result) => {
-        console.log(result.data.token);
-        localStorage.setItem("token", result.data.token);
-
-        navigate("/home");
-      })
-      .catch((error) => {
-        console.log(error);
       });
+
+      if (result.data.token) {
+        localStorage.setItem("token", result.data.token);
+        signIn("admin", formData);
+        navigate("/home");
+      } else {
+        console.error("Login failed: No token received");
+      }
+    } catch (error) {
+      console.error("Error during login: ", error);
+    }
 
     setFormData({
       email: "",
