@@ -11,7 +11,6 @@ const AddCoursePage = () => {
   const [longDescription, setLongDescription] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
 
