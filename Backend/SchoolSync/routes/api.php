@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
     Route::get('enroll/course/{id}',[EnrollmentController::class,'enroll']);
     Route::get('/enrolled-courses', [EnrollmentController::class, 'getEnrolledCourses']);
     Route::get('/course/{$id}/contents', [ContentController::class, 'showCourseContents']);
-    
+
 });
 
 //instructor_routes
@@ -45,7 +45,7 @@ Route::post('instructor/registration',[InstructorController::class,'registration
 Route::post('instructor/login',[InstructorController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function() {
     Route::get('instructor/details',[InstructorController::class,'getDetails']);
-    
+
     Route::get('/courses', [CourseController::class, 'getActiveCourses']);
     Route::get('/course/{id}', [CourseController::class, 'details']);
     Route::post('/content/create', [ContentController::class, 'create']);
@@ -56,6 +56,7 @@ Route::post('admin/registration',[AdminController::class,'registration']);
 Route::post('admin/login',[AdminController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:admin']], function() {
     Route::get('admin/details',[AdminController::class,'getDetails']);
+    Route::get('all/instructor',[AdminController::class,'getAllInstructor']);
     Route::post('create/course',[CourseController::class,'create']);
     Route::post('create/category',[CategoryController::class,'create']);
     Route::get('/courses', [CourseController::class, 'getAllCourses']);
