@@ -66,7 +66,7 @@ const Modal = ({ closeModal, addCourse }) => {
     //   });
 
     try {
-      const respose = await axios.post(
+      const response = await axios.post(
         "http://127.0.0.1:8000/api/create/course",
         data,
         {
@@ -77,8 +77,8 @@ const Modal = ({ closeModal, addCourse }) => {
         }
       );
 
-      if (respose.status === 200) {
-        console.log("Course created:", respose.data);
+      if (response.status === 200) {
+        console.log("Course created:", response.data);
         addCourse({
           name: courseName,
           short_description: shortDescription,
