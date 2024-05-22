@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('category_id');
             $table->bigInteger('instructor_id');
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->text('short_description');
             $table->text('long_description');
             $table->boolean('status')->default(0);

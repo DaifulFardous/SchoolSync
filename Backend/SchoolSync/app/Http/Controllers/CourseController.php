@@ -11,7 +11,7 @@ class CourseController extends Controller
     public function create(Request $request){
         // Validate incoming request
         $request->validate([
-            // 'category_id' => 'required',
+            'category_id' => 'required',
             'name' => 'required',
             'short_description' => 'required',
             'long_description' => 'required',
@@ -28,8 +28,8 @@ class CourseController extends Controller
 
         // Create a new instance of the Course model
         $course = new Course();
-        // $course->category_id = $request->category_id;
-        // $course->instructor_id = Auth::user()->id;
+        $course->category_id = $request->category_id;
+        $course->instructor_id = $request->instructor_id;
         $course->name = $request->name;
         $course->short_description = $request->short_description;
         $course->long_description = $request->long_description;
