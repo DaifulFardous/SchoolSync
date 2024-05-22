@@ -25,10 +25,10 @@ const AdminLogin = () => {
   const handleSignUpNow = () => {
     navigate("/signup");
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
-    signIn("admin", formData);
 
     try {
       const result = await axios.post("http://127.0.0.1:8000/api/admin/login", {
@@ -101,7 +101,7 @@ const AdminLogin = () => {
         </form>
         {error && <p className="text-red-500">{error}</p>}
 
-        <div className=" md:w-[70%] w-[90%] flex gap-2 items-center">
+        <div className="md:w-[70%] w-[90%] flex gap-2 items-center">
           <div className="flex-1 h-[1px] bg-gray-400"></div>
           <div>OR</div>
           <div className="flex-1 h-[1px] bg-gray-400"></div>
@@ -116,7 +116,7 @@ const AdminLogin = () => {
           rounded-md 
           bg-transparent hover:bg-[#56b7f0]
           border border-black 
-           text-black hover:text-white"
+          text-black hover:text-white"
           onClick={handleSignUpNow}
         >
           Signup Now
