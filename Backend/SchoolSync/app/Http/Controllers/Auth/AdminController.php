@@ -7,6 +7,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\LoginRequest;
+use App\Models\Instructor;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -42,5 +43,9 @@ class AdminController extends Controller
         return response()->json([
             'data'=>$user
         ]);
+    }
+    public function getAllInstructor(){
+        $instructors = Instructor::all();
+        return response()->json($instructors);
     }
 }
