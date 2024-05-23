@@ -10,7 +10,6 @@ const Modal = ({ closeModal, addCourse }) => {
   const [shortDescription, setShortDescription] = useState("");
   const [longDescription, setLongDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
   const [error, setError] = useState(null);
 
   const { signOut } = useContext(AuthContext);
@@ -91,7 +90,6 @@ const Modal = ({ closeModal, addCourse }) => {
         setShortDescription("");
         setLongDescription("");
         setImage(null);
-        setImagePreview("");
       }
     } catch (error) {
       console.error("Error creating course:", error);
@@ -110,7 +108,6 @@ const Modal = ({ closeModal, addCourse }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
-    setImagePreview(file ? URL.createObjectURL(file) : "");
   };
 
   return (
@@ -195,15 +192,6 @@ const Modal = ({ closeModal, addCourse }) => {
               accept="image/*"
               onChange={handleImageChange}
             />
-            {imagePreview && (
-              <div className="mt-4 w-full">
-                <img
-                  src={imagePreview}
-                  alt="Course"
-                  className="max-w-full h-auto rounded"
-                />
-              </div>
-            )}
           </div>
           <div className="flex items-center justify-between">
             <button
