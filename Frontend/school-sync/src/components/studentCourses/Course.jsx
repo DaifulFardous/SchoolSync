@@ -50,6 +50,7 @@ const Course = () => {
             {currentCourses.map((course, index) => (
               <CourseCard
                 key={index}
+                courseId={course.id}
                 courseDetails={course.courseDetails}
                 courseName={course.courseName}
                 courseInstructor={course.teacher}
