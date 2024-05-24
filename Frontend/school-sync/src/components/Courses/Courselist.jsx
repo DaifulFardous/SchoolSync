@@ -4,13 +4,11 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
 import CouresesHeader from "./Slices/CoursesHeader";
-import EnrollStudentsModal from "./Slices/EnrollStudentsModal";
 import EnrolledStudentsModal from "./Slices/EnrolledStudentsModal";
 import Modal from "./Slices/Modal";
 
 const Courselist = () => {
   const [modal, setModal] = useState(false);
-  const [enrollModal, setEnrollModal] = useState(false);
   const [selectedCourseIndex, setSelectedCourseIndex] = useState(null);
   const [courses, setCourses] = useState([]);
   const [teachers, setTeachers] = useState([]);
@@ -85,11 +83,6 @@ const Courselist = () => {
     setModal(false);
   };
 
-  const closeEnrollModal = () => {
-    setEnrollModal(false);
-    setSelectedCourseIndex(null);
-  };
-
   const closeStudentsModal = () => {
     setStudentsModal(false);
   };
@@ -107,22 +100,6 @@ const Courselist = () => {
     });
     setCourses(updatedCourses);
   };
-
-  const enrollStudents = (courseIndex, students) => {
-    const updatedCourses = courses.map((course, index) => {
-      if (index === courseIndex) {
-        return {
-          ...course,
-          students: course.students
-            ? [...course.students, ...students]
-            : students,
-        };
-      }
-      return course;
-    });
-    setCourses(updatedCourses);
-  };
-
   const unenrollStudent = (courseIndex, studentId) => {
     const updatedCourses = courses.map((course, index) => {
       if (index === courseIndex) {
@@ -156,14 +133,6 @@ const Courselist = () => {
           </button>
         </div>
         {modal && <Modal closeModal={closeModal} addCourse={addCourse} />}
-        {enrollModal && (
-          <EnrollStudentsModal
-            closeModal={closeEnrollModal}
-            enrollStudents={enrollStudents}
-            courseIndex={selectedCourseIndex}
-            enrolledStudents={courses[selectedCourseIndex].students}
-          />
-        )}
         {studentsModal && (
           <EnrolledStudentsModal
             closeModal={closeStudentsModal}
@@ -207,17 +176,6 @@ const Courselist = () => {
                       ))}
                     </select>
                   )}
-                </div>
-                <div>
-                  <button
-                    onClick={() => {
-                      setSelectedCourseIndex(index);
-                      setEnrollModal(true);
-                    }}
-                    className="bg-[#6956E5] px-4 py-2 rounded text-white"
-                  >
-                    Enroll Students
-                  </button>
                 </div>
                 <div>{course.students ? course.students.length : 0}</div>
                 <div

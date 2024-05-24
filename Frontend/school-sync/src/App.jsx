@@ -20,10 +20,6 @@ import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSi
 import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
-import InstructorLogin from './components/Login/Instructor Login/InstructorLogin';
-import AdminLogin from "./components/Login/Admin Login/AdminLogin";
-import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSignUp";
-import AdminSignUp from "./components/Signup/Admin Signup/AdminSignUp";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
 function App() {
   return (
@@ -49,7 +45,10 @@ function App() {
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/studentCourses" element={<Course />} />
-          <Route path="/course-details/:courseId" element={<StudentCourseDetails />} />
+          <Route
+            path="/course-details/:courseId"
+            element={<StudentCourseDetails />}
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
