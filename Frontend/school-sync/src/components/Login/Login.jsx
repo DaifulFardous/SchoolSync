@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../../assets/images/log.png";
-import logo from "../../assets/images/logo.png";
 import { AuthContext } from "../../authContext/authContext";
 import Logo from "../common/Logo";
 
@@ -28,7 +27,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
-    signIn(formData.email, formData.password);
+    signIn("student", formData);
 
     axios
       .post("http://127.0.0.1:8000/api/login", {
@@ -37,6 +36,7 @@ const Login = () => {
       })
       .then((result) => {
         console.log(result.data.token);
+        localStorage.setItem("token", result.data.token);
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +53,7 @@ const Login = () => {
     { name: "password", placeholder: "Password", type: "password" },
   ];
 
-  return ( 
+  return (
     <div className="h-screen flex">
       <div className="bg-[#F4F4F4] w-[60%] h-full md:flex items-center justify-center hidden">
         <img src={loginImage} alt="" />

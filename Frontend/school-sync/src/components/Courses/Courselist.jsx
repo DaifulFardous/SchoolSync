@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
 import CouresesHeader from "./Slices/CoursesHeader";
-import Modal from "./Slices/Modal";
 import EnrollStudentsModal from "./Slices/EnrollStudentsModal";
 import EnrolledStudentsModal from "./Slices/EnrolledStudentsModal";
-import teachersData from "../../data/Teacher";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import Modal from "./Slices/Modal";
 
 const Courselist = () => {
   const [modal, setModal] = useState(false);
@@ -15,10 +16,70 @@ const Courselist = () => {
   const [teachers, setTeachers] = useState([]);
   const [expandedRowIndex, setExpandedRowIndex] = useState(null);
   const [studentsModal, setStudentsModal] = useState(false);
+  const [error, setError] = useState("");
+  const { signOut } = useContext(AuthContext);
+
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   useEffect(() => {
-    setTeachers(teachersData);
+    fetchCourses();
   }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/courses", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log("fetched Courses:", response.data);
+
+        setCourses(response.data);
+      }
+    } catch (error) {
+      console.log("Failed to fetch courses", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
+  useEffect(() => {
+    // setTeachers(teachersData);
+    fetchInstructors();
+  }, []);
+
+  const fetchInstructors = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/all/instructor",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Fetched Instructors:", response.data);
+        setTeachers(response.data);
+      }
+    } catch (error) {
+      console.log("Failed to fetch Instructors", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
 
   const closeModal = () => {
     setModal(false);
@@ -113,13 +174,13 @@ const Courselist = () => {
           />
         )}
         <div className="grid grid-cols-5 gap-5 w-full bg-black bg-opacity-5 p-5 place-content-center place-items-center">
-          <div className="font-bold">Course Name</div>
+          <div className="font-bold">Course Name </div>
           <div className="font-bold">Assigned Teacher</div>
           <div className="font-bold">Enroll Students</div>
           <div className="font-bold">Total Enrolled Students</div>
           <div className="font-bold"></div>
           <>
-            {courses.map((course, index) => (
+            {courses.map((course, index = index + 1) => (
               <React.Fragment key={index}>
                 <div className="col-span-5 border-t w-full"></div>
                 <div>{course.name}</div>
@@ -175,7 +236,8 @@ const Courselist = () => {
                       <strong>Course Name:</strong> {course.name}
                     </div>
                     <div>
-                      <strong>Description:</strong> {course.description}
+                      <strong>Short Description:</strong>{" "}
+                      {course.short_description}
                     </div>
                     {course.teacher && (
                       <div>

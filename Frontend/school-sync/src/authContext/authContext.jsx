@@ -1,20 +1,65 @@
-import React, { createContext, useState } from "react";
+import axios from "axios";
+import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-   
 
-  const signUp = async ({ name, email, password, address, contact, image }) => {
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
+  }, [token]);
+
+  const signUp = async (stakeholderType, formData) => {
+    const data = new FormData();
+    Object.keys(formData).forEach((key) => {
+      if (formData[key]) {
+        data.append(key, formData[key]);
+      }
+    });
+
+    let endpoint = "";
+    switch (stakeholderType) {
+      case "student":
+        endpoint = "http://127.0.0.1:8000/api/registration";
+        break;
+      case "instructor":
+        endpoint = "http://127.0.0.1:8000/api/instructor/registration";
+        break;
+      case "admin":
+        endpoint = "http://127.0.0.1:8000/api/admin/registration";
+        break;
+      default:
+        setError("Invalid stakeholder type.");
+        return;
+    }
+
+    if (formData.password !== formData.confirm_password) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     try {
-      console.log("Signing up:", { name, email, password, address, contact, image });
-      const imageUrl = await uploadImage(image);
+      const response = await axios.post(endpoint, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      setUser({ name, email, address, contact, imageUrl });
+      const { token } = response.data;
+      setToken(token);
+      localStorage.setItem("token", token);
+      const { name, email, password, address, contact, image } = formData;
+
+      setUser({ name, email, password, address, contact, image, token });
       setError(null);
       navigate("/home");
     } catch (error) {
@@ -23,13 +68,43 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const uploadImage = async (imageFile) => {
+  const signIn = async (stakeholderType, formData) => {
+    // const data = new FormData();
+    // Object.keys(formData).forEach((key) => {
+    //   if (formData[key]) {
+    //     data.append(key, formData[key]);
+    //   }
+    // });
 
-    return "https://example.com/image.jpg";
-  };
+    // let endpoint = "";
+    // switch (stakeholderType) {
+    //   case "student":
+    //     endpoint = "http://127.0.0.1:8000/api/login";
+    //     break;
+    //   case "instructor":
+    //     endpoint = "http://127.0.0.1:8000/api/instructor/login";
+    //     break;
+    //   case "admin":
+    //     console.log("admin");
+    //     endpoint = "http://127.0.0.1:8000/api/admin/login";
 
-  const signIn = async (email, password) => {
-    console.log("Signing in:", email, password);
+    //     break;
+    //   default:
+    //     setError("Invalid stakeholder type.");
+    //     return;
+    // }
+
+    // try {
+    //   const response = await axios.post(endpoint, data, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
+
+    //   const { token } = response.data;
+    //   setToken(token);
+    //   localStorage.setItem("token", token);
+    const { email } = formData;
     setUser({ email });
     setError(null);
     navigate("/home");
@@ -37,6 +112,8 @@ const AuthProvider = ({ children }) => {
 
   const signOut = () => {
     setUser(null);
+    setToken(null);
+    localStorage.removeItem("token");
     navigate("/");
   };
 

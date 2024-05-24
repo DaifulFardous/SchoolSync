@@ -1,22 +1,21 @@
 import React, { useState } from "react";
-import logo from "../../assets/images/Group.png";
 import {
-  HiOutlineViewGrid,
-  HiTrendingUp,
-  HiOutlinePencilAlt,
-  HiOutlineNewspaper,
-  HiQuestionMarkCircle,
-  HiOutlineCog,
   HiLogout,
+  HiMenu,
+  HiOutlineCog,
+  HiOutlineNewspaper,
+  HiOutlinePencilAlt,
+  HiOutlineViewGrid,
+  HiQuestionMarkCircle,
+  HiTrendingUp,
 } from "react-icons/hi";
 import {
   HiCalendarDays,
+  HiComputerDesktop,
   HiDocumentText,
   HiMiniUsers,
-  HiComputerDesktop,
 } from "react-icons/hi2";
 import { LuShieldQuestion } from "react-icons/lu";
-import { HiMenu } from "react-icons/hi";
 import Logo from "../common/Logo";
 
 const navItems = [
@@ -24,7 +23,7 @@ const navItems = [
   { href: "/home", icon: <HiTrendingUp />, label: "Progress Tracking" },
   { href: "/home", icon: <HiOutlinePencilAlt />, label: "Exams" },
   { href: "/home", icon: <HiCalendarDays />, label: "Academic Calender" },
-  { href: "/home", icon: <HiOutlineNewspaper />, label: "Courses" },
+  { href: "/courses", icon: <HiOutlineNewspaper />, label: "Courses" },
   { href: "/home", icon: <HiQuestionMarkCircle />, label: "Suggestions" },
   { href: "/home", icon: <HiDocumentText />, label: "Assignments" },
   { href: "/home", icon: <HiMiniUsers />, label: "Attendance" },

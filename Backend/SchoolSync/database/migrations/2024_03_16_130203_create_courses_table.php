@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('category_id');
-            $table->bigInteger('instructor_id');
+            $table->bigInteger('instructor_id')->nullable();
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->text('short_description');
             $table->text('long_description');
             $table->boolean('status')->default(0);

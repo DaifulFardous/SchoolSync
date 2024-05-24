@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import signup from "../../assets/images/signup.png";
 import { AuthContext } from "../../authContext/authContext";
@@ -34,37 +33,37 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending data: ", formData);
-    signUp(formData);
+    signUp("student", formData);
 
-    if (formData.password != formData.confirm_password) {
-      console.log("passwords dont match");
-      return;
-    }
+    // if (formData.password != formData.confirm_password) {
+    //   console.log("passwords dont match");
+    //   return;
+    // }
 
-    const data = new FormData();
-    data.append("name", formData.name);
-    data.append("email", formData.email);
-    data.append("password", formData.password);
-    data.append("address", formData.address);
-    data.append("contact", formData.contact);
-    if (formData.image) {
-      data.append("image", formData.image);
-    }
+    // const data = new FormData();
+    // data.append("name", formData.name);
+    // data.append("email", formData.email);
+    // data.append("password", formData.password);
+    // data.append("address", formData.address);
+    // data.append("contact", formData.contact);
+    // if (formData.image) {
+    //   data.append("image", formData.image);
+    // }
 
-    try {
-      const result = await axios.post(
-        "http://127.0.0.1:8000/api/registration",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log(result.data.message);
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const result = await axios.post(
+    //     "http://127.0.0.1:8000/api/registration",
+    //     data,
+    //     {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     }
+    //   );
+    //   console.log(result.data.message);
+    // } catch (error) {
+    //   console.error(error);
+    // }
 
     setFormData({
       name: "",
