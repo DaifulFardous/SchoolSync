@@ -21,6 +21,7 @@ import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
+import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 function App() {
   return (
     <BrowserRouter>
@@ -49,6 +50,7 @@ function App() {
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}
           />
+          <Route path="/teacher-course" element={<TeacherCourseContent />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

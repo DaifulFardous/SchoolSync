@@ -48,12 +48,12 @@ const StudentCourseDetails = () => {
                   key={index}
                   className="bg-[#F7F3F3] shadow-md p-2 rounded-md flex items-center gap-5"
                 >
-                  <h3 className="font-semibold bg-green-400 min-h-[60px] min-w-[150px] rounded-md p-2 flex items-center justify-center ">
+                  <h3 className="font-semibold bg-[#A4F7B1] min-h-[60px] min-w-[150px] rounded-md p-2 flex items-center justify-center ">
                     {content.topic}
                   </h3>
                   <p>{content.details}</p>
-                  <button className="rounded bg-blue-500 px-5 py-2 ml-auto">
-                    Download
+                  <button className="rounded bg-blue-500 text-white px-5 py-2 ml-auto">
+                    Give Exam
                   </button>
                 </li>
               ))}
