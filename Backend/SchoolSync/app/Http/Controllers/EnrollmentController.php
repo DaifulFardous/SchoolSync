@@ -26,4 +26,11 @@ class EnrollmentController extends Controller
         // Return enrolled courses as JSON response
         return response()->json($enrolledCourses);
     }
+    public function unenroll($id){
+        $enrollment = Enrollment::find($id);
+        $enrollment->delete();
+        return response()->json([
+            'message' => 'Course Unenroll Successfully'
+        ]);
+    }
 }

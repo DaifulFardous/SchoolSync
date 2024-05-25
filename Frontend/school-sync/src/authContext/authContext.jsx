@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
 
       setUser({ name, email, password, address, contact, image, token });
       setError(null);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       setError("Error signing up. Please try again.");
       console.error("Error signing up:", error);

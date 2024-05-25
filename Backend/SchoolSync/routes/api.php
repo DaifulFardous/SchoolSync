@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
     Route::get('/courses', [CourseController::class, 'getActiveCourses']);
     Route::get('/course/{id}', [CourseController::class, 'details']);
     Route::get('enroll/course/{id}',[EnrollmentController::class,'enroll']);
+    Route::get('unenroll/course/{id}',[EnrollmentController::class,'unenroll']);
     Route::get('/enrolled-courses', [EnrollmentController::class, 'getEnrolledCourses']);
     Route::get('/course/{$id}/contents', [ContentController::class, 'showCourseContents']);
 

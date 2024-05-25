@@ -91,13 +91,42 @@ const Courselist = () => {
     setCourses([...courses, course]);
   };
 
-  const assignTeacher = (courseIndex, teacher) => {
+  const assignTeacher = async (courseIndex, teacher) => {
+    const course_id = courses[courseIndex].id;
+
     const updatedCourses = courses.map((course, index) => {
       if (index === courseIndex) {
         return { ...course, teacher };
       }
       return course;
     });
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/set/instructor",
+        {
+          course_id: course_id,
+          instructor_id: teacher.id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Instructor Set");
+      }
+    } catch (error) {
+      console.log("Failed to fetch Instructors", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
     setCourses(updatedCourses);
   };
   const unenrollStudent = (courseIndex, studentId) => {
