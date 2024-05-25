@@ -21,6 +21,7 @@ class Instructor extends Authenticatable
         'name',
         'email',
         'password',
+        'image'
     ];
 
     public function courses()
