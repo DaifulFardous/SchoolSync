@@ -23,10 +23,10 @@ class UserController extends Controller
             'address' => 'nullable|string|max:255',
             'contact' => 'nullable|string|max:255',
         ]);
-         $nameInitials = strtoupper(substr($request->name, 0, 2));
-         $registrationMonth = date('m');
-         $suffix = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
-         $studentId = $nameInitials . $registrationMonth . $suffix;
+        $nameInitials = strtoupper(substr($request->name, 0, 2));
+        $registrationMonth = date('m');
+        $suffix = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        $studentId = $nameInitials . $registrationMonth . $suffix;
         while (User::where('student_id', $studentId)->exists()) {
             $suffix = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
             $studentId = $nameInitials . $registrationMonth . $suffix;
@@ -49,10 +49,13 @@ class UserController extends Controller
         $user->address = $request->address;
         $user->contact = $request->contact;
         $user->save();
+
         return response()->json([
-            'message' => 'Registered Successfully'
+            'message' => 'Registered Successfully',
+            'image_url' => $imagePath ? asset('storage/' . $imagePath) : null
         ]);
     }
+
 
     public function login(LoginRequest $request){
         $input = $request->all();
