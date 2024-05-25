@@ -22,6 +22,7 @@ import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -46,6 +47,7 @@ function App() {
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/studentCourses" element={<Course />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}

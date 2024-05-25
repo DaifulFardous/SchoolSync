@@ -39,7 +39,7 @@ const Course = () => {
     <div className="flex gap-5 bg-[#E5EAEA]">
       <Sidenav />
       <div className="flex-1 overflow-y-auto h-screen px-2">
-        <div className="text-4xl font-bold mb-5">Courses</div>
+        <div className="text-4xl font-bold my-5">Courses</div>
         <div className="flex justify-between gap-5 mb-5">
           <Search />
           <Profile />

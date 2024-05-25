@@ -27,7 +27,7 @@ const navItems = [
   { href: "/home", icon: <HiQuestionMarkCircle />, label: "Suggestions" },
   { href: "/home", icon: <HiDocumentText />, label: "Assignments" },
   { href: "/home", icon: <HiMiniUsers />, label: "Attendance" },
-  { href: "/home", icon: <HiComputerDesktop />, label: "AI Chatbot" },
+  { href: "/chatbot", icon: <HiComputerDesktop />, label: "AI Chatbot" },
   { href: "/home", icon: <LuShieldQuestion />, label: "Help" },
   { href: "/home", icon: <HiOutlineCog />, label: "Settings" },
   { href: "/home", icon: <HiLogout />, label: "Logout" },
@@ -43,10 +43,10 @@ export default function Sidenav() {
   return (
     <aside
       className={`bg-white  py-5 px-5 sm:px-10 flex justify-center h-screen shadow-xl ${
-        isExpanded ? " w-1 sm:w-[20%]" : "w-1"
+        isExpanded ? " w-1 sm:w-[16%]" : "w-1"
       }`}
     >
-      <nav className="flex flex-col flex-1">
+      <nav className="flex flex-col gap-5 flex-1">
         <div
           className={`flex justify-center ${
             isExpanded ? "sm:justify-between" : "sm:justify-center"
@@ -67,10 +67,12 @@ export default function Sidenav() {
             <a
               href={item.href}
               key={index}
-              className="flex gap-5 text-2xl py-2 sm:px-5 items-center sm:justify-start hover:bg-gray-200 text-[#6956E5]"
+              className="flex gap-5 text-sm py-2 sm:px-5 items-center sm:justify-start hover:bg-gray-200 text-[#6956E5]"
             >
+              <span className="text-2xl">
               {item.icon}
-              <span className={`${isExpanded ? "hidden sm:block" : "hidden"}`}>
+              </span>
+              <span className={`text-[#4638a0] ${isExpanded ? "hidden sm:block" : "hidden"}`}>
                 {item.label}
               </span>
             </a>
