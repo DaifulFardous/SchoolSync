@@ -1,8 +1,9 @@
-import Sidenav from "./../SideNav/Sidenav";
+import Sidenav from "../SideNav/Sidenav";
+import Profile from "../common/Profile";
+import Search from "../common/Search";
 import Assignments from "./Assignments";
 import Completion from "./Completion";
-import RightSideBar from "./RightSideBar";
-import SearchBar from "./SearchBar";
+
 function Dashboard() {
   const Completions = [
     {
@@ -82,17 +83,18 @@ function Dashboard() {
     },
   ];
   return (
-    <div className="bg-[#e5eaea] min-h-screen">
-      <div className="flex flex-col md:flex-row gap-5">
-        <div className="hidden md:block">
-          <Sidenav />
+    <div className="flex sm:gap-5 bg-[#E5EAEA]">
+      <Sidenav />
+      <div className="flex-1 overflow-y-auto h-screen mx-5 sm:m-0 sm:mr-5">
+        <h1 className="text-4xl font-bold my-5">Dashboard</h1>
+        <div className="flex justify-between gap-5 mb-5">
+          <Search />
+          <Profile />
         </div>
-        <div className="flex flex-col gap-10 md:w-[50vw] mx-5">
-          <SearchBar />
+        <div className="flex flex-col gap-10">
           <Completion completions={Completions} />
           <Assignments assignments={AssignmentsData} />
         </div>
-        <RightSideBar schedules={schedules} upComing={upComingEvents} />
       </div>
     </div>
   );
