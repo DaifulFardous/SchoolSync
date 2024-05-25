@@ -10,12 +10,12 @@ const Tabs = ({ onClick }) => {
       >
         Ongoing Courses
       </div>
-      <div
+      {/* <div
         onClick={() => onClick("Completed Courses")}
         className="cursor-pointer"
       >
         Completed Courses
-      </div>
+      </div> */}
     </div>
   );
 };

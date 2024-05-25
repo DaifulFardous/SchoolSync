@@ -1,6 +1,6 @@
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import chatbot from "../../assets/images/AI_chatbot.png";
 import overview from "../../assets/images/Overview.png";
 import quiz from "../../assets/images/Quiz_Generate.png";
@@ -9,7 +9,9 @@ import logo from "../../assets/images/logo.png";
 import parents from "../../assets/images/parents.png";
 import student from "../../assets/images/student.png";
 import teacher from "../../assets/images/teacher.png";
+import SplitButton from "../Button/Dropdown";
 import Footer from "./Footer/Footer";
+
 const LandingPage = () => {
   const token = localStorage.getItem("token");
   const navigateTo = useNavigate();
@@ -58,11 +60,12 @@ const LandingPage = () => {
                 </div>
               </>
             ) : (
-              <Link to="/login">
-                <button className="text-lg bg-[#FF4800] text-white px-5 py-2 rounded-md cursor-pointer">
+              <>
+                {/* <button className="text-lg bg-[#FF4800] text-white px-5 py-2 rounded-md cursor-pointer">
                   Login
-                </button>
-              </Link>
+                </button> */}
+                <SplitButton />
+              </>
             )}
           </nav>
         </header>
