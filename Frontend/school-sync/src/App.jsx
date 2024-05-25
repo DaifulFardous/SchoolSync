@@ -20,6 +20,8 @@ import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSi
 import Signup from "./components/Signup/Signup";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
+import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
+import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 function App() {
   return (
     <BrowserRouter>
@@ -44,6 +46,14 @@ function App() {
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/studentCourses" element={<Course />} />
+          <Route
+            path="/course-details/:courseId"
+            element={<StudentCourseDetails />}
+          />
+          <Route
+            path="/teacher-course/:courseId"
+            element={<TeacherCourseContent />}
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
