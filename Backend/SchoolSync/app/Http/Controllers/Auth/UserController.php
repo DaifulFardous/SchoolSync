@@ -45,7 +45,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->student_id = $studentId;
-        $user->image = $imagePath;
+        $user->image = asset('storage/' . $imagePath);
         $user->address = $request->address;
         $user->contact = $request->contact;
         $user->save();
@@ -57,6 +57,7 @@ class UserController extends Controller
     }
 
 
+
     public function login(LoginRequest $request){
         $input = $request->all();
         if(Auth::guard('user')->attempt(['email'=>$input['email'],'password'=>$input['password']])){
@@ -65,6 +66,7 @@ class UserController extends Controller
             return response()->json([
                 'token' => $token
             ]);
+
         }else{
             return response()->json([
                 'message'=>'Incorrect email or password'
