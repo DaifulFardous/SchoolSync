@@ -7,7 +7,8 @@ import Logo from "../common/Logo";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn, error, setError } = useContext(AuthContext);
+  const { signIn, error, setError, imageUrl } = useContext(AuthContext);
+  console.log(imageUrl);
   const [formData, setFormData] = useState({
     email: "",
     password: "",

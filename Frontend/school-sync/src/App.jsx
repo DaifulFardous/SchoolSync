@@ -50,7 +50,7 @@ function App() {
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/studentCourses" element={<Course />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          {/* <Route path="/admin" element={<AdminDashboard />} /> */}
           <Route
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}

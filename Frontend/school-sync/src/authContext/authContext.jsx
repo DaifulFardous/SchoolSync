@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,6 +54,9 @@ const AuthProvider = ({ children }) => {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(response.data.image_url);
+      const displayimage = response.data.image_url;
+      setImageUrl(displayimage);
 
       const { token } = response.data;
       setToken(token);
@@ -125,7 +129,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, signIn, signOut, error, setError }}
+      value={{ user, signUp, signIn, signOut, error, setError, imageUrl }}
     >
       {children}
     </AuthContext.Provider>
