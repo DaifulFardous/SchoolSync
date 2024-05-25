@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('instructor_id')->nullable();
             $table->string('name');
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->text('short_description');
             $table->text('long_description');
             $table->boolean('status')->default(0);
