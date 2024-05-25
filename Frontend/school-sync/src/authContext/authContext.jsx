@@ -61,7 +61,13 @@ const AuthProvider = ({ children }) => {
 
       setUser({ name, email, password, address, contact, image, token });
       setError(null);
-      navigate("/");
+      if (stakeholderType == "student") {
+        navigate("/login");
+      } else if (stakeholderType == "instructor") {
+        navigate("/instructor-login");
+      } else {
+        navigate("/admin-login");
+      }
     } catch (error) {
       setError("Error signing up. Please try again.");
       console.error("Error signing up:", error);
@@ -118,7 +124,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signUp, signIn, signOut, error }}>
+    <AuthContext.Provider
+      value={{ user, signUp, signIn, signOut, error, setError }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -18,17 +18,21 @@ import Sidenav from "./components/SideNav/Sidenav";
 import AdminSignUp from "./components/Signup/Admin Signup/AdminSignUp";
 import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSignUp";
 import Signup from "./components/Signup/Signup";
-import Uppernav from "./components/UpperNav/Uppernav";
-import Course from "./components/studentCourses/Course";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
+import Uppernav from "./components/UpperNav/Uppernav";
+import Course from "./components/studentCourses/Course";
 function App() {
+  const token = localStorage.getItem("token");
+
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+
           <Route path="/login" element={<Login />} />
+
           <Route path="/instructor-login" element={<InstructorLogin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/signup" element={<Signup />} />
