@@ -17,13 +17,13 @@ class CourseController extends Controller
         ]);
 
         $imageName = time().'.'.$request->image->extension();
-        $request->image->storeAs('course', $imageName, 'public');
+        $request->image->storeAs('courses', $imageName, 'public');
 
         $course = new Course();
         $course->name = $request->name;
         $course->short_description = $request->short_description;
         $course->long_description = $request->long_description;
-        $course->image = asset('storage/course/' . $imageName);;
+        $course->image = asset('storage/' . $imageName);;
         $course->save();
 
         return response()->json([
