@@ -35,8 +35,10 @@ const Login = () => {
         password: formData.password,
       })
       .then((result) => {
-        console.log(result.data.token);
-        localStorage.setItem("token", result.data.token);
+        if (result.status == 200) {
+          console.log(result.data.token);
+          localStorage.setItem("token", result.data.token);
+        }
       })
       .catch((error) => {
         console.log(error);

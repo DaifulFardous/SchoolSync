@@ -36,8 +36,8 @@ const Modal = ({ closeModal, addCourse }) => {
 
     const data = new FormData();
     data.append("name", courseName);
-    data.append("category_id", categoryID);
-    data.append("instructor_id", 1233);
+    // data.append("category_id", categoryID);
+    // data.append("instructor_id", 1233);
     data.append("short_description", shortDescription);
     data.append("long_description", longDescription);
     if (image) {
