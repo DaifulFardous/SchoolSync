@@ -13,16 +13,22 @@ class CourseController extends Controller
             'name' => 'required',
             'short_description' => 'required',
             'long_description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->storeAs('course', $imageName, 'public');
+
         $course = new Course();
         $course->name = $request->name;
         $course->short_description = $request->short_description;
         $course->long_description = $request->long_description;
-
+        $course->image = asset('storage/course/' . $imageName);;
         $course->save();
 
         return response()->json([
-            'message' => 'Course Created Successfully'
+            'message' => 'Course Created Successfully',
+            'image_url' => $course->image_url,
         ]);
     }
     public function status($id){
