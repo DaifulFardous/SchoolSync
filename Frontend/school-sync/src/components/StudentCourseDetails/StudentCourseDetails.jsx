@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import dummy from "../../data/Course"; // Importing the dummy data
+import dummy from "../../data/Course";
 import Sidenav from "../SideNav/Sidenav";
 import Search from "../common/Search";
 import Profile from "../common/Profile";
@@ -13,7 +13,7 @@ const StudentCourseDetails = () => {
 
   useEffect(() => {
     // Fetch the course details using the courseId
-    const courseData = dummy.find((course) => course.id === parseInt(courseId)); // Parsing courseId to integer
+    const courseData = dummy.find((course) => course.id === parseInt(courseId));
     setCourse(courseData);
   }, [courseId]);
 

@@ -50,7 +50,10 @@ function App() {
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}
           />
-          <Route path="/teacher-course" element={<TeacherCourseContent />} />
+          <Route
+            path="/teacher-course/:courseId"
+            element={<TeacherCourseContent />}
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
