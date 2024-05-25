@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import dummy from "../../data/Course";
 import Sidenav from "../SideNav/Sidenav";
-import Search from "../common/Search";
 import Profile from "../common/Profile";
+import Search from "../common/Search";
 
 import physics from "../../assets/images/phy.png";
 
@@ -23,7 +23,7 @@ const StudentCourseDetails = () => {
     <div className="flex sm:gap-5 bg-[#E5EAEA]">
       <Sidenav />
       <div className="flex-1 overflow-y-auto h-screen mx-5 sm:m-0 sm:mr-5">
-        <h1 className="text-4xl font-bold my-5">Course Details</h1>
+        <h1 className="text-4xl font-bold mb-5">Courses</h1>
         <div className="flex justify-between gap-5 mb-5">
           <Search />
           <Profile />
