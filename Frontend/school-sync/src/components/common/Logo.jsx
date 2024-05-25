@@ -3,7 +3,7 @@ import logo from "../../assets/images/logo.png";
 const Logo = () => {
   return (
     <div className="flex gap-5 items-center justify-center">
-      <img src={logo} alt="" />
+      <img src={logo} alt="" className="h-12" />
       <div className="w-min text-wrap text-2xl font-bold">
         <span className="text-red-500">S</span>chool Sync
       </div>

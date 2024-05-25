@@ -18,8 +18,8 @@ const CourseCard = ({
         alt=""
         className="absolute top-[110px] right-10 rounded-full h-[65px] w-[65px]"
       />
-      <Link to={`/course-details/${courseId}`}>
-        <button className="border py-2 mx-auto rounded-lg border-black hover:bg-gray-100 w-[80%] font-bold">
+      <Link to={`/course-details/${courseId}`} className="mx-auto">
+        <button className="border py-2 text-nowrap  rounded-lg border-black hover:bg-gray-100 px-10 font-bold">
           Course Details
         </button>
       </Link>
