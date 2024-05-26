@@ -4,25 +4,13 @@ import { FaChevronDown } from "react-icons/fa";
 
 const Profile = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState(null);
   const token = localStorage.getItem("token");
 
-  //   useEffect( async ()  =>{
-  //     try {
-  //       const response = await axios.post(
-  //         "http://127.0.0.1:8000/api/user/details",
-  //         {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data",
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-
-  //   })
-  // }
   useEffect(() => {
     fetchUserDetails();
   }, []);
+
   const fetchUserDetails = async () => {
     try {
       const response = await axios.get(
@@ -44,13 +32,16 @@ const Profile = () => {
       console.error("Error creating course:", error);
 
       if (error.response && error.response.status === 401) {
-        setError("Unauthorized. Please log in again.");
-        signOut();
+        console.log("error");
       } else {
-        setError("An error occurred. Please try again.");
+        console.log("An error occurred. Please try again.");
       }
     }
   };
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="sm:flex hidden gap-5 items-center">

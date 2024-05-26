@@ -15,6 +15,7 @@ const Courselist = () => {
   const [expandedRowIndex, setExpandedRowIndex] = useState(null);
   const [studentsModal, setStudentsModal] = useState(false);
   const [error, setError] = useState("");
+  const [assigned, setAssigned] = useState(null);
   const { signOut } = useContext(AuthContext);
 
   const token = localStorage.getItem("token");
@@ -79,6 +80,37 @@ const Courselist = () => {
     }
   };
 
+  const getAssignedInstructor = async (courseIndex) => {
+    const course_ins_id = courses[courseIndex].instructor_id;
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/get/instructor/${course_ins_id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        // console.log("Fetched Instructors:", response.data);
+        // setTeachers(response.data);
+        setAssigned(response.data);
+
+        console.log(assigned.data.name);
+        // return response.data.name;
+      }
+    } catch (error) {
+      console.log("Failed to fetch Instructors details", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
+
   const closeModal = () => {
     setModal(false);
   };
@@ -93,11 +125,13 @@ const Courselist = () => {
 
   const assignTeacher = async (courseIndex, teacher) => {
     const course_id = courses[courseIndex].id;
+    const course_ins_id = courses[courseIndex].instructor_id;
 
     const updatedCourses = courses.map((course, index) => {
       if (index === courseIndex) {
         return { ...course, teacher };
       }
+
       return course;
     });
 
@@ -182,30 +216,32 @@ const Courselist = () => {
               <React.Fragment key={index}>
                 <div className="col-span-5 border-t w-full"></div>
                 <div>{course.name}</div>
-                <div>
-                  {course.teacher ? (
+                {/* <div>
+                  {course.instructor_id ? (
                     <span className="text-green-500">
-                      {course.teacher.name}
-                    </span>
-                  ) : (
+                      {/* {getAssignedInstructor(index)} */}
+                {/* </React.Fragment>{course.instructor_name}
+                    </span> */}
+                {/* ) : (
                     <select
                       onChange={(e) =>
                         assignTeacher(index, JSON.parse(e.target.value))
                       }
                       className="px-3 py-2 rounded"
-                    >
-                      <option value="">Select a teacher</option>
+                    > */}
+                {/* <option value="">Select a teacher</option>
                       {teachers.map((teacher) => (
                         <option
                           key={teacher.id}
                           value={JSON.stringify(teacher)}
                         >
-                          {teacher.name}
+                          {teacher.name} {course.instructor_id}
                         </option>
                       ))}
-                    </select>
-                  )}
-                </div>
+                    </select> */}
+                {/* )} */}
+                {/* </div> */}
+                <div>{course.instructor_name}</div>
                 <div>{course.students ? course.students.length : 0}</div>
                 <div
                   className="cursor-pointer"

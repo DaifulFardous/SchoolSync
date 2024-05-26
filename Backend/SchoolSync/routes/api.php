@@ -31,12 +31,12 @@ Route::post('login',[UserController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
     Route::get('logout',[UserController::class,'logout']);
     Route::get('user/details',[UserController::class,'getDetails']);
-    Route::get('/courses', [CourseController::class, 'getActiveCourses']);
-    Route::get('/course/{id}', [CourseController::class, 'details']);
+    Route::get('user/courses', [CourseController::class, 'getAllCourses']);
+    Route::get('user/course/{id}', [CourseController::class, 'details']);
     Route::get('enroll/course/{id}',[EnrollmentController::class,'enroll']);
     Route::get('unenroll/course/{id}',[EnrollmentController::class,'unenroll']);
     Route::get('/enrolled-courses', [EnrollmentController::class, 'getEnrolledCourses']);
-    Route::get('/course/{$id}/contents', [ContentController::class, 'showCourseContents']);
+    Route::get('/course/{id}/contents', [ContentController::class, 'showCourseContents']);
 
 });
 
@@ -45,9 +45,10 @@ Route::post('instructor/registration',[InstructorController::class,'registration
 Route::post('instructor/login',[InstructorController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function() {
     Route::get('instructor/details',[InstructorController::class,'getDetails']);
-    Route::get('/courses', [CourseController::class, 'getActiveCourses']);
+    Route::get('/courses', [CourseController::class, 'getAllCourses']);
     Route::get('/course/{id}', [CourseController::class, 'details']);
     Route::post('/content/create', [ContentController::class, 'create']);
+    
 });
 
 //admin_routes
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:admin']], function() {
     Route::post('set/instructor',[CourseController::class,'setInstructor']);
     Route::post('create/course',[CourseController::class,'create']);
     Route::get('/courses', [CourseController::class, 'getAllCourses']);
+    Route::get('/get/instructor/{id}', [CourseController::class, 'getInstructor']);
     Route::get('course/status/{id}',[CourseController::class,'status']);
 });
 

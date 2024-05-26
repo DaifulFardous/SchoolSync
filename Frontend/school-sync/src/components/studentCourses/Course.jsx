@@ -1,23 +1,92 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
 import Profile from "../common/Profile";
 import Search from "../common/Search";
 import CourseCard from "./slices/CourseCard";
-import dummyData from "../../data/Course";
-import Tabs from "./slices/Tabs";
 import Pagination from "./slices/Pagination";
+import Tabs from "./slices/Tabs";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);
+  const { signOut } = useContext(AuthContext);
   const [tab, setTab] = useState("All courses");
   const [currentPage, setCurrentPage] = useState(1);
   const [coursesPerPage] = useState(10);
+  const [error, setError] = useState(null);
+  const [flag, setFlag] = useState(false);
+  const token = localStorage.getItem("token");
+  const [couresName, setCourseName] = useState(null);
+  console.log(token);
 
   useEffect(() => {
-    // using dummy courses
-    setCourses(dummyData);
+    if (tab == "All Courses") fetchCourses();
+    else {
+      fetchEnrolledCourses();
+    }
   }, [tab]);
 
+  const fetchEnrolledCourses = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/enrolled-courses",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status == 200) {
+        console.log("Ongoing Courses:", response.data);
+        setCourses(response.data);
+
+        setCourseName(response.data);
+        const course = couresName.name;
+        console.log(course);
+        setFlag(true);
+      }
+    } catch (error) {
+      console.log("Failed to fetch courses", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/user/courses",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("fetched Courses:", response.data);
+
+        setCourses(response.data);
+        console.log(response.data);
+        // setCourseName(courses.name);
+        setFlag(false);
+      }
+    } catch (error) {
+      console.log("Failed to fetch courses", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
@@ -52,8 +121,10 @@ const Course = () => {
                 key={index}
                 courseId={course.id}
                 courseDetails={course.courseDetails}
-                courseName={course.courseName}
-                courseInstructor={course.teacher}
+                courseName={course.name}
+                courseImage={course.image}
+                courseInstructor={course.instructor_name}
+                flag={flag}
               />
             ))}
           </div>

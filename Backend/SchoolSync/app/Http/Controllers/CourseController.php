@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -11,6 +12,7 @@ class CourseController extends Controller
     public function create(Request $request){
         $request->validate([
             'name' => 'required',
+            'instructor_name' => 'required',
             'short_description' => 'required',
             'long_description' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -21,9 +23,10 @@ class CourseController extends Controller
 
         $course = new Course();
         $course->name = $request->name;
+        $course->instructor_name = $request->instructor_name;
         $course->short_description = $request->short_description;
         $course->long_description = $request->long_description;
-        $course->image = asset('storage/' . $imageName);;
+        $course->image = asset('storage/courses/' . $imageName);;
         $course->save();
 
         return response()->json([
@@ -50,12 +53,6 @@ class CourseController extends Controller
 
         return response()->json($courses);
     }
-    public function getActiveCourses()
-    {
-        $courses = Course::where('status', 1)->get();
-
-        return response()->json($courses);
-    }
     public function details($id){
         $course = Course::findOrFail($id);
 
@@ -69,5 +66,11 @@ class CourseController extends Controller
         return response()->json([
                 'message'=>'Instructor added successfully'
             ]);
+    }
+    public function getInstructor($id){
+        $instructor = Instructor::find($id);
+        return response()->json([
+            'data' => $instructor
+        ]);
     }
 }
