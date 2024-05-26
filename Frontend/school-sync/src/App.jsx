@@ -23,6 +23,7 @@ import Course from "./components/studentCourses/Course";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -46,8 +47,9 @@ function App() {
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
-          <Route path="/studentCourses" element={<Course />} />
+          <Route path="/courseList" element={<Course />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/teacher" element={<TeacherDashboard />} />
           <Route
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}

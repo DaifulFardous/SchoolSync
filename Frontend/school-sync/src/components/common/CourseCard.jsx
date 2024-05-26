@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ICT from "../../../assets/images/ICT.png";
-import fac from "../../../assets/images/fac1.png";
+import ICT from "../../assets/images/ICT.png";
+import fac from "../../assets/images/fac1.png";
 
 const CourseCard = ({
   courseId,

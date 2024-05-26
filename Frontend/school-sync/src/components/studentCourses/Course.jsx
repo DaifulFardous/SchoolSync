@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Sidenav from "../SideNav/Sidenav";
 import Profile from "../common/Profile";
 import Search from "../common/Search";
-import CourseCard from "./slices/CourseCard";
 import dummyData from "../../data/Course";
 import Tabs from "./slices/Tabs";
 import Pagination from "./slices/Pagination";
+import CourseCard from "../common/CourseCard";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);
