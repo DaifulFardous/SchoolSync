@@ -18,19 +18,23 @@ import Sidenav from "./components/SideNav/Sidenav";
 import AdminSignUp from "./components/Signup/Admin Signup/AdminSignUp";
 import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSignUp";
 import Signup from "./components/Signup/Signup";
-import Uppernav from "./components/UpperNav/Uppernav";
-import Course from "./components/studentCourses/Course";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
+import Uppernav from "./components/UpperNav/Uppernav";
+import Course from "./components/studentCourses/Course";
 function App() {
+  const token = localStorage.getItem("token");
+
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+
           <Route path="/login" element={<Login />} />
+
           <Route path="/instructor-login" element={<InstructorLogin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/signup" element={<Signup />} />
@@ -47,9 +51,14 @@ function App() {
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
+<<<<<<< HEAD
           <Route path="/courseList" element={<Course />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/teacher" element={<TeacherDashboard />} />
+=======
+          <Route path="/studentCourses" element={<Course />} />
+          {/* <Route path="/admin" element={<AdminDashboard />} /> */}
+>>>>>>> 660d4e6053a0c1b412ba3cca8b60f8ecc1df7da7
           <Route
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}

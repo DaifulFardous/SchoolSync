@@ -7,7 +7,8 @@ import Logo from "../common/Logo";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn, error } = useContext(AuthContext);
+  const { signIn, error, setError, imageUrl } = useContext(AuthContext);
+  console.log(imageUrl);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,7 +28,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
-    signIn("student", formData);
 
     axios
       .post("http://127.0.0.1:8000/api/login", {
@@ -35,9 +35,13 @@ const Login = () => {
         password: formData.password,
       })
       .then((result) => {
-        if (result.status == 200) {
-          console.log(result.data.token);
+        if (result.data.token) {
           localStorage.setItem("token", result.data.token);
+          signIn("student", formData);
+          navigate("/home");
+        } else {
+          console.error("Login failed: No token received");
+          setError("Wrong Password or Email");
         }
       })
       .catch((error) => {

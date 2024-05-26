@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,6 +54,9 @@ const AuthProvider = ({ children }) => {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(response.data.image_url);
+      const displayimage = response.data.image_url;
+      setImageUrl(displayimage);
 
       const { token } = response.data;
       setToken(token);
@@ -61,7 +65,13 @@ const AuthProvider = ({ children }) => {
 
       setUser({ name, email, password, address, contact, image, token });
       setError(null);
-      navigate("/");
+      if (stakeholderType == "student") {
+        navigate("/login");
+      } else if (stakeholderType == "instructor") {
+        navigate("/instructor-login");
+      } else {
+        navigate("/admin-login");
+      }
     } catch (error) {
       setError("Error signing up. Please try again.");
       console.error("Error signing up:", error);
@@ -118,7 +128,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signUp, signIn, signOut, error }}>
+    <AuthContext.Provider
+      value={{ user, signUp, signIn, signOut, error, setError, imageUrl }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -7,7 +7,7 @@ import { AuthContext } from "../../../authContext/authContext";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { signIn, error } = useContext(AuthContext);
+  const { signIn, error, setError } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -23,7 +23,7 @@ const AdminLogin = () => {
   };
 
   const handleSignUpNow = () => {
-    navigate("/signup");
+    navigate("/admin-signup");
   };
 
   const handleSubmit = async (e) => {
@@ -42,6 +42,7 @@ const AdminLogin = () => {
         navigate("/home");
       } else {
         console.error("Login failed: No token received");
+        setError("Wrong Password or Email");
       }
     } catch (error) {
       console.error("Error during login: ", error);

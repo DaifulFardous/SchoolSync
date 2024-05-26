@@ -6,14 +6,52 @@ const Modal = ({ closeModal, addCourse }) => {
   const modalRef = useRef();
   const [courseName, setCourseName] = useState("");
   const [categoryID, setCategoryID] = useState("");
-
+  const [teachers, setTeachers] = useState([]);
   const [shortDescription, setShortDescription] = useState("");
   const [longDescription, setLongDescription] = useState("");
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
 
   const { signOut } = useContext(AuthContext);
   const token = localStorage.getItem("token");
+
+  const handleTeacherChange = (e) => {
+    const teacher = JSON.parse(e.target.value);
+    setSelectedTeacher(teacher);
+  };
+
+  useEffect(() => {
+    // setTeachers(teachersData);
+    fetchInstructors();
+  }, []);
+
+  const fetchInstructors = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/all/instructor",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Fetched Instructors:", response.data);
+        setTeachers(response.data);
+      }
+    } catch (error) {
+      console.log("Failed to fetch Instructors", error);
+      if (error.response && error.response.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        signOut();
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -38,6 +76,7 @@ const Modal = ({ closeModal, addCourse }) => {
     data.append("name", courseName);
     // data.append("category_id", categoryID);
     // data.append("instructor_id", 1233);
+    data.append("instructor_name", selectedTeacher);
     data.append("short_description", shortDescription);
     data.append("long_description", longDescription);
     if (image) {
@@ -134,18 +173,24 @@ const Modal = ({ closeModal, addCourse }) => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold m-1"
-              htmlFor="courseName"
+              htmlFor="teacher"
             >
-              Categoy ID
+              Set Teacher
             </label>
-            <input
-              type="text"
-              id="categoryID"
+            <select
+              id="teacher"
               className="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-              value={categoryID}
-              onChange={(e) => setCategoryID(e.target.value)}
+              value={selectedTeacher ? JSON.stringify(selectedTeacher) : ""}
+              onChange={handleTeacherChange}
               required
-            />
+            >
+              <option value="">Select a teacher</option>
+              {teachers.map((teacher) => (
+                <option key={teacher.id} value={JSON.stringify(teacher.name)}>
+                  {teacher.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="mb-4">

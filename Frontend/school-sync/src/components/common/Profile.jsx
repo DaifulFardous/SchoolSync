@@ -1,20 +1,59 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 const Profile = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  const fetchUserDetails = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/user/details",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Fethced Students:", response.data);
+        setUserData(response.data);
+        console.log(userData.data.image);
+      }
+    } catch (error) {
+      console.error("Error creating course:", error);
+
+      if (error.response && error.response.status === 401) {
+        console.log("error");
+      } else {
+        console.log("An error occurred. Please try again.");
+      }
+    }
+  };
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex gap-5 items-center">
       <div className="flex items-center gap-5">
         <img
-          src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={userData.data.image}
           alt="Profile"
           className="rounded-full h-16 w-16"
         />
         <div>
-            <div className="font-bold">dummy name</div>
-            <div className="text-sm text-gray-500">dummy profession</div>
+          <div className="font-bold">{userData.data.name}</div>
+          <div className="text-sm text-gray-500">{userData.data.email}</div>
         </div>
       </div>
       <div className="expanded">

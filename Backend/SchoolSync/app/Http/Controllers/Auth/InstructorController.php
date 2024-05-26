@@ -12,24 +12,27 @@ class InstructorController extends Controller
 {
     public function registration(Request $request)
     {
-        // Validate incoming request
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:instructors',
             'password' => 'required|string|min:8',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-            // Create a new instance of the Instructor model
-            $instructor = new Instructor();
-            // Assign values to the model properties
-            $instructor->name = $request->name;
-            $instructor->email = $request->email;
-            $instructor->password = bcrypt($request->password);
-            $instructor->save();
 
-            // Return a JSON response indicating success
-            return response()->json([
-                'message' => 'Registered Successfully'
-            ]);
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->storeAs('instructors', $imageName, 'public');
+
+        $instructor = new Instructor();
+        $instructor->name = $request->name;
+        $instructor->email = $request->email;
+        $instructor->password = bcrypt($request->password);
+        $instructor->image = asset('storage/' . $imageName);
+        $instructor->save();
+
+        return response()->json([
+            'message' => 'Registered Successfully',
+            'image_url' => $instructor->image_url,
+        ]);
     }
 
     public function login(Request $request)

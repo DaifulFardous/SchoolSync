@@ -7,7 +7,7 @@ import { AuthContext } from "../../../authContext/authContext";
 
 const InstructorLogin = () => {
   const navigate = useNavigate();
-  const { signIn, error } = useContext(AuthContext);
+  const { signIn, error, setError } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,12 +22,11 @@ const InstructorLogin = () => {
   };
 
   const handleSignUpNow = () => {
-    navigate("/signup");
+    navigate("/instructor-signup");
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending login data: ", formData);
-    signIn("instructor", formData);
 
     axios
       .post("http://127.0.0.1:8000/api/instructor/login", {
@@ -36,7 +35,14 @@ const InstructorLogin = () => {
       })
       .then((result) => {
         console.log(result.data.token);
-        localStorage.setItem("token", result.data.token);
+        if (result.data.token) {
+          localStorage.setItem("token", result.data.token);
+          signIn("instructor", formData);
+          navigate("/home");
+        } else {
+          console.error("Login failed: No token received");
+          setError("Wrong Password or Email");
+        }
       })
       .catch((error) => {
         console.log(error);
