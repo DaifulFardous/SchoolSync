@@ -108,20 +108,21 @@ const StudentCourseDetails = () => {
           <div className="mt-5">
             <h2 className="text-xl font-bold">Course Contents</h2>
             <ul className="flex flex-col sm:gap-3 gap-5 py-5">
-              {contents.map((content, index) => (
-                <li
-                  key={index}
-                  className="bg-[#F7F3F3] shadow-md p-2 rounded-md flex flex-col sm:flex-row sm:items-center gap-5"
-                >
-                  <h3 className="font-semibold bg-[#A4F7B1] min-h-[60px] min-w-[150px] rounded-md p-2 flex items-center justify-center ">
-                    {content.name}
-                  </h3>
-                  <p>{content.long_description}</p>
-                  <button className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto">
-                    Give Exam
-                  </button>
-                </li>
-              ))}
+              {contents &&
+                contents.map((content, index) => (
+                  <li
+                    key={index}
+                    className="bg-[#F7F3F3] shadow-md p-2 rounded-md flex flex-col sm:flex-row sm:items-center gap-5"
+                  >
+                    <h3 className="font-semibold bg-[#A4F7B1] min-h-[60px] min-w-[150px] rounded-md p-2 flex items-center justify-center ">
+                      {content.name}
+                    </h3>
+                    <p>{content.long_description}</p>
+                    <button className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto">
+                      Give Exam
+                    </button>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>

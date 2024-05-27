@@ -2,11 +2,9 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
+import CourseCard from "../common/CourseCard";
 import Profile from "../common/Profile";
 import Search from "../common/Search";
-import Tabs from "./slices/Tabs";
-import Pagination from "./slices/Pagination";
-import CourseCard from "../common/CourseCard";
 import Pagination from "./slices/Pagination";
 import Tabs from "./slices/Tabs";
 
@@ -45,8 +43,8 @@ const Course = () => {
         setCourses(response.data);
 
         setCourseName(response.data);
-        const course = couresName.name;
-        console.log(course);
+        // const course = couresName.name;
+        // console.log(course);
         setFlag(true);
       }
     } catch (error) {
