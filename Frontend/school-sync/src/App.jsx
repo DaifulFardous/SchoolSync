@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "./authContext/authContext";
-import AdaptiveLearning from "./components/AdaptiveLearning/AdaptiveLearning";
-import McqList from "./components/AdaptiveLearning/MCQ/McqList";
+import AdaptiveLearning from "./components/AdaptiveLearning/page";
 import Chatbot from "./components/Chatbot/Chatbot";
 import CourseDet from "./components/Courses/Course-details";
 import Courselist from "./components/Courses/Courselist";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Forgot from "./components/ForgotPass/Forgot";
+import GiveMCQ from "./components/GiveMCQ/Mcq";
 import LandingPage from "./components/LandingPage/LandingPage";
 import AdminLogin from "./components/Login/Admin Login/AdminLogin";
 import InstructorLogin from "./components/Login/Instructor Login/InstructorLogin";
@@ -45,7 +45,7 @@ function App() {
           <Route path="/courses" element={<Courselist />} />
           <Route path="/courses-details" element={<CourseDet />} />
           <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
-          <Route path="/mcqList" element={<McqList />} />
+          <Route path="/giveMcq" element={<GiveMCQ />} />
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
