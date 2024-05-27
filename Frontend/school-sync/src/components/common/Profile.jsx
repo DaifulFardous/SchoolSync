@@ -44,7 +44,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="sm:flex hidden gap-5 items-center">
+    <div className="flex gap-5 items-center">
       <div className="flex items-center gap-5">
         <img
           src={userData.data.image}

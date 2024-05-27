@@ -4,7 +4,9 @@ import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
 import Profile from "../common/Profile";
 import Search from "../common/Search";
-import CourseCard from "./slices/CourseCard";
+import Tabs from "./slices/Tabs";
+import Pagination from "./slices/Pagination";
+import CourseCard from "../common/CourseCard";
 import Pagination from "./slices/Pagination";
 import Tabs from "./slices/Tabs";
 

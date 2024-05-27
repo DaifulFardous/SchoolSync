@@ -6,6 +6,7 @@ import Sidenav from "../SideNav/Sidenav";
 import CouresesHeader from "./Slices/CoursesHeader";
 import EnrolledStudentsModal from "./Slices/EnrolledStudentsModal";
 import Modal from "./Slices/Modal";
+import Header from "../common/Header";
 
 const Courselist = () => {
   const [modal, setModal] = useState(false);
@@ -183,10 +184,10 @@ const Courselist = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex sm:gap-5 bg-[#E5EAEA]">
       <Sidenav />
-      <div className="bg-[#E5EAEA] flex-1 p-5 flex flex-col items-center">
-        <CouresesHeader />
+      <div className="flex-1 overflow-y-auto h-screen mx-5 sm:m-0 sm:mr-5">
+        <Header pageName={"Course"} />
         <div className="w-full mb-5">
           <button
             className="bg-[#6956E5] text-white px-5 py-2 rounded text-lg"

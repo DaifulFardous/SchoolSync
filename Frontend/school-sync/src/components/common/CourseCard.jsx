@@ -1,8 +1,13 @@
 import axios from "axios";
 import { default as React, useContext, useState } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD:Frontend/school-sync/src/components/common/CourseCard.jsx
+import ICT from "../../assets/images/ICT.png";
+import fac from "../../assets/images/fac1.png";
+=======
 import fac from "../../../assets/images/fac1.png";
 import { AuthContext } from "../../../authContext/authContext";
+>>>>>>> 660d4e6053a0c1b412ba3cca8b60f8ecc1df7da7:Frontend/school-sync/src/components/studentCourses/slices/CourseCard.jsx
 
 const CourseCard = ({
   courseId,
