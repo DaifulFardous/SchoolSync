@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 //user_routes
 Route::post('registration',[UserController::class,'registration']);
 Route::post('login',[UserController::class,'login']);
+Route::post('token/ability',[UserController::class,'checkAbility']);
 Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
     Route::get('logout',[UserController::class,'logout']);
     Route::get('user/details',[UserController::class,'getDetails']);
@@ -48,7 +49,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function
     Route::get('/courses', [CourseController::class, 'getAllCourses']);
     Route::get('/course/{id}', [CourseController::class, 'details']);
     Route::post('/content/create', [ContentController::class, 'create']);
-    
+
 });
 
 //admin_routes
