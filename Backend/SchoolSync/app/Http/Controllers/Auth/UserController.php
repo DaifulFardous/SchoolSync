@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class UserController extends Controller
 {
@@ -85,4 +85,23 @@ class UserController extends Controller
         $user->currentAccessToken()->delete();
         return response()->json(['message' => 'Successfully logged out']);
     }
+
+    public function checkAbility(Request $request)
+    {
+        if ($request->has('token')) {
+            $tokenValue = $request->input('token');
+            $token = PersonalAccessToken::findToken($tokenValue);
+
+            if ($token) {
+                $abilities = $token->abilities;
+
+                return response()->json(['abilities' => $abilities]);
+            } else {
+                return response()->json(['message' => 'Token is invalid or not found.']);
+            }
+        } else {
+            return response()->json(['message' => 'Token not provided.']);
+        }
+    }
+
 }
