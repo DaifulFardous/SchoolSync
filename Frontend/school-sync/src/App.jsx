@@ -21,8 +21,10 @@ import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSi
 import Signup from "./components/Signup/Signup";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
 
+import StudentExam from "./components/StudentExam/StudentExam";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
+import TeacherExam from "./components/TeacherExam/TeacherExam";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
 function App() {
@@ -56,7 +58,9 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/teacher" element={<TeacherDashboard />} />
           <Route path="/studentCourses" element={<Course />} />
-
+          <Route path="/studentExam" element={<StudentExam />} />
+          <Route path="/teacherExam" element={<TeacherExam />} />
+          {/* <Route path="/admin" element={<AdminDashboard />} /> */}
           <Route
             path="studentCourses/course-details/:courseId"
             element={<StudentCourseDetails />}

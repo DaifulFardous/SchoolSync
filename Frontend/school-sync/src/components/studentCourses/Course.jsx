@@ -5,8 +5,6 @@ import Sidenav from "../SideNav/Sidenav";
 import CourseCard from "../common/CourseCard";
 import Profile from "../common/Profile";
 import Search from "../common/Search";
-import Pagination from "./slices/Pagination";
-import Tabs from "./slices/Tabs";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);
