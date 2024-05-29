@@ -11,7 +11,7 @@ import Tabs from "./slices/Tabs";
 const Course = () => {
   const [courses, setCourses] = useState([]);
   const { signOut } = useContext(AuthContext);
-  const [tab, setTab] = useState("All courses");
+  const [tab, setTab] = useState("Ongoing Courses");
   const [currentPage, setCurrentPage] = useState(1);
   const [coursesPerPage] = useState(10);
   const [error, setError] = useState(null);
@@ -40,7 +40,10 @@ const Course = () => {
       );
       if (response.status == 200) {
         console.log("Ongoing Courses:", response.data);
-        setCourses(response.data);
+        const enrolledCourses = response.data.map((enrolledCourse) => ({
+          ...enrolledCourse.course,
+        }));
+        setCourses(enrolledCourses);
 
         setCourseName(response.data);
         // const course = couresName.name;

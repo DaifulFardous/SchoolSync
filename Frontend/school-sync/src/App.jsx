@@ -20,6 +20,7 @@ import AdminSignUp from "./components/Signup/Admin Signup/AdminSignUp";
 import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSignUp";
 import Signup from "./components/Signup/Signup";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
+
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
 import Uppernav from "./components/UpperNav/Uppernav";
@@ -57,9 +58,14 @@ function App() {
           <Route path="/studentCourses" element={<Course />} />
 
           <Route
-            path="/course-details/:courseId"
+            path="studentCourses/course-details/:courseId"
             element={<StudentCourseDetails />}
           />
+          {/* <Route
+            path="instructor/course-details/:courseId"
+            element={<TeacherCourseDetails />}
+          /> */}
+
           <Route
             path="/teacher-course/:courseId"
             element={<TeacherCourseContent />}

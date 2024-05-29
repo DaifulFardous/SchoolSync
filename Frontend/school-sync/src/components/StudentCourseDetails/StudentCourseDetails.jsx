@@ -10,7 +10,7 @@ import axios from "axios";
 const StudentCourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
-  const [contents, setContents] = useState(null);
+  const [contents, setContents] = useState([]);
   const token = localStorage.getItem("token");
   const { signOut } = useContext(AuthContext);
   const [error, setError] = useState("");
@@ -23,10 +23,10 @@ const StudentCourseDetails = () => {
     fetchCourseContents();
   }, [courseId]);
 
-  useEffect(() => {
-    // Log the course state whenever it changes
-    console.log("Course state updated:", course);
-  }, [course]);
+  // useEffect(() => {
+  //   // Log the course state whenever it changes
+  //   console.log("Course state updated:", course);
+  // }, [course]);
 
   const fetchCourseDetails = async () => {
     try {
@@ -58,7 +58,7 @@ const StudentCourseDetails = () => {
   const fetchCourseContents = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/course/${courseId}/contents`,
+        `http://127.0.0.1:8000/api/user/course/${courseId}/contents`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -96,25 +96,27 @@ const StudentCourseDetails = () => {
         <div className="bg-white rounded-xl p-5">
           <div className="sm:flex gap-3">
             <img
-              src={course.image} // gave this URL instead which is course.courseDetails.courseImage
+              src={course.image}
               alt={course.name}
               className="sm:h-[200px] sm:w-[300px]"
             />
             <div>
-              <h1 className="text-2xl font-bold">{course.name}</h1>
+              <h1 className="text-2xl font-bold">
+                {course.name} ( {course.instructor_name} )
+              </h1>
               <p className="text-sm">{course.long_description}</p>
             </div>
           </div>
           <div className="mt-5">
             <h2 className="text-xl font-bold">Course Contents</h2>
-            <ul className="flex flex-col sm:gap-3 gap-5 py-5">
-              {contents &&
-                contents.map((content, index) => (
+            {contents && contents.length > 0 ? (
+              <ul className="flex flex-col sm:gap-3 gap-5 py-5">
+                {contents.map((content, index) => (
                   <li
                     key={index}
                     className="bg-[#F7F3F3] shadow-md p-2 rounded-md flex flex-col sm:flex-row sm:items-center gap-5"
                   >
-                    <h3 className="font-semibold bg-[#A4F7B1] min-h-[60px] min-w-[150px] rounded-md p-2 flex items-center justify-center ">
+                    <h3 className="font-semibold bg-[#A4F7B1] min-h-[60px] min-w-[150px] rounded-md p-2 flex items-center justify-center">
                       {content.name}
                     </h3>
                     <p>{content.long_description}</p>
@@ -123,7 +125,10 @@ const StudentCourseDetails = () => {
                     </button>
                   </li>
                 ))}
-            </ul>
+              </ul>
+            ) : (
+              <p>No course contents available at the moment.</p>
+            )}
           </div>
         </div>
       </div>
