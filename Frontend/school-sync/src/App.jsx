@@ -24,6 +24,7 @@ import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
+import StudentExam from "./components/StudentExam/StudentExam";
 function App() {
   const token = localStorage.getItem("token");
 
@@ -51,14 +52,12 @@ function App() {
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
-<<<<<<< HEAD
           <Route path="/courseList" element={<Course />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/teacher" element={<TeacherDashboard />} />
-=======
           <Route path="/studentCourses" element={<Course />} />
+          <Route path="/studentExam" element={<StudentExam />} />
           {/* <Route path="/admin" element={<AdminDashboard />} /> */}
->>>>>>> 660d4e6053a0c1b412ba3cca8b60f8ecc1df7da7
           <Route
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}
