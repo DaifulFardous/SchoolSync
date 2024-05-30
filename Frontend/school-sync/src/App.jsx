@@ -3,6 +3,7 @@ import "./App.css";
 import { AuthProvider } from "./authContext/authContext";
 import AdaptiveLearning from "./components/AdaptiveLearning/AdaptiveLearning";
 import McqList from "./components/AdaptiveLearning/MCQ/McqList";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import Chatbot from "./components/Chatbot/Chatbot";
 import CourseDet from "./components/Courses/Course-details";
 import Courselist from "./components/Courses/Courselist";
@@ -20,7 +21,6 @@ import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSi
 import Signup from "./components/Signup/Signup";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
-import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
@@ -51,14 +51,11 @@ function App() {
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
-<<<<<<< HEAD
           <Route path="/courseList" element={<Course />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/teacher" element={<TeacherDashboard />} />
-=======
           <Route path="/studentCourses" element={<Course />} />
           {/* <Route path="/admin" element={<AdminDashboard />} /> */}
->>>>>>> 660d4e6053a0c1b412ba3cca8b60f8ecc1df7da7
           <Route
             path="/course-details/:courseId"
             element={<StudentCourseDetails />}
