@@ -7,8 +7,6 @@ import Search from "../common/Search";
 import Tabs from "./slices/Tabs";
 import Pagination from "./slices/Pagination";
 import CourseCard from "../common/CourseCard";
-import Pagination from "./slices/Pagination";
-import Tabs from "./slices/Tabs";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);

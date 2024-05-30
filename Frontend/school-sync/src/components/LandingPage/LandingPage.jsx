@@ -9,7 +9,6 @@ import logo from "../../assets/images/logo.png";
 import parents from "../../assets/images/parents.png";
 import student from "../../assets/images/student.png";
 import teacher from "../../assets/images/teacher.png";
-import SplitButton from "../Button/Dropdown";
 import Footer from "./Footer/Footer";
 
 const LandingPage = () => {
