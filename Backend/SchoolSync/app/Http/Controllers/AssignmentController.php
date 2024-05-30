@@ -56,4 +56,8 @@ class AssignmentController extends Controller
             'file_url' => $assignmentAnswer->file_path,
         ]);
     }
+    public function showAssignmentAnswer($id){
+        $answers = Answer::where('assignment_id',$id)->get();
+        return response()->json($answers);
+    }
 }
