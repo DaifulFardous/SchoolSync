@@ -3,6 +3,7 @@ import "./App.css";
 import { AuthProvider } from "./authContext/authContext";
 import AdaptiveLearning from "./components/AdaptiveLearning/page";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+
 import Chatbot from "./components/Chatbot/Chatbot";
 import CourseDet from "./components/Courses/Course-details";
 import Courselist from "./components/Courses/Courselist";
