@@ -63,7 +63,7 @@ const LandingPage = () => {
                 {/* <button className="text-lg bg-[#FF4800] text-white px-5 py-2 rounded-md cursor-pointer">
                   Login
                 </button> */}
-                <SplitButton />
+                {/* <SplitButton /> */}
               </>
             )}
           </nav>
