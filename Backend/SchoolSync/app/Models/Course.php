@@ -24,5 +24,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Instructor::class);
     }
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
 
 }
