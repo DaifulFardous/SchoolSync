@@ -58,7 +58,7 @@ class ConversationResponse(BaseModel):
 
 async def generate_response(history: List[Message]):
     chat = model.start_chat(history=[msg.dict() for msg in history])
-    response = chat.send_message(history[-1].parts[0])  # Send the last user message as input
+    response = chat.send_message(history[-1].parts[0])  
     return response.text
 
 @app.get("/")

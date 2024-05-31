@@ -17,10 +17,11 @@ export default function Mcq() {
   const [answers, setAnswers] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
-
+  const token = localStorage.getItem("token");
   const email = "rabibhaque200@gmail.com";
   const { contentId } = useParams();
   console.log(contentId);
+  console.log(token);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +58,7 @@ export default function Mcq() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSubmitted(true);
     const correctCount = questions.reduce((count, question, index) => {
       if (answers[index] === question.answer) {
@@ -65,7 +66,41 @@ export default function Mcq() {
       }
       return count;
     }, 0);
-    setCorrectAnswersCount(correctCount);
+
+    const data = new FormData();
+
+    data.append("content_id", contentId);
+    data.append("total_marks", questions.length);
+    data.append("achieved_marks", correctCount);
+
+    // for (const pair of data.entries()) {
+    //   console.log(`${pair[0]}: ${pair[1]}`);
+    // }
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/mcq/answer/upload",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status == 200) {
+        console.log("Set Answers in database successfully!");
+        setCorrectAnswersCount(correctCount);
+      }
+    } catch (error) {
+      console.log("Failed to fetch Instructors details", error);
+      if (error.response && error.response.status === 401) {
+        console.log("error response");
+      } else {
+        console.log(error);
+      }
+    }
   };
 
   return (
