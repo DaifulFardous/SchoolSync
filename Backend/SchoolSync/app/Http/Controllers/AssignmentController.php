@@ -88,12 +88,12 @@ class AssignmentController extends Controller
              $query->where('course_id', $courseId);
          })
          ->with(['content' => function($query) {
-             $query->select('id', 'title', 'course_id');
+             $query->select('id', 'name', 'course_id');
          }])
          ->get(['id', 'content_id', 'total_marks', 'achieved_marks']);
         $processedMarks = $marks->map(function($mark) {
             return [
-                'content_title' => $mark->content->title,
+                'content_title' => $mark->content->name,
                 'total_marks' => $mark->total_marks,
                 'achieved_marks' => $mark->achieved_marks,
                 'percentage' => ($mark->achieved_marks / $mark->total_marks) * 100,
