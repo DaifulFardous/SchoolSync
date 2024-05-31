@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import MCQ from "./slices/MCQ";
 // import Sidenav from "../components/SideNav/Sidenav";
 
@@ -10,6 +11,7 @@ export default function Mcq() {
   const [enableHighlight, setEnableHighlight] = useState(false);
   const [randomIDs, setRandomIDs] = useState<number[]>([]);
   const [mcqDataList, setMcqDataList] = useState([]);
+  const { contentId } = useParams();
 
   const handleWordSelection = (word: string) => {
     if (enableHighlight && !selectedWords.includes(word)) {
@@ -57,6 +59,7 @@ export default function Mcq() {
         try {
           await axios.post("http://localhost:3001/api/mcq", {
             email: "rabibhaque200@gmail.com",
+            contentId: contentId,
             ques_id: data.random_id,
             question: data.question,
             answer: data.answer,

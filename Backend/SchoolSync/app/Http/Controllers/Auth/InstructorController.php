@@ -26,7 +26,7 @@ class InstructorController extends Controller
         $instructor->name = $request->name;
         $instructor->email = $request->email;
         $instructor->password = bcrypt($request->password);
-        $instructor->image = asset('storage/' . $imageName);
+        $instructor->image = asset('storage/instructors/' . $imageName);
         $instructor->save();
 
         return response()->json([

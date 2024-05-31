@@ -9,6 +9,9 @@ export class MCQEntity {
   email: string;
 
   @Column()
+  contentId: number;
+
+  @Column()
   question: string;
 
   @Column()

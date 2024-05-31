@@ -12,28 +12,35 @@ class AssignmentController extends Controller
         $request->validate([
             'course_id' => 'required|integer',
             'assignment_name' => 'required|string',
-            'assignment_file' => 'required|file|mimes:pdf,doc,docx|max:2048',
-            'description' => 'required|string',
+            'assignment_subject' => 'required|string',
+            'num_of_ques' => 'required|integer',
+            'points' => 'required|integer',
+            'assignment_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
-        $assignmentFileName = time().'.'.$request->assignment_file->extension();
-        $request->assignment_file->storeAs('assignments', $assignmentFileName, 'public');
         $assignment = new Assignment();
         $assignment->course_id = $request->course_id;
         $assignment->name = $request->assignment_name;
-        $assignment->file_path = asset('storage/assignments/' . $assignmentFileName);
-        $assignment->description = $request->description;
+        $assignment->subject = $request->assignment_subject;
+        $assignment->num_of_ques = $request->num_of_ques; // Make sure to include this field
+        $assignment->points = $request->points;
+
+        if ($request->hasFile('assignment_file')) {
+            $assignmentFileName = time().'.'.$request->assignment_file->extension();
+            $request->assignment_file->storeAs('assignments', $assignmentFileName, 'public');
+            $assignment->file_path = asset('storage/assignments/' . $assignmentFileName);
+        }
+
         $assignment->save();
 
         return response()->json([
             'message' => 'Assignment Uploaded Successfully',
-            'file_url' => $assignment->file_path,
+            'file_url' => $assignment->file_path ?? null,
         ]);
     }
 
     public function showCourseAssignments($id){
         $assignments = Assignment::where('course_id', $id)->get();
-
         return response()->json($assignments);
     }
 
@@ -56,8 +63,9 @@ class AssignmentController extends Controller
             'file_url' => $assignmentAnswer->file_path,
         ]);
     }
+
     public function showAssignmentAnswer($id){
-        $answers = Answer::where('assignment_id',$id)->get();
+        $answers = Answer::where('assignment_id', $id)->get();
         return response()->json($answers);
     }
 }

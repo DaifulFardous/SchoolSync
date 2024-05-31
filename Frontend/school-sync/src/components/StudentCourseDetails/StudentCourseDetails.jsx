@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
 import Profile from "../common/Profile";
@@ -14,6 +14,7 @@ const StudentCourseDetails = () => {
   const token = localStorage.getItem("token");
   const { signOut } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch the course details using the courseId
@@ -82,6 +83,10 @@ const StudentCourseDetails = () => {
     }
   };
 
+  const handleExam = (contentId) => () => {
+    navigate(`/giveExam/${contentId}`);
+  };
+
   if (!course) return <div>Loading...</div>;
 
   return (
@@ -120,7 +125,10 @@ const StudentCourseDetails = () => {
                       {content.name}
                     </h3>
                     <p>{content.long_description}</p>
-                    <button className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto">
+                    <button
+                      className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto"
+                      onClick={handleExam(content.id)}
+                    >
                       Give Exam
                     </button>
                   </li>

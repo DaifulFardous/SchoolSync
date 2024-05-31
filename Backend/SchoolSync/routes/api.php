@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function
     Route::post('/content/create', [ContentController::class, 'create']);
     Route::post('/courses/instructor', [CourseController::class, 'getCoursesByInstructorName']);
     Route::get('/course/{id}/contents', [ContentController::class, 'showCourseContents']);
-        Route::post('/assignment/create', [AssignmentController::class, 'create']);
+    Route::post('/assignment/create', [AssignmentController::class, 'create']);
     Route::get('/instructor/course/{id}/assignments', [AssignmentController::class, 'showCourseAssignments']);
     Route::get('/instructor/assignment/{id}/answer', [AssignmentController::class, 'showAssignmentAnswer']);
 });

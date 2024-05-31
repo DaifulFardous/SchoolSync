@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import Sidenav from "../SideNav/Sidenav";
 import Header from "../common/Header";
-import UploadModal from "./slices/UploadModal";
 import CreateExamModal from "./slices/CreateExamModal";
 import Exam from "./slices/Exam";
+import UploadModal from "./slices/UploadModal";
 
 const TeacherExam = () => {
   const [isUploadModalOpen, setUploadModalOpen] = useState(false);
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const { courseId } = useParams();
+  console.log(courseId);
 
   const exams = [
     {
@@ -82,7 +85,7 @@ const TeacherExam = () => {
       </div>
       {isUploadModalOpen && <UploadModal onClose={handleCloseUploadModal} />}
       {isCreateModalOpen && (
-        <CreateExamModal onClose={handleCloseCreateModal} />
+        <CreateExamModal onClose={handleCloseCreateModal} courseId={courseId} />
       )}
     </div>
   );

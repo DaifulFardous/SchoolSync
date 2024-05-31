@@ -50,7 +50,7 @@ function App() {
           <Route path="/uppernav" element={<Uppernav />} />
           <Route path="/courses" element={<Courselist />} />
           <Route path="/courses-details" element={<CourseDet />} />
-          <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
+          {/* <Route path="/adaptiveLearning" element={<AdaptiveLearning />} /> */}
           <Route path="/giveMcq" element={<GiveMCQ />} />
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
@@ -60,7 +60,10 @@ function App() {
           <Route path="/teacher" element={<TeacherDashboard />} />
           <Route path="/studentCourses" element={<Course />} />
           <Route path="/studentExam" element={<StudentExam />} />
-          <Route path="/teacherExam" element={<TeacherExam />} />
+          <Route
+            path="/teacherAssignment/:courseId"
+            element={<TeacherExam />}
+          />
           {/* <Route path="/admin" element={<AdminDashboard />} /> */}
           <Route
             path="studentCourses/course-details/:courseId"
@@ -75,6 +78,12 @@ function App() {
             path="/teacher-course/:courseId"
             element={<TeacherCourseContent />}
           />
+
+          <Route path="/giveExam/:contentId" element={<GiveMCQ />}></Route>
+          <Route
+            path="/createQues/:contentId"
+            element={<AdaptiveLearning />}
+          ></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

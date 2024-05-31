@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidenav from "../SideNav/Sidenav";
 import Profile from "../common/Profile";
 import Search from "../common/Search";
@@ -14,6 +14,7 @@ const TeacherCourseContent = () => {
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch the course details using the courseId
@@ -73,6 +74,10 @@ const TeacherCourseContent = () => {
     }
   };
 
+  const handleCreateMCQ = (contentId) => () => {
+    navigate(`/createQues/${contentId}`);
+  };
+
   // const handleAddContent = (newContent) => {
   //   setCourse((prevCourse) => ({
   //     ...prevCourse,
@@ -81,6 +86,9 @@ const TeacherCourseContent = () => {
   // };
   const handleAddContent = (newContent) => {
     setContents((prevContents) => [...prevContents, newContent]);
+  };
+  const handleAddAssignment = () => {
+    navigate(`/teacherAssignment/${courseId}`);
   };
 
   if (!course) return <div>Loading...</div>;
@@ -109,13 +117,22 @@ const TeacherCourseContent = () => {
           <div className="mt-5">
             <div className="flex justify-between">
               <h2 className="text-xl font-bold">Course Contents</h2>
-              <button
-                className="px-5 py-2 rounded-md bg-[#6956E5] text-white font-bold"
-                onClick={() => setIsModalOpen(true)}
-              >
-                Add content
-              </button>
+              <div className="flex gap-2">
+                <button
+                  className="px-5 py-2 rounded-md bg-[#6956E5] text-white font-bold"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Add content
+                </button>
+                <button
+                  className="px-5 py-2 rounded-md bg-[#6956E5] text-white font-bold"
+                  onClick={handleAddAssignment}
+                >
+                  Add Assignment
+                </button>
+              </div>
             </div>
+
             {contents.length > 0 ? (
               <ul className="flex flex-col sm:gap-3 gap-5 py-5">
                 {contents.map((content, index) => (
@@ -127,6 +144,12 @@ const TeacherCourseContent = () => {
                       {content.name}
                     </h3>
                     <p>{content.long_description}</p>
+                    <button
+                      className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto"
+                      onClick={handleCreateMCQ(content.id)}
+                    >
+                      Make MCQ
+                    </button>
                   </li>
                 ))}
               </ul>

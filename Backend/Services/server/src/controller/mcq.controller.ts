@@ -16,10 +16,12 @@ class MCQController {
 
   async getMCQ(req: Request, res: Response) {
     try {
-      const { email } = req.params;
+      const { contentId } = req.params;
+      const numericContentId = parseInt(contentId);
+
       const mcq = await AppDataSource.getRepository(MCQEntity).find({
         where: {
-          email: email,
+          contentId: Equal(numericContentId),
         },
       });
 
@@ -64,10 +66,11 @@ class MCQController {
 
   async getMCQWithOptions(req: Request, res: Response) {
     try {
-      const { email } = req.params;
+      const { contentId } = req.params;
+      const numericContentId = parseInt(contentId);
       const mcq = await AppDataSource.getRepository(MCQEntity).find({
         where: {
-          email: email,
+          contentId: numericContentId,
         },
       });
 

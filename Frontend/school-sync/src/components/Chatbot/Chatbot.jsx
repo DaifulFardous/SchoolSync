@@ -1,21 +1,33 @@
 import React, { useState } from "react";
 
-import PromptsList from "./slices/PromptsList";
-import Prompt from "./slices/Prompt";
+import axios from "axios";
 import Profile from "./slices/Profile";
+import Prompt from "./slices/Prompt";
+import PromptsList from "./slices/PromptsList";
 
 const Chatbot = () => {
   const [prompts, setPrompts] = useState([]);
   const [messages, setMessages] = useState({});
   const [currentPrompt, setCurrentPrompt] = useState(null);
+  const [reply, setReply] = useState("");
+  const addNewPrompt = async () => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8080/conversation/create/"
+      );
+      const conversationId = response.data.conversation_id;
+      console.log(conversationId);
 
-  const addNewPrompt = () => {
-    const newPrompt = {
-      id: prompts.length + 1,
-      name: "Untitled Prompt",
-    };
-    setPrompts([...prompts, newPrompt]);
-    setCurrentPrompt(newPrompt);
+      const newPrompt = {
+        id: prompts.length + 1,
+        name: "Untitled Prompt",
+        conversationId: conversationId,
+      };
+      setPrompts([...prompts, newPrompt]);
+      setCurrentPrompt(newPrompt);
+    } catch (error) {
+      console.log("Failed to create a new conversation:", error);
+    }
   };
 
   const handleUpdateName = (id, newName) => {
@@ -33,7 +45,7 @@ const Chatbot = () => {
     }
   };
 
-  const handleSendMessage = (message) => {
+  const handleSendMessage = async (message) => {
     if (currentPrompt) {
       const promptId = currentPrompt.id;
       const newMessage = { text: message, sender: "user" };
@@ -43,11 +55,29 @@ const Chatbot = () => {
         [promptId]: [...(prevMessages[promptId] || []), newMessage],
       }));
 
-      const dummyReply = { text: "This is a dummy reply.", sender: "ChatGPT" };
-      setMessages((prevMessages) => ({
-        ...prevMessages,
-        [promptId]: [...(prevMessages[promptId] || []), dummyReply],
-      }));
+      try {
+        const response = await axios.post(
+          `http://127.0.0.1:8080/conversation/${currentPrompt.conversationId}/send_message/`,
+          {
+            role: "user",
+            parts: [message],
+          }
+        );
+
+        const replyMessage = {
+          text: response.data.response,
+          sender: "ChatGPT",
+        };
+        console.log(replyMessage.text);
+        setReply(replyMessage.text);
+
+        setMessages((prevMessages) => ({
+          ...prevMessages,
+          [promptId]: [...(prevMessages[promptId] || []), replyMessage],
+        }));
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      }
     }
   };
 
@@ -72,7 +102,8 @@ const Chatbot = () => {
             onUpdateName={handleUpdateName}
             onDeletePrompt={handleDeletePrompt}
             onSendMessage={handleSendMessage}
-            chatHistory={messages[currentPrompt.id] || []}
+            chatHistory={messages[currentPrompt.id]}
+            reply={reply}
           />
         )}
       </div>

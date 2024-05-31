@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Question from "./Questions";
 
 interface QuestionProps {
@@ -17,12 +18,14 @@ export default function Mcq() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const email = "rabibhaque200@gmail.com";
+  const { contentId } = useParams();
+  console.log(contentId);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const questionRes = await axios.get(
-          `http://localhost:3001/api/mcq/${email}`
+          `http://localhost:3001/api/mcq/${contentId}`
         );
 
         if (questionRes.status !== 200) {

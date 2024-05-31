@@ -1,15 +1,46 @@
+import axios from "axios";
 import React, { useState } from "react";
 
-const CreateExamModal = ({ onClose }) => {
+const CreateExamModal = ({ onClose, courseId }) => {
   const [examType, setExamType] = useState("");
   const [subject, setSubject] = useState("");
   const [term, setTerm] = useState("");
   const [questions, setQuestions] = useState("");
   const [points, setPoints] = useState("");
+  const token = localStorage.getItem("token");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ examType, subject, term, questions, points });
+    console.log({ examType, subject, questions, points });
+    console.log(courseId);
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/assignment/create",
+        {
+          courseId: courseId,
+          assignment_name: examType,
+          assignment_subject: subject,
+          num_of_ques: questions,
+          points: points,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error getting course:", error);
+
+      if (error.response && error.response.status === 401) {
+        console.log("error");
+      } else {
+        console.log("An error occurred. Please try again.");
+      }
+    }
+
     onClose();
   };
 
@@ -38,7 +69,7 @@ const CreateExamModal = ({ onClose }) => {
               required
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block text-gray-700">Term</label>
             <input
               type="text"
@@ -47,7 +78,7 @@ const CreateExamModal = ({ onClose }) => {
               className="w-full px-3 py-2 border rounded"
               required
             />
-          </div>
+          </div> */}
           <div className="mb-4">
             <label className="block text-gray-700">Number of Questions</label>
             <input
