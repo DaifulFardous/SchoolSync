@@ -24,7 +24,7 @@ class ContentController extends Controller
         $content = new Content();
         $content->course_id = $request->course_id;
         $content->name = $request->name;
-        $content->pdf = $pdfPath; // Assign the PDF path
+        $content->pdf =  asset('storage/pdfs/' . $pdfName);
         $content->short_description = $request->short_description;
         $content->long_description = $request->long_description;
         $content->save();
