@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function
     Route::get('/instructor/course/{id}/assignments', [AssignmentController::class, 'showCourseAssignments']);
     Route::get('/instructor/assignment/{id}/answer', [AssignmentController::class, 'showAssignmentAnswer']);
     Route::get('/instructor/marks/course/{user_id}/{course_id}', [AssignmentController::class, 'showMarks']);
-    Route::get('/instructor/marks/course/{user_id}/{content_id}', [AssignmentController::class, 'getUserContentMarks']);
+    Route::get('/instructor/marks/content/{user_id}/{content_id}', [AssignmentController::class, 'getUserContentMarks']);
 });
 
 //admin_routes
