@@ -16,6 +16,7 @@ export default function Mcq() {
   const [questions, setQuestions] = useState<QuestionProps[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   const email = "rabibhaque200@gmail.com";
   const { contentId } = useParams();
@@ -58,13 +59,20 @@ export default function Mcq() {
 
   const handleSubmit = () => {
     setIsSubmitted(true);
+    const correctCount = questions.reduce((count, question, index) => {
+      if (answers[index] === question.answer) {
+        return count + 1;
+      }
+      return count;
+    }, 0);
+    setCorrectAnswersCount(correctCount);
   };
 
   return (
     <div className="flex flex-col md:flex-row bg-pink-100 bg-opacity-20 px-5 min-h-[100vh]">
       <div className="flex-1">
         <div className="flex justify-center">
-          <button>Show Questions</button>
+          {/* <button>Show Questions</button> */}
         </div>
         <form action="" className="flex-1">
           {questions.map((question, index) => (
@@ -92,6 +100,14 @@ export default function Mcq() {
             Submit
           </button>
         </div>
+        {isSubmitted && (
+          <div className="flex justify-center m-5 md:w-[75%]">
+            <p>
+              You answered {correctAnswersCount} out of {questions.length}{" "}
+              questions correctly.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
