@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function
     Route::post('/assignment/create', [AssignmentController::class, 'create']);
     Route::get('/instructor/course/{id}/assignments', [AssignmentController::class, 'showCourseAssignments']);
     Route::get('/instructor/assignment/{id}/answer', [AssignmentController::class, 'showAssignmentAnswer']);
+    Route::get('/instructor/marks/course/{user_id}/{course_id}', [AssignmentController::class, 'showMarks']);
 });
 
 //admin_routes

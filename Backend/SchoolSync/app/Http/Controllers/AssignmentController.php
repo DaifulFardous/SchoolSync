@@ -82,4 +82,36 @@ class AssignmentController extends Controller
             'message' => 'MCQ Answer Uploaded Successfully',
         ]);
     }
+    public function showMarks($userId, $courseId){
+         $marks = MCQAnswer::where('user_id', $userId)
+         ->whereHas('content', function($query) use ($courseId) {
+             $query->where('course_id', $courseId);
+         })
+         ->with(['content' => function($query) {
+             $query->select('id', 'title', 'course_id');
+         }])
+         ->get(['id', 'content_id', 'total_marks', 'achieved_marks']);
+        $processedMarks = $marks->map(function($mark) {
+            return [
+                'content_title' => $mark->content->title,
+                'total_marks' => $mark->total_marks,
+                'achieved_marks' => $mark->achieved_marks,
+                'percentage' => ($mark->achieved_marks / $mark->total_marks) * 100,
+            ];
+        });
+        return response()->json($processedMarks);
+    }
+    public function getUserContentMarks($userId, $contentId)
+    {
+        $marks = MCQAnswer::where('user_id', $userId)
+            ->where('content_id', $contentId)
+            ->first();
+
+        if (!$marks) {
+            return response()->json(['error' => 'Marks not found for the specified user and content'], 404);
+        }
+
+        return response()->json($marks);
+    }
+
 }
