@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Assignment;
 use App\Models\Answer;
+use App\Models\MCQAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class AssignmentController extends Controller
 {
@@ -67,5 +69,17 @@ class AssignmentController extends Controller
     public function showAssignmentAnswer($id){
         $answers = Answer::where('assignment_id', $id)->get();
         return response()->json($answers);
+    }
+
+    public function mcqAnswer(Request $request){
+        $mcq = new MCQAnswer();
+        $mcq->user_id = Auth::user()->id;
+        $mcq->content_id = $request->content_id;
+        $mcq->total_marks = $request->total_marks;
+        $mcq->achieved_marks = $request->achieved_marks;
+        $mcq->save();
+        return response()->json([
+            'message' => 'MCQ Answer Uploaded Successfully',
+        ]);
     }
 }
