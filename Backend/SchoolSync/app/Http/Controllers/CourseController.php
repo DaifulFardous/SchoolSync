@@ -73,4 +73,18 @@ class CourseController extends Controller
             'data' => $instructor
         ]);
     }
+
+    public function getCoursesByInstructorName(Request $request)
+    {
+        $request->validate([
+            'instructor_name' => 'required|string'
+        ]);
+
+        $instructorName = $request->input('instructor_name');
+        $courses = Course::where('instructor_name', $instructorName)
+            ->select('id','name', 'image', 'short_description', 'long_description')
+            ->get();
+
+        return response()->json($courses);
+    }
 }

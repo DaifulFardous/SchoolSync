@@ -7,26 +7,57 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const token = localStorage.getItem("token");
 
+  const [stakeholder, setStakeholder] = useState(null);
+
   useEffect(() => {
-    fetchUserDetails();
+    const initializeProfile = async () => {
+      const ability = await checkAbility();
+      setStakeholder(ability);
+      await fetchUserDetails(ability);
+    };
+    initializeProfile();
   }, []);
 
-  const fetchUserDetails = async () => {
+  const checkAbility = async () => {
     try {
-      const response = await axios.get(
-        "http://127.0.0.1:8000/api/user/details",
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/token/ability",
         {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+          token: token,
         }
       );
 
+      const ability = response.data.abilities;
+      console.log(ability);
+      return ability;
+    } catch (error) {
+      console.log("Failed to check ability", error);
+      return "";
+    }
+  };
+
+  const fetchUserDetails = async (prop) => {
+    let endpoint = "";
+    if (prop == "user") {
+      endpoint = "http://127.0.0.1:8000/api/user/details";
+    } else if (prop == "admin") {
+      endpoint = "http://127.0.0.1:8000/api/admin/details";
+    } else {
+      endpoint = "http://127.0.0.1:8000/api/instructor/details";
+    }
+
+    try {
+      const response = await axios.get(endpoint, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (response.status === 200) {
-        console.log("Fethced Students:", response.data);
+        console.log("Fethced User Data:", response.data);
         setUserData(response.data);
-        console.log(userData.data.image);
+        // console.log(userData.data.image);
       }
     } catch (error) {
       console.error("Error creating course:", error);
@@ -39,7 +70,7 @@ const Profile = () => {
     }
   };
 
-  if (!userData) {
+  if (!userData || !userData.data) {
     return <div>Loading...</div>;
   }
 

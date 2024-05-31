@@ -1,14 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "./authContext/authContext";
-import AdaptiveLearning from "./components/AdaptiveLearning/AdaptiveLearning";
-import McqList from "./components/AdaptiveLearning/MCQ/McqList";
+import AdaptiveLearning from "./components/AdaptiveLearning/page";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+
 import Chatbot from "./components/Chatbot/Chatbot";
 import CourseDet from "./components/Courses/Course-details";
 import Courselist from "./components/Courses/Courselist";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Forgot from "./components/ForgotPass/Forgot";
+import GiveMCQ from "./components/GiveMCQ/Mcq";
 import LandingPage from "./components/LandingPage/LandingPage";
 import AdminLogin from "./components/Login/Admin Login/AdminLogin";
 import InstructorLogin from "./components/Login/Instructor Login/InstructorLogin";
@@ -20,12 +21,13 @@ import AdminSignUp from "./components/Signup/Admin Signup/AdminSignUp";
 import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSignUp";
 import Signup from "./components/Signup/Signup";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
+
+import StudentExam from "./components/StudentExam/StudentExam";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
+import TeacherExam from "./components/TeacherExam/TeacherExam";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
-import StudentExam from "./components/StudentExam/StudentExam";
-import TeacherExam from "./components/TeacherExam/TeacherExam";
 function App() {
   const token = localStorage.getItem("token");
 
@@ -48,8 +50,8 @@ function App() {
           <Route path="/uppernav" element={<Uppernav />} />
           <Route path="/courses" element={<Courselist />} />
           <Route path="/courses-details" element={<CourseDet />} />
-          <Route path="/adaptiveLearning" element={<AdaptiveLearning />} />
-          <Route path="/mcqList" element={<McqList />} />
+          {/* <Route path="/adaptiveLearning" element={<AdaptiveLearning />} /> */}
+          <Route path="/giveMcq" element={<GiveMCQ />} />
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/chatbot" element={<Chatbot />} />
@@ -58,16 +60,30 @@ function App() {
           <Route path="/teacher" element={<TeacherDashboard />} />
           <Route path="/studentCourses" element={<Course />} />
           <Route path="/studentExam" element={<StudentExam />} />
-          <Route path="/teacherExam" element={<TeacherExam />} />
+          <Route
+            path="/teacherAssignment/:courseId"
+            element={<TeacherExam />}
+          />
           {/* <Route path="/admin" element={<AdminDashboard />} /> */}
           <Route
-            path="/course-details/:courseId"
+            path="studentCourses/course-details/:courseId"
             element={<StudentCourseDetails />}
           />
+          {/* <Route
+            path="instructor/course-details/:courseId"
+            element={<TeacherCourseDetails />}
+          /> */}
+
           <Route
             path="/teacher-course/:courseId"
             element={<TeacherCourseContent />}
           />
+
+          <Route path="/giveExam/:contentId" element={<GiveMCQ />}></Route>
+          <Route
+            path="/createQues/:contentId"
+            element={<AdaptiveLearning />}
+          ></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

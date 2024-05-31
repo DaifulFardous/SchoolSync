@@ -17,8 +17,10 @@ class Assignment extends Model
     protected $fillable = [
         'course_id',
         'name',
+        'subject',
+        'num_of_ques',
+        'points',
         'file_path',
-        'description',
     ];
 
     // Relationships

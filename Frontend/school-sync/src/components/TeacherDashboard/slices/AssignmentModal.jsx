@@ -1,6 +1,8 @@
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 const AssignmentModal = ({ assignments, onClose }) => {
+  const token = localStorage.getItem("token");
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-md p-5 mx-5">

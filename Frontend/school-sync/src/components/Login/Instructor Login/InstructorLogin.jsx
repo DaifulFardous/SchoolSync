@@ -38,7 +38,7 @@ const InstructorLogin = () => {
         if (result.data.token) {
           localStorage.setItem("token", result.data.token);
           signIn("instructor", formData);
-          navigate("/home");
+          navigate("/teacher");
         } else {
           console.error("Login failed: No token received");
           setError("Wrong Password or Email");

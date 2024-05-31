@@ -2,16 +2,16 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
+import CourseCard from "../common/CourseCard";
 import Profile from "../common/Profile";
 import Search from "../common/Search";
-import Tabs from "./slices/Tabs";
-import Pagination from "./slices/Pagination";
-import CourseCard from "../common/CourseCard";
+import Pagination from "../studentCourses/slices/Pagination";
+import Tabs from "../studentCourses/slices/Tabs";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);
   const { signOut } = useContext(AuthContext);
-  const [tab, setTab] = useState("All courses");
+  const [tab, setTab] = useState("Ongoing Courses");
   const [currentPage, setCurrentPage] = useState(1);
   const [coursesPerPage] = useState(10);
   const [error, setError] = useState(null);
@@ -40,11 +40,14 @@ const Course = () => {
       );
       if (response.status == 200) {
         console.log("Ongoing Courses:", response.data);
-        setCourses(response.data);
+        const enrolledCourses = response.data.map((enrolledCourse) => ({
+          ...enrolledCourse.course,
+        }));
+        setCourses(enrolledCourses);
 
         setCourseName(response.data);
-        const course = couresName.name;
-        console.log(course);
+        // const course = couresName.name;
+        // console.log(course);
         setFlag(true);
       }
     } catch (error) {

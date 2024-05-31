@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('course_id');
             $table->string('name');
-            $table->string('file_path');
-            $table->text('description');
+            $table->string('subject');
+            $table->integer('num_of_ques');
+            $table->integer('points');
+            $table->string('file_path')->nullable();
             $table->timestamps();
+
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

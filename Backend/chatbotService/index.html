@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200">
+    <div id="app" class="flex h-screen">
+        <!-- Side Nav -->
+        <div class="w-1/5 bg-gray-800 text-white">
+            <div class="p-4">
+                <h1 class="text-lg font-semibold mb-4">Conversations</h1>
+                <ul id="conversations-list"></ul>
+                <button id="create-conversation" class="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">Create Conversation</button>
+            </div>
+        </div>
+        <!-- Chat Area -->
+        <div class="w-4/5 bg-white">
+            <div id="chat-area" class="p-4 h-full flex flex-col justify-between">
+                <div id="chats" class="overflow-y-auto"></div>
+                <div class="mt-4">
+                    <input id="user-message" type="text" class="w-full rounded border-gray-300 border p-2" placeholder="Type your message...">
+                    <button id="send-message" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">Send</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const conversationsList = document.getElementById('conversations-list');
+            const chatsDiv = document.getElementById('chats');
+            const createConversationBtn = document.getElementById('create-conversation');
+            const userMessageInput = document.getElementById('user-message');
+            const sendMessageBtn = document.getElementById('send-message');
+
+            // Function to fetch conversations
+            const fetchConversations = async () => {
+                const response = await fetch('/conversations/');
+                const conversations = await response.json();
+                conversationsList.innerHTML = conversations.map(conversationId => `<li><button class="text-left w-full bg-gray-700 rounded p-2 hover:bg-gray-600" onclick="selectConversation('${conversationId}')">${conversationId}</button></li>`).join('');
+            };
+
+            // Function to fetch chats for a conversation
+            const fetchChats = async (conversationId) => {
+                const response = await fetch(`/conversation/${conversationId}/chats/`);
+                const chats = await response.json();
+                chatsDiv.innerHTML = chats.map(chat => `<div>${chat.role === 'user' ? '<div class="text-right mb-1"><span class="bg-gray-300 p-2 rounded">' : '<div class="text-left mb-1"><span class="bg-blue-300 p-2 rounded">'}${chat.text}</span></div>`).join('');
+            };
+
+            // Function to create a conversation
+            const createConversation = async () => {
+                const response = await fetch('/conversation/create/', { method: 'POST' });
+                fetchConversations();
+            };
+
+            // Function to send a message in a conversation
+            const sendMessage = async () => {
+                const selectedConversation = document.querySelector('.bg-gray-700');
+                const message = userMessageInput.value.trim();
+                if (selectedConversation && message) {
+                    const response = await fetch(`/conversation/${selectedConversation.innerText}/send_message/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "role": "user", "parts": [message] })
+                    });
+                    userMessageInput.value = '';
+                    fetchChats(selectedConversation.innerText);
+                }
+            };
+
+            // Function to select a conversation
+            const selectConversation = (conversationId) => {
+                const conversationButtons = document.querySelectorAll('#conversations-list button');
+                conversationButtons.forEach(button => button.classList.remove('bg-gray-700'));
+                document.getElementById(conversationId).classList.add('bg-gray-700');
+                fetchChats(conversationId);
+            };
+
+            // Fetch conversations on page load
+            fetchConversations();
+
+            // Event listeners
+            createConversationBtn.addEventListener('click', createConversation);
+            sendMessageBtn.addEventListener('click', sendMessage);
+        });
+    </script>
+</body>
+</html>

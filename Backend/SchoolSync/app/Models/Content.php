@@ -11,6 +11,7 @@ class Content extends Model
     protected $fillable = [
         'course_id',
         'name',
+        'pdf',
         'image',
         'short_description',
         'long_description',
