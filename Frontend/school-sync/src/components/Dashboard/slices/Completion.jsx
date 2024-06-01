@@ -20,7 +20,9 @@ const Completion = ({ completions }) => {
               Chapter {completion.chapter}
             </div>
           </div>
-          <div className="w-2/4">{ProgressBar(completion.progress)}</div>
+          <div className="w-2/4">
+            <ProgressBar progress={completion.progress} />
+          </div>
         </div>
       ))}
     </div>
