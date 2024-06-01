@@ -6,7 +6,7 @@ use App\Models\Course;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
 use App\Models\Enrollment;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -89,9 +89,9 @@ class CourseController extends Controller
         return response()->json($courses);
     }
 
-    public function enrolledOrNot($userId, $courseId)
+    public function enrolledOrNot($courseId)
     {
-        $enrollment = Enrollment::where('user_id', $userId)
+        $enrollment = Enrollment::where('user_id',Auth::user()->id)
                                  ->where('course_id', $courseId)
                                  ->first();
 
