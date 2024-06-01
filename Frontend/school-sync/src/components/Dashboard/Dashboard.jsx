@@ -1,14 +1,43 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Sidenav from "../SideNav/Sidenav";
 import Header from "../common/Header";
 import Assignments from "./slices/Assignments";
 import Completion from "./slices/Completion";
 
 function Dashboard() {
+  const token = localStorage.getItem("token");
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+
+  useEffect(() => {
+    fetchEnrolledCourses();
+  }, []);
+
+  const fetchEnrolledCourses = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/enrolled-courses",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status == 200) {
+        console.log("Fetched Enrolled Courses:", response.data);
+        setEnrolledCourses(response.data);
+      }
+    } catch (error) {
+      console.log("Error fetching enrolled courses", error);
+    }
+  };
+
   const Completions = [
     {
       subject: "Organic chemistry",
       chapter: 1,
-      progress: 40,
+      progress: 100,
     },
     {
       subject: "State of matter",
