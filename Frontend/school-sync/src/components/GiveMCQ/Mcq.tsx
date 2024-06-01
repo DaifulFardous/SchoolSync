@@ -16,10 +16,12 @@ export default function Mcq() {
   const [questions, setQuestions] = useState<QuestionProps[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const token = localStorage.getItem("token");
   const email = "rabibhaque200@gmail.com";
   const { contentId } = useParams();
   console.log(contentId);
+  console.log(token);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,15 +58,56 @@ export default function Mcq() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSubmitted(true);
+    const correctCount = questions.reduce((count, question, index) => {
+      if (answers[index] === question.answer) {
+        return count + 1;
+      }
+      return count;
+    }, 0);
+
+    const data = new FormData();
+
+    data.append("content_id", contentId);
+    data.append("total_marks", questions.length);
+    data.append("achieved_marks", correctCount);
+
+    // for (const pair of data.entries()) {
+    //   console.log(`${pair[0]}: ${pair[1]}`);
+    // }
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/mcq/answer/upload",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status == 200) {
+        console.log("Set Answers in database successfully!");
+        setCorrectAnswersCount(correctCount);
+      }
+    } catch (error) {
+      console.log("Failed to fetch Instructors details", error);
+      if (error.response && error.response.status === 401) {
+        console.log("error response");
+      } else {
+        console.log(error);
+      }
+    }
   };
 
   return (
     <div className="flex flex-col md:flex-row bg-pink-100 bg-opacity-20 px-5 min-h-[100vh]">
       <div className="flex-1">
         <div className="flex justify-center">
-          <button>Show Questions</button>
+          {/* <button>Show Questions</button> */}
         </div>
         <form action="" className="flex-1">
           {questions.map((question, index) => (
@@ -92,6 +135,14 @@ export default function Mcq() {
             Submit
           </button>
         </div>
+        {isSubmitted && (
+          <div className="flex justify-center m-5 md:w-[75%]">
+            <p>
+              You answered {correctAnswersCount} out of {questions.length}{" "}
+              questions correctly.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
