@@ -3,7 +3,6 @@ import "./App.css";
 import { AuthProvider } from "./authContext/authContext";
 import AdaptiveLearning from "./components/AdaptiveLearning/page";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
-
 import Chatbot from "./components/Chatbot/Chatbot";
 import CourseDet from "./components/Courses/Course-details";
 import Courselist from "./components/Courses/Courselist";
@@ -21,13 +20,14 @@ import AdminSignUp from "./components/Signup/Admin Signup/AdminSignUp";
 import InstructorSignUp from "./components/Signup/Instructor Signup/InstructorSignUp";
 import Signup from "./components/Signup/Signup";
 import StudentCourseDetails from "./components/StudentCourseDetails/StudentCourseDetails";
-
 import StudentExam from "./components/StudentExam/StudentExam";
 import TeacherCourseContent from "./components/TeacherCourseContent/TeacherCourseContent";
 import TeacherDashboard from "./components/TeacherDashboard/TeacherDashboard";
 import TeacherExam from "./components/TeacherExam/TeacherExam";
 import Uppernav from "./components/UpperNav/Uppernav";
 import Course from "./components/studentCourses/Course";
+import ProtectedRoute from "./ProtectedRoute";
+
 function App() {
   const token = localStorage.getItem("token");
 
@@ -36,21 +36,18 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-
-          <Route path="/login" element={<Login />} />
-
-          <Route path="/instructor-login" element={<InstructorLogin />} />
-          <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/instructor-signup" element={<InstructorSignUp />} />
-          <Route path="/admin-signup" element={<AdminSignUp />} />
+          <Route path="/login" element={<ProtectedRoute component={Login} redirectTo="/home" />} />
+          <Route path="/instructor-login" element={<ProtectedRoute component={InstructorLogin} redirectTo="/home" />} />
+          <Route path="/admin-login" element={<ProtectedRoute component={AdminLogin} redirectTo="/home" />} />
+          <Route path="/signup" element={<ProtectedRoute component={Signup} redirectTo="/home" />} />
+          <Route path="/instructor-signup" element={<ProtectedRoute component={InstructorSignUp} redirectTo="/home" />} />
+          <Route path="/admin-signup" element={<ProtectedRoute component={AdminSignUp} redirectTo="/home" />} />
           <Route path="/Forgot" element={<Forgot />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/sidenav" element={<Sidenav />} />
           <Route path="/uppernav" element={<Uppernav />} />
           <Route path="/courses" element={<Courselist />} />
           <Route path="/courses-details" element={<CourseDet />} />
-          {/* <Route path="/adaptiveLearning" element={<AdaptiveLearning />} /> */}
           <Route path="/giveMcq" element={<GiveMCQ />} />
           <Route path="/home" element={<Dashboard />} />
           <Route path="/edit" element={<Edit />} />
@@ -60,30 +57,11 @@ function App() {
           <Route path="/teacher" element={<TeacherDashboard />} />
           <Route path="/studentCourses" element={<Course />} />
           <Route path="/studentExam" element={<StudentExam />} />
-          <Route
-            path="/teacherAssignment/:courseId"
-            element={<TeacherExam />}
-          />
-          {/* <Route path="/admin" element={<AdminDashboard />} /> */}
-          <Route
-            path="studentCourses/course-details/:courseId"
-            element={<StudentCourseDetails />}
-          />
-          {/* <Route
-            path="instructor/course-details/:courseId"
-            element={<TeacherCourseDetails />}
-          /> */}
-
-          <Route
-            path="/teacher-course/:courseId"
-            element={<TeacherCourseContent />}
-          />
-
-          <Route path="/giveExam/:contentId" element={<GiveMCQ />}></Route>
-          <Route
-            path="/createQues/:contentId"
-            element={<AdaptiveLearning />}
-          ></Route>
+          <Route path="/teacherAssignment/:courseId" element={<TeacherExam />} />
+          <Route path="studentCourses/course-details/:courseId" element={<StudentCourseDetails />} />
+          <Route path="/teacher-course/:courseId" element={<TeacherCourseContent />} />
+          <Route path="/giveExam/:contentId" element={<GiveMCQ />} />
+          <Route path="/createQues/:contentId" element={<AdaptiveLearning />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
