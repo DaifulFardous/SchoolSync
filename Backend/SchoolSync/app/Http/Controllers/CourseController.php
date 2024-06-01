@@ -102,4 +102,10 @@ class CourseController extends Controller
         }
         return response()->json($response);
     }
+    public function totalUsers($courseId)
+    {
+        $userCount = Enrollment::where('course_id', $courseId)->count();
+        $response = ['total_users' => $userCount];
+        return response()->json($response);
+    }
 }
