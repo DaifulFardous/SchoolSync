@@ -14,20 +14,37 @@ const StudentCourseDetails = () => {
   const token = localStorage.getItem("token");
   const { signOut } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const [buttonStatus, setButtonStatus] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch the course details using the courseId
     // const courseData = dummy.find((course) => course.id === parseInt(courseId));
-
+    rednerButton();
     fetchCourseDetails();
-    fetchCourseContents();
+    if (buttonStatus.status == "yes") {
+      fetchCourseContents();
+    }
   }, [courseId]);
 
   // useEffect(() => {
   //   // Log the course state whenever it changes
   //   console.log("Course state updated:", course);
   // }, [course]);
+
+  const rednerButton = async () => {
+    const response = await axios.get(
+      `http://127.0.0.1:8000/api/course/enrolled/or/not/${courseId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("status:", response.data);
+    setButtonStatus(response.data);
+  };
 
   const fetchCourseDetails = async () => {
     try {
@@ -87,6 +104,20 @@ const StudentCourseDetails = () => {
     navigate(`/giveExam/${contentId}`);
   };
 
+  const handleEnroll = async () => {
+    try {
+      await axios.get(`http://127.0.0.1:8000/api/enroll/course/${courseId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setButtonStatus("yes");
+    } catch (error) {
+      console.log("Error Enrolling Course");
+    }
+  };
+
   if (!course) return <div>Loading...</div>;
 
   return (
@@ -113,7 +144,18 @@ const StudentCourseDetails = () => {
             </div>
           </div>
           <div className="mt-5">
-            <h2 className="text-xl font-bold">Course Contents</h2>
+            <div className="flex">
+              <h2 className="text-xl font-bold">Course Contents</h2>
+              {buttonStatus.status === "no" ? (
+                <button
+                  className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto"
+                  onClick={handleEnroll}
+                >
+                  Enroll
+                </button>
+              ) : null}
+            </div>
+
             {contents && contents.length > 0 ? (
               <ul className="flex flex-col sm:gap-3 gap-5 py-5">
                 {contents.map((content, index) => (
@@ -124,7 +166,7 @@ const StudentCourseDetails = () => {
                     <h3 className="font-semibold bg-[#A4F7B1] min-h-[60px] min-w-[150px] rounded-md p-2 flex items-center justify-center">
                       {content.name}
                     </h3>
-                    <p>{content.long_description}</p>
+                    <p className="flex-grow">{content.long_description}</p>
                     <button
                       className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto"
                       onClick={handleExam(content.id)}

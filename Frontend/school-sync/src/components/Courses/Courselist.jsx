@@ -3,10 +3,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { AuthContext } from "../../authContext/authContext";
 import Sidenav from "../SideNav/Sidenav";
-import CouresesHeader from "./Slices/CoursesHeader";
+import Header from "../common/Header";
 import EnrolledStudentsModal from "./Slices/EnrolledStudentsModal";
 import Modal from "./Slices/Modal";
-import Header from "../common/Header";
 
 const Courselist = () => {
   const [modal, setModal] = useState(false);
@@ -209,7 +208,7 @@ const Courselist = () => {
         <div className="grid grid-cols-5 gap-5 w-full bg-black bg-opacity-5 p-5 place-content-center place-items-center">
           <div className="font-bold">Course Name </div>
           <div className="font-bold">Assigned Teacher</div>
-          <div className="font-bold">Enroll Students</div>
+          {/* <div className="font-bold">Enroll Students</div> */}
           <div className="font-bold">Total Enrolled Students</div>
           <div className="font-bold"></div>
           <>
