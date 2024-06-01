@@ -1,6 +1,6 @@
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import chatbot from "../../assets/images/AI_chatbot.png";
 import overview from "../../assets/images/Overview.png";
 import quiz from "../../assets/images/Quiz_Generate.png";
@@ -10,10 +10,20 @@ import parents from "../../assets/images/parents.png";
 import student from "../../assets/images/student.png";
 import teacher from "../../assets/images/teacher.png";
 import Footer from "./Footer/Footer";
+import { useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const LandingPage = () => {
   const token = localStorage.getItem("token");
   const navigateTo = useNavigate();
+  const [logShowDropdown, setLogShowDropdown] = useState(false);
+  const [signShowDropdown, setSignShowDropdown] = useState(false);
+  const toggleLogDropdown = () => {
+    setLogShowDropdown(!logShowDropdown);
+  };
+  const toggleSignDropdown = () => {
+    setSignShowDropdown(!signShowDropdown);
+  };
   const handleLogout = () => {
     axios
       .get("http://127.0.0.1:8000/api/logout")
@@ -59,12 +69,70 @@ const LandingPage = () => {
                 </div>
               </>
             ) : (
-              <>
-                {/* <button className="text-lg bg-[#FF4800] text-white px-5 py-2 rounded-md cursor-pointer">
-                  Login
-                </button> */}
-                
-              </>
+              <div className="flex gap-2">
+                <div className="relative">
+                  <button
+                    className="text-black px-3 py-2 rounded-sm cursor-pointer flex gap-5 items-center border"
+                    onClick={toggleLogDropdown}
+                  >
+                    Login
+                    {!logShowDropdown ? <FaChevronDown /> : <FaChevronUp />}
+                  </button>
+                  {logShowDropdown && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
+                      <Link
+                        to="/login"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >
+                        Student Login
+                      </Link>
+                      <Link
+                        to="/instructor-login"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >
+                        Teacher Login
+                      </Link>
+                      <Link
+                        to="/admin-login"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >
+                        Admin Login
+                      </Link>
+                    </div>
+                  )}
+                </div>
+                <div className="relative">
+                  <button
+                    className="text-black px-3 py-2 rounded-sm cursor-pointer flex gap-5 items-center border"
+                    onClick={toggleSignDropdown}
+                  >
+                    Sign up
+                    {!signShowDropdown ? <FaChevronDown /> : <FaChevronUp />}
+                  </button>
+                  {signShowDropdown && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
+                      <Link
+                        to="/signUp"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >
+                        Student Sign Up
+                      </Link>
+                      <Link
+                        to="/instructor-signUp"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >
+                        Teacher Sign Up
+                      </Link>
+                      <Link
+                        to="/admin-signUp"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >
+                        Admin Sign Up
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
             )}
           </nav>
         </header>
