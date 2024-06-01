@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
+use App\Models\Enrollment;
 use Auth;
 
 class CourseController extends Controller
@@ -86,5 +87,19 @@ class CourseController extends Controller
             ->get();
 
         return response()->json($courses);
+    }
+
+    public function enrolledOrNot($userId, $courseId)
+    {
+        $enrollment = Enrollment::where('user_id', $userId)
+                                 ->where('course_id', $courseId)
+                                 ->first();
+
+        if ($enrollment) {
+            $response = ['status' => 'yes'];
+        } else {
+            $response = ['status' => 'no'];
+        }
+        return response()->json($response);
     }
 }
