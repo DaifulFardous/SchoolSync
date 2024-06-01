@@ -11,6 +11,7 @@ const StudentCourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
   const [contents, setContents] = useState([]);
+  const [attemptedExams, setAttemptedExams] = useState([]);
   const token = localStorage.getItem("token");
   const { signOut } = useContext(AuthContext);
   const [error, setError] = useState("");
@@ -18,52 +19,41 @@ const StudentCourseDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch the course details using the courseId
-    // const courseData = dummy.find((course) => course.id === parseInt(courseId));
-    rednerButton();
-    fetchCourseDetails();
-    if (buttonStatus.status == "yes") {
-      fetchCourseContents();
-    }
+    fetchCourseDetailsAndButtonStatus();
   }, [courseId]);
 
-  // useEffect(() => {
-  //   // Log the course state whenever it changes
-  //   console.log("Course state updated:", course);
-  // }, [course]);
-
-  const rednerButton = async () => {
-    const response = await axios.get(
-      `http://127.0.0.1:8000/api/course/enrolled/or/not/${courseId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log("status:", response.data);
-    setButtonStatus(response.data);
-  };
-
-  const fetchCourseDetails = async () => {
+  const fetchCourseDetailsAndButtonStatus = async () => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/api/user/course/${courseId}`,
-        {
+      const [courseDetailsResponse, buttonStatusResponse] = await Promise.all([
+        axios.get(`http://127.0.0.1:8000/api/user/course/${courseId}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
+        }),
+        axios.get(
+          `http://127.0.0.1:8000/api/course/enrolled/or/not/${courseId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ),
+      ]);
 
-      if (response.status == 200) {
-        console.log(response.data);
-        setCourse(response.data);
+      if (courseDetailsResponse.status === 200) {
+        setCourse(courseDetailsResponse.data);
+      }
+
+      if (buttonStatusResponse.status === 200) {
+        setButtonStatus(buttonStatusResponse.data);
+        if (buttonStatusResponse.data.status === "yes") {
+          fetchCourseContents();
+        }
       }
     } catch (error) {
-      console.log("Failed to fetch courses", error);
+      console.log("Failed to fetch course details or button status", error);
       if (error.response && error.response.status === 401) {
         setError("Unauthorized. Please log in again.");
         signOut();
@@ -85,9 +75,9 @@ const StudentCourseDetails = () => {
         }
       );
 
-      if (response.status == 200) {
-        console.log(response.data);
+      if (response.status === 200) {
         setContents(response.data);
+        fetchAttemptedExams(response.data);
       }
     } catch (error) {
       console.log("Failed to fetch contents", error);
@@ -97,6 +87,33 @@ const StudentCourseDetails = () => {
       } else {
         setError("An error occurred. Please try again.");
       }
+    }
+  };
+
+  const fetchAttemptedExams = async (contents) => {
+    try {
+      const attempts = await Promise.all(
+        contents.map((content) =>
+          axios.get(
+            `http://127.0.0.1:8000/api/content/exam/attempt/or/not/${content.id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+        )
+      );
+
+      const attemptedExams = attempts.map((response, index) => ({
+        contentId: contents[index].id,
+        status: response.data.status,
+      }));
+
+      setAttemptedExams(attemptedExams);
+    } catch (error) {
+      console.log("Failed to fetch attempted exams", error);
     }
   };
 
@@ -112,7 +129,8 @@ const StudentCourseDetails = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setButtonStatus("yes");
+      setButtonStatus({ status: "yes" });
+      fetchCourseContents();
     } catch (error) {
       console.log("Error Enrolling Course");
     }
@@ -156,7 +174,7 @@ const StudentCourseDetails = () => {
               ) : null}
             </div>
 
-            {contents && contents.length > 0 ? (
+            {contents.length > 0 ? (
               <ul className="flex flex-col sm:gap-3 gap-5 py-5">
                 {contents.map((content, index) => (
                   <li
@@ -167,12 +185,17 @@ const StudentCourseDetails = () => {
                       {content.name}
                     </h3>
                     <p className="flex-grow">{content.long_description}</p>
-                    <button
-                      className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto"
-                      onClick={handleExam(content.id)}
-                    >
-                      Give Exam
-                    </button>
+                    {attemptedExams.find(
+                      (exam) =>
+                        exam.contentId === content.id && exam.status === "no"
+                    ) && (
+                      <button
+                        className="rounded bg-blue-500 text-white px-5 py-2 sm:ml-auto"
+                        onClick={handleExam(content.id)}
+                      >
+                        Give Exam
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>

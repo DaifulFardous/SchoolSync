@@ -3,7 +3,9 @@ import React from "react";
 function Assignments({ assignments }) {
   return (
     <div className="border-0 bg-[#FFFAFA] rounded-[20px] p-5 flex flex-col gap-5 max-h-[400px] overflow-y-auto">
-      <div className="text-black text-[20px] font-bold">Assignments</div>
+      <div className="text-black text-[20px] font-bold">
+        Attempted MCQs Details
+      </div>
       {assignments.map((assignment, index) => (
         <div
           key={index}
@@ -11,19 +13,21 @@ function Assignments({ assignments }) {
         >
           <div className="flex flex-col gap-2">
             <div className="text-black text-[14px] font-bold">
-              {assignment.subject}
+              {assignment.content_title}
             </div>
-            <div className="text-black text-[12px]">
-              Chapter {assignment.chapter}
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="text-black text-[14px] font-bold">Daily Task</div>
-            <div className="text-black text-[12px]">Page {assignment.page}</div>
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-black text-[14px] font-bold">
-              {assignment.deadline}
+              Achieved Marks
+            </div>
+            <div className="text-black text-[12px] text-center">
+              {assignment.achieved_marks}
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-black text-[14px] font-bold">Out of</div>
+            <div className="text-black text-[14px] font-bold text-center">
+              {assignment.total_marks}
             </div>
           </div>
           <div className="flex flex-col gap-2">
@@ -34,7 +38,7 @@ function Assignments({ assignments }) {
                   : "text-[#1CC800]"
               }`}
             >
-              {assignment.status}
+              Reviewed
             </div>
           </div>
         </div>

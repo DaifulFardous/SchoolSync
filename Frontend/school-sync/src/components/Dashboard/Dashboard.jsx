@@ -9,6 +9,7 @@ function Dashboard() {
   const token = localStorage.getItem("token");
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [completions, setCompletions] = useState([]);
+  const [contents, setContents] = useState([]);
 
   useEffect(() => {
     fetchEnrolledCourses();
@@ -26,12 +27,37 @@ function Dashboard() {
         }
       );
 
-      if (response.status == 200) {
-        console.log("Fetched Contents of Course:", response.data);
+      if (response.status === 200) {
+        console.log(`Fetched Contents of Course ${courseId}:`, response.data);
         return response.data;
       }
     } catch (error) {
-      console.log("Error fetchihng Contents of Course", error);
+      console.log(`Error fetching contents of course ${courseId}`, error);
+      return [];
+    }
+  };
+
+  const fetchAttemptedMCQs = async (courseId) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/marks/course/${courseId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log(
+          `Fetched MCQ attempts for Course ${courseId}:`,
+          response.data
+        );
+        return response.data;
+      }
+    } catch (error) {
+      console.log(`Error fetching MCQ attempts for course ${courseId}`, error);
       return [];
     }
   };
@@ -52,42 +78,41 @@ function Dashboard() {
         console.log("Fetched Enrolled Courses:", response.data);
         setEnrolledCourses(response.data);
 
+        const allContents = [];
         const completionsData = await Promise.all(
           response.data.map(async (course) => {
-            const contents = await fetchContentsOfCourse(course.course_id);
-            // console.log(contents.length);
+            const courseContents = await fetchContentsOfCourse(
+              course.course_id
+            );
+            const attempts = await fetchAttemptedMCQs(course.course_id);
+
+            // Ensure that contents and attempts are fetched and have valid lengths
+            const contentsLength = courseContents.length || 1; // Avoid division by zero
+            const attemptsLength = attempts.length || 0;
+
+            console.log(
+              `Course ${course.course_id} - Contents Length: ${contentsLength}, Attempts Length: ${attemptsLength}`
+            );
+
+            allContents.push(...attempts); // Add attempts to allContents
+
             return {
               subject: course.course.name,
               chapter: 1, // Placeholder, adjust as necessary
-              progress: Math.floor(Math.random() * 100), // Placeholder, replace with actual progress data
-              contentsLength: contents.length,
+              progress: (attemptsLength / contentsLength) * 100,
             };
           })
         );
 
         setCompletions(completionsData);
-        console.log(completions);
+        setContents(allContents); // Set contents to allContents which includes attempted MCQs
+        console.log("Completions:", completionsData);
+        console.log("All Contents:", allContents);
       }
     } catch (error) {
       console.log("Error fetching enrolled courses", error);
     }
   };
-  const AssignmentsData = [
-    {
-      subject: "Organic chemistry",
-      chapter: 1,
-      page: 14,
-      deadline: "10:00 AM",
-      status: "Pending",
-    },
-    {
-      subject: "State of matter",
-      chapter: 2,
-      page: 19,
-      deadline: "11:00 AM",
-      status: "Completed",
-    },
-  ];
 
   return (
     <div className="flex sm:gap-5 bg-[#E5EAEA]">
@@ -96,7 +121,7 @@ function Dashboard() {
         <Header pageName={"Dashboard"} />
         <div className="flex flex-col gap-10">
           <Completion completions={completions} />
-          <Assignments assignments={AssignmentsData} />
+          <Assignments assignments={contents} />
         </div>
       </div>
     </div>
