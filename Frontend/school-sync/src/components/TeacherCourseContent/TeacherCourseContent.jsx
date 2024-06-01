@@ -149,12 +149,12 @@ const TeacherCourseContent = () => {
                 >
                   Add content
                 </button>
-                <button
+                {/* <button
                   className="px-5 py-2 rounded-md bg-[#6956E5] text-white font-bold"
                   onClick={handleAddAssignment}
                 >
                   Add Assignment
-                </button>
+                </button> */}
               </div>
             </div>
 

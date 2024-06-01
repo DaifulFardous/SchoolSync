@@ -1,29 +1,49 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   HiLogout,
   HiMenu,
   HiOutlineNewspaper,
-  HiOutlinePencilAlt,
   HiOutlineViewGrid,
-  HiQuestionMarkCircle,
 } from "react-icons/hi";
-import { HiComputerDesktop, HiDocumentText } from "react-icons/hi2";
+import { HiComputerDesktop } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import Logo from "../common/Logo";
-
-const navItems = [
-  { href: "/home", icon: <HiOutlineViewGrid />, label: "Dashboard" },
-  { href: "/home", icon: <HiOutlinePencilAlt />, label: "Exams" },
-  { href: "/courses", icon: <HiOutlineNewspaper />, label: "Courses" },
-  { href: "/home", icon: <HiQuestionMarkCircle />, label: "Suggestions" },
-  { href: "/home", icon: <HiDocumentText />, label: "Assignments" },
-  { href: "/chatbot", icon: <HiComputerDesktop />, label: "AI Chatbot" },
-];
 
 export default function Sidenav() {
   const [isExpanded, setIsExpanded] = useState(true);
   const navigateTo = useNavigate();
+  const token = localStorage.getItem("token");
+  const [navItems, setNavItems] = useState([]);
+
+  useEffect(() => {
+    checkAbility();
+  }, []);
+
+  const checkAbility = async () => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/token/ability",
+        {
+          token: token,
+        }
+      );
+
+      const ability = response.data.abilities;
+      console.log(ability);
+
+      // Set the appropriate navItems based on user's ability
+      if (ability.includes("user")) {
+        setNavItems(navItemsForUser);
+      } else if (ability.includes("instructor")) {
+        setNavItems(navItemForInstructor);
+      } else if (ability.includes("admin")) {
+        setNavItems(navItemForAdmin);
+      }
+    } catch (error) {
+      console.log("Failed to check ability", error);
+    }
+  };
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -101,3 +121,18 @@ export default function Sidenav() {
     </aside>
   );
 }
+
+const navItemsForUser = [
+  { href: "/home", icon: <HiOutlineViewGrid />, label: "Dashboard" },
+  { href: "/studentCourses", icon: <HiOutlineNewspaper />, label: "Courses" },
+  { href: "/chatbot", icon: <HiComputerDesktop />, label: "AI Chatbot" },
+];
+const navItemForInstructor = [
+  { href: "/teacher", icon: <HiOutlineViewGrid />, label: "Dashboard" },
+  { href: "/chatbot", icon: <HiComputerDesktop />, label: "AI Chatbot" },
+];
+const navItemForAdmin = [
+  { href: "/admin", icon: <HiOutlineViewGrid />, label: "Dashboard" },
+  { href: "/courses", icon: <HiOutlineNewspaper />, label: "Courses" },
+  { href: "/chatbot", icon: <HiComputerDesktop />, label: "AI Chatbot" },
+];
