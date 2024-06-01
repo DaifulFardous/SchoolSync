@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Content;
+use App\Models\MCQAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
 {
@@ -37,5 +39,17 @@ class ContentController extends Controller
         $courseContents = Content::where('course_id', $courseId)->get();
 
         return response()->json($courseContents);
+    }
+    public function examAttemptOrNot($contentId){
+        $mcq = MCQAnswer::where('user_id',Auth::user()->id)
+        ->where('content_id', $contentId)
+        ->first();
+
+        if ($mcq) {
+        $response = ['status' => 'yes'];
+        } else {
+        $response = ['status' => 'no'];
+        }
+        return response()->json($response);
     }
 }

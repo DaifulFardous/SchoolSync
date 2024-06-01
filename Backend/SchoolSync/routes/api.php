@@ -43,6 +43,9 @@ Route::group(['middleware' => ['auth:sanctum','abilities:user']], function() {
     Route::post('/assignment/answer/upload', [AssignmentController::class, 'uploadAssignmentAnswer']);
     Route::post('/mcq/answer/upload', [AssignmentController::class, 'mcqAnswer']);
     Route::get('/course/enrolled/or/not/{course_id}', [CourseController::class, 'enrolledOrNot']);
+    Route::get('/content/exam/attempt/or/not/{content_id}', [ContentController::class, 'examAttemptOrNot']);
+    Route::get('marks/course/{course_id}', [CourseController::class, 'userTotalMarks']);
+    Route::get('marks/content/{content_id}', [CourseController::class, 'userMarks']);
 });
 
 //instructor_routes
