@@ -79,6 +79,10 @@ Route::group(['middleware' => ['auth:sanctum','abilities:admin']], function() {
     Route::get('/get/instructor/{id}', [CourseController::class, 'getInstructor']);
     Route::get('course/status/{id}',[CourseController::class,'status']);
     Route::get('admin/course/{id}/total/users',[CourseController::class,'totalUsers']);
+    Route::get('total/users',[AdminController::class,'totalUsers']);
+    Route::get('total/instructors',[AdminController::class,'totalInstructors']);
+    Route::get('total/admins',[AdminController::class,'totalAdmins']);
+    Route::get('total/courses',[AdminController::class,'totalCourses']);
 });
 
 
