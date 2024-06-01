@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:instructor']], function
     Route::get('/instructor/assignment/{id}/answer', [AssignmentController::class, 'showAssignmentAnswer']);
     Route::get('/instructor/marks/course/{user_id}/{course_id}', [AssignmentController::class, 'showMarks']);
     Route::get('/instructor/marks/content/{user_id}/{content_id}', [AssignmentController::class, 'getUserContentMarks']);
-    Route::get('instructor/course/{id}/total/users',[CourseController::class,'totalUsers']);
+    Route::get('/instructor/course/{id}/total/users',[CourseController::class,'totalUsers']);
 });
 
 //admin_routes
@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth:sanctum','abilities:admin']], function() {
     Route::get('/courses', [CourseController::class, 'getAllCourses']);
     Route::get('/get/instructor/{id}', [CourseController::class, 'getInstructor']);
     Route::get('course/status/{id}',[CourseController::class,'status']);
-    Route::get('admin/course/{id}/total/users',[CourseController::class,'totalUsers']);
+    Route::get('/admin/course/{id}/total/users',[CourseController::class,'totalUsers']);
 });
 
 

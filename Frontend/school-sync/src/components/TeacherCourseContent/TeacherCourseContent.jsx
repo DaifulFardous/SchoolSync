@@ -13,6 +13,7 @@ const TeacherCourseContent = () => {
   const [contents, setContents] = useState([]);
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [totalEnrolled, setTotalEnrolled] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -20,7 +21,29 @@ const TeacherCourseContent = () => {
     // Fetch the course details using the courseId
     fetchCourseDetails();
     fetchCourseContents();
+    getTotalEnrolledStudents();
   }, [courseId]);
+
+  const getTotalEnrolledStudents = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/instructor/course/${courseId}/total/users`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setTotalEnrolled(response.data);
+        console.log(totalEnrolled.total_users);
+      }
+    } catch (error) {
+      console.log("Failed to fetch total enrolled students", error);
+      return 0;
+    }
+  };
 
   const fetchCourseDetails = async () => {
     try {
@@ -110,7 +133,9 @@ const TeacherCourseContent = () => {
               className="sm:h-[200px] sm:w-[300px]"
             />
             <div>
-              <h1 className="text-2xl font-bold">{course.name}</h1>
+              <h1 className="text-2xl font-bold">
+                {course.name} ( Total Enrolled : {totalEnrolled.total_users} )
+              </h1>
               <p className="text-sm">{course.long_description}</p>
             </div>
           </div>

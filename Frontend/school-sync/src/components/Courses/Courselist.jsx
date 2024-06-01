@@ -35,9 +35,23 @@ const Courselist = () => {
       });
 
       if (response.status === 200) {
-        console.log("fetched Courses:", response.data);
+        const coursesData = response.data;
 
-        setCourses(response.data);
+        // Fetch total enrolled students for each course
+        const updatedCourses = await Promise.all(
+          coursesData.map(async (course) => {
+            const totalEnrolledStudents = await getTotalEnrolledStudents(
+              course.id
+            );
+            return {
+              ...course,
+              totalEnrolledStudents,
+            };
+          })
+        );
+
+        setCourses(updatedCourses);
+        console.log(courses);
       }
     } catch (error) {
       console.log("Failed to fetch courses", error);
@@ -49,6 +63,7 @@ const Courselist = () => {
       }
     }
   };
+
   useEffect(() => {
     // setTeachers(teachersData);
     fetchInstructors();
@@ -80,11 +95,41 @@ const Courselist = () => {
     }
   };
 
-  const getAssignedInstructor = async (courseIndex) => {
-    const course_ins_id = courses[courseIndex].instructor_id;
+  // const getAssignedInstructor = async (courseIndex) => {
+  //   const course_ins_id = courses[courseIndex].instructor_id;
+  //   try {
+  //     const response = await axios.get(
+  //       `http://127.0.0.1:8000/api/get/instructor/${course_ins_id}`,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     if (response.status === 200) {
+  //       // console.log("Fetched Instructors:", response.data);
+  //       // setTeachers(response.data);
+  //       setAssigned(response.data);
+
+  //       console.log(assigned.data.name);
+  //       // return response.data.name;
+  //     }
+  //   } catch (error) {
+  //     console.log("Failed to fetch Instructors details", error);
+  //     if (error.response && error.response.status === 401) {
+  //       setError("Unauthorized. Please log in again.");
+  //       signOut();
+  //     } else {
+  //       setError("An error occurred. Please try again.");
+  //     }
+  //   }
+  // };
+
+  const getTotalEnrolledStudents = async (courseId) => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/get/instructor/${course_ins_id}`,
+        `http://127.0.0.1:8000/api/admin/course/${courseId}/total/users`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -93,21 +138,11 @@ const Courselist = () => {
         }
       );
       if (response.status === 200) {
-        // console.log("Fetched Instructors:", response.data);
-        // setTeachers(response.data);
-        setAssigned(response.data);
-
-        console.log(assigned.data.name);
-        // return response.data.name;
+        return response.data.total_users; // Assuming the API returns the total in this format
       }
     } catch (error) {
-      console.log("Failed to fetch Instructors details", error);
-      if (error.response && error.response.status === 401) {
-        setError("Unauthorized. Please log in again.");
-        signOut();
-      } else {
-        setError("An error occurred. Please try again.");
-      }
+      console.log("Failed to fetch total enrolled students", error);
+      return 0;
     }
   };
 
@@ -123,46 +158,46 @@ const Courselist = () => {
     setCourses([...courses, course]);
   };
 
-  const assignTeacher = async (courseIndex, teacher) => {
-    const course_id = courses[courseIndex].id;
-    const course_ins_id = courses[courseIndex].instructor_id;
+  // const assignTeacher = async (courseIndex, teacher) => {
+  //   //   const course_id = courses[courseIndex].id;
+  //   //   const course_ins_id = courses[courseIndex].instructor_id;
 
-    const updatedCourses = courses.map((course, index) => {
-      if (index === courseIndex) {
-        return { ...course, teacher };
-      }
+  //   //   const updatedCourses = courses.map((course, index) => {
+  //   //     if (index === courseIndex) {
+  //   //       return { ...course, teacher };
+  //   //     }
 
-      return course;
-    });
+  //   //     return course;
+  //   //   });
 
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/set/instructor",
-        {
-          course_id: course_id,
-          instructor_id: teacher.id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        console.log("Instructor Set");
-      }
-    } catch (error) {
-      console.log("Failed to fetch Instructors", error);
-      if (error.response && error.response.status === 401) {
-        setError("Unauthorized. Please log in again.");
-        signOut();
-      } else {
-        setError("An error occurred. Please try again.");
-      }
-    }
-    setCourses(updatedCourses);
-  };
+  //   try {
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:8000/api/set/instructor",
+  //       {
+  //         course_id: course_id,
+  //         instructor_id: teacher.id,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     if (response.status === 200) {
+  //       console.log("Instructor Set");
+  //     }
+  //   } catch (error) {
+  //     console.log("Failed to fetch Instructors", error);
+  //     if (error.response && error.response.status === 401) {
+  //       setError("Unauthorized. Please log in again.");
+  //       signOut();
+  //     } else {
+  //       setError("An error occurred. Please try again.");
+  //     }
+  //   }
+  //   setCourses(updatedCourses);
+  // };
   const unenrollStudent = (courseIndex, studentId) => {
     const updatedCourses = courses.map((course, index) => {
       if (index === courseIndex) {
@@ -242,7 +277,7 @@ const Courselist = () => {
                 {/* )} */}
                 {/* </div> */}
                 <div>{course.instructor_name}</div>
-                <div>{course.students ? course.students.length : 0}</div>
+                <div>{course.totalEnrolledStudents}</div>
                 <div
                   className="cursor-pointer"
                   onClick={() => toggleRow(index)}
