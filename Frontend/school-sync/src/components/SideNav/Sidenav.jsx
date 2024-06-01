@@ -1,48 +1,50 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   HiLogout,
   HiMenu,
-  HiOutlineCog,
   HiOutlineNewspaper,
   HiOutlinePencilAlt,
   HiOutlineViewGrid,
   HiQuestionMarkCircle,
-  HiTrendingUp,
 } from "react-icons/hi";
-import {
-  HiCalendarDays,
-  HiComputerDesktop,
-  HiDocumentText,
-  HiMiniUsers,
-} from "react-icons/hi2";
-import { LuShieldQuestion } from "react-icons/lu";
+import { HiComputerDesktop, HiDocumentText } from "react-icons/hi2";
 import Logo from "../common/Logo";
 
 const navItems = [
   { href: "/home", icon: <HiOutlineViewGrid />, label: "Dashboard" },
-  { href: "/home", icon: <HiTrendingUp />, label: "Progress Tracking" },
   { href: "/home", icon: <HiOutlinePencilAlt />, label: "Exams" },
-  { href: "/home", icon: <HiCalendarDays />, label: "Academic Calender" },
   { href: "/courses", icon: <HiOutlineNewspaper />, label: "Courses" },
   { href: "/home", icon: <HiQuestionMarkCircle />, label: "Suggestions" },
   { href: "/home", icon: <HiDocumentText />, label: "Assignments" },
-  { href: "/home", icon: <HiMiniUsers />, label: "Attendance" },
   { href: "/chatbot", icon: <HiComputerDesktop />, label: "AI Chatbot" },
-  { href: "/home", icon: <LuShieldQuestion />, label: "Help" },
-  { href: "/home", icon: <HiOutlineCog />, label: "Settings" },
-  { href: "/home", icon: <HiLogout />, label: "Logout" },
 ];
 
 export default function Sidenav() {
   const [isExpanded, setIsExpanded] = useState(true);
+  const navigateTo = useNavigate();
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleLogout = () => {
+    axios
+      .get("http://127.0.0.1:8000/api/logout")
+      .then((result) => {
+        console.log(result);
+        localStorage.removeItem("token");
+        navigateTo("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <aside
-      className={`bg-white  py-5 px-5 sm:px-10 flex justify-center h-screen shadow-xl ${
+      className={`bg-white py-5 px-5 sm:px-10 flex justify-center h-screen shadow-xl ${
         isExpanded ? " w-1 sm:w-[16%]" : "w-1"
       }`}
     >
@@ -69,14 +71,31 @@ export default function Sidenav() {
               key={index}
               className="flex gap-5 text-sm py-2 sm:px-5 items-center sm:justify-start hover:bg-gray-200 text-[#6956E5]"
             >
-              <span className="text-2xl">
-              {item.icon}
-              </span>
-              <span className={`text-[#4638a0] ${isExpanded ? "hidden sm:block" : "hidden"}`}>
+              <span className="text-2xl">{item.icon}</span>
+              <span
+                className={`text-[#4638a0] ${
+                  isExpanded ? "hidden sm:block" : "hidden"
+                }`}
+              >
                 {item.label}
               </span>
             </a>
           ))}
+          <button
+            onClick={handleLogout}
+            className="flex gap-5 text-sm py-2 sm:px-5 items-center sm:justify-start hover:bg-gray-200 text-[#6956E5]"
+          >
+            <span className="text-2xl">
+              <HiLogout />
+            </span>
+            <span
+              className={`text-[#4638a0] ${
+                isExpanded ? "hidden sm:block" : "hidden"
+              }`}
+            >
+              Logout
+            </span>
+          </button>
         </div>
       </nav>
     </aside>
