@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Question from "./Questions";
+import Sidenav from "../SideNav/Sidenav";
+import Header from "../common/Header";
 
 interface QuestionProps {
   question: string;
@@ -104,11 +106,10 @@ export default function Mcq() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-pink-100 bg-opacity-20 px-5 min-h-[100vh]">
-      <div className="flex-1">
-        <div className="flex justify-center">
-          {/* <button>Show Questions</button> */}
-        </div>
+    <div className="flex sm:gap-5 bg-[#E5EAEA]">
+      <Sidenav />
+      <div className="flex-1 overflow-y-auto h-screen mx-5 sm:m-0 sm:mr-5">
+        <Header pageName={"Give Exam"} />
         <form action="" className="flex-1">
           {questions.map((question, index) => (
             <Question

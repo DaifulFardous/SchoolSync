@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
 import axios from "axios";
-import Profile from "./slices/Profile";
 import Prompt from "./slices/Prompt";
 import PromptsList from "./slices/PromptsList";
+import Sidenav from "../SideNav/Sidenav";
+import Profile from "../common/Profile";
+import Header from "../common/Header";
 
 const Chatbot = () => {
   const [prompts, setPrompts] = useState([]);
@@ -82,30 +84,30 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="bg-[#E5EAEA] text-black flex gap-10 md:flex-row flex-col">
-      <PromptsList
-        prompts={prompts}
-        setCurrentPrompt={setCurrentPrompt}
-        addNewPrompt={addNewPrompt}
-      />
-      <div className="main-body flex-1 flex flex-col">
-        <div className="header flex-none flex flex-col gap-5 my-5">
-          <div className="text-3xl font-bold">AI Chatbot</div>
-          <div className="sub-header px-20">
-            <Profile />
+    <div className="flex bg-[#E5EAEA]">
+      <Sidenav />
+      <div className="flex-1 overflow-y-auto h-screen mx-5 sm:m-0 sm:mr-5">
+        <div className="bg-[#E5EAEA] text-black flex gap-10 md:flex-row flex-col">
+          <PromptsList
+            prompts={prompts}
+            setCurrentPrompt={setCurrentPrompt}
+            addNewPrompt={addNewPrompt}
+          />
+          <div className="main-body flex-1 flex flex-col">
+            <Header pageName={"AI Chatbot"} />
+            {currentPrompt && (
+              <Prompt
+                key={currentPrompt.id}
+                prompt={currentPrompt}
+                onUpdateName={handleUpdateName}
+                onDeletePrompt={handleDeletePrompt}
+                onSendMessage={handleSendMessage}
+                chatHistory={messages[currentPrompt.id]}
+                reply={reply}
+              />
+            )}
           </div>
         </div>
-        {currentPrompt && (
-          <Prompt
-            key={currentPrompt.id}
-            prompt={currentPrompt}
-            onUpdateName={handleUpdateName}
-            onDeletePrompt={handleDeletePrompt}
-            onSendMessage={handleSendMessage}
-            chatHistory={messages[currentPrompt.id]}
-            reply={reply}
-          />
-        )}
       </div>
     </div>
   );
