@@ -2,8 +2,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import Sidenav from "../SideNav/Sidenav";
 import MCQ from "./slices/MCQ";
-// import Sidenav from "../components/SideNav/Sidenav";
 
 export default function Mcq() {
   const [paragraph, setParagraph] = useState("");
@@ -116,9 +116,9 @@ export default function Mcq() {
 
   return (
     <div className="flex-col  gap-10 bg-gray">
-      {/* <div className="hidden md:block">
+      <div className="hidden md:block">
         <Sidenav />
-      </div> */}
+      </div>
       <form onSubmit={handleSubmit}>
         <label className="gap-10">
           <textarea
