@@ -39,7 +39,7 @@ const AdminLogin = () => {
       if (result.data.token) {
         localStorage.setItem("token", result.data.token);
         signIn("admin", formData);
-        navigate("/home");
+        navigate("/admin");
       } else {
         console.error("Login failed: No token received");
         setError("Wrong Password or Email");

@@ -7,7 +7,8 @@ from get_distractors import get_distractors_of_a_word
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/api/*": {"origins": ["*"]}})
+# CORS(app, resources={r"/api/*": {"origins": ["*"]}})
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
 question_model = T5ForConditionalGeneration.from_pretrained('ramsrigouthamg/t5_squad_v1')
 question_tokenizer = T5Tokenizer.from_pretrained('t5-base', legacy=False)
