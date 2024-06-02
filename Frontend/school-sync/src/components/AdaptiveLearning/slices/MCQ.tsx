@@ -94,14 +94,11 @@ function MCQ({
           {index + 1}. {question}
         </h3>
         <div>
-          <form className="justify-left w-48 grid grid-cols-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            <div
-              key={index}
-              className="border-b border-gray-200 dark:border-gray-600"
-            >
+          <form className="justify-left w-48 grid grid-cols-1 text-sm font-medium">
+            <div key={index} className="">
               <label
                 htmlFor={`option${index}`}
-                className="flex items-center py-1 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="flex items-center py-1 ml-2 text-sm font-medium text-gray-900"
               >
                 <input
                   type="radio"
@@ -109,7 +106,7 @@ function MCQ({
                   value={answer}
                   checked={selectedOption === answer}
                   onChange={handleOptionChange}
-                  className="mr-2 w-4 h-4 text-blue-600 bg-gray-200 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="mr-2 w-4 h-4 text-blue-600 bg-gray-200 border-gray-300"
                 />
                 <span>{answer.charAt(0).toUpperCase() + answer.slice(1)}</span>
               </label>
@@ -173,25 +170,26 @@ function MCQ({
             suggestedOptions={options}
           />
         )}
-
-        <button
-          onClick={openModal}
-          className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Add Option
-        </button>
-        <button
-          onClick={() => deleteOption(selectedOption)}
-          className="mt-2 bg-dimgray hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Delete Latest Option
-        </button>
-        <button
-          onClick={() => handleDelete(index)}
-          className="mt-2 bg-red hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Delete Question
-        </button>
+        <div className="flex gap-5">
+          <button
+            onClick={openModal}
+            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Add Option
+          </button>
+          <button
+            onClick={() => deleteOption(selectedOption)}
+            className="mt-2 hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 rounded"
+          >
+            Delete Latest Option
+          </button>
+          <button
+            onClick={() => handleDelete(index)}
+            className="mt-2 hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 rounded"
+          >
+            Delete Question
+          </button>
+        </div>
         <p>Selected option: {selectedOption}</p>
         <p>
           Added option serial to be saved in DATABASE:{" "}

@@ -3,7 +3,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import MCQ from "./slices/MCQ";
-// import Sidenav from "../components/SideNav/Sidenav";
+import Sidenav from './../SideNav/Sidenav';
+import Profile from "../common/Profile";
+import Header from "../common/Header";
 
 export default function Mcq() {
   const [paragraph, setParagraph] = useState("");
@@ -115,77 +117,87 @@ export default function Mcq() {
   };
 
   return (
-    <div className="flex-col  gap-10 bg-gray">
-      {/* <div className="hidden md:block">
-        <Sidenav />
-      </div> */}
-      <form onSubmit={handleSubmit}>
-        <label className="gap-10">
-          <textarea
-            name=""
-            id=""
-            value={paragraph}
-            onChange={(e) => setParagraph(e.target.value)}
-            style={{
-              width: "90%",
-              height: "400px",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              resize: "none",
-              fontFamily: "Arial, sans-serif",
-              fontSize: "16px",
-              color: "#000",
-              backgroundColor: "#fff",
-              justifyContent: "center",
-            }}
-            onSelect={(event) => {
-              const selectedText = event.target.value.substring(
-                event.target.selectionStart,
-                event.target.selectionEnd
-              );
-              handleWordSelection(selectedText);
-            }}
-          />
-        </label>
-        <br />
-        <div>Selected Highlights: {selectedWords.join(", ")}</div>
-
-        <div className="flex justify-center text-center  ">
-          <button
-            type="button"
-            className="bg-gray-300 h-[40px] px-5 flex items-center"
-            onClick={() => {
-              setEnableHighlight(!enableHighlight);
-            }}
-          >
-            {enableHighlight ? "Disable Highlight" : "Enable Highlight"}
-          </button>{" "}
-          <button type="submit">Generate MCQ</button>
-          <button type="button" onClick={handleDeleteWordSelection}>
-            Delete Latest Highlight
-          </button>
-        </div>
-      </form>
-
-      {mcqDataList.length > 0 && (
-        <div className="flex-col justify-center gap-10">
-          <h3>Generated MCQ Data:</h3>
-          {mcqDataList.map((mcqData, index) => (
-            <MCQ
-              key={index}
-              index={index}
-              ques_id={mcqData.random_id}
-              paragraph={paragraph}
-              question={mcqData.question}
-              options={mcqData.distractors}
-              answer={mcqData.answer}
-              onDelete={() => deleteQuestion(index, mcqData.random_id)}
+    <div className="flex sm:gap-5 bg-[#E5EAEA]">
+      <Sidenav />
+      <div className="flex-1 overflow-y-auto h-screen mx-5 sm:m-0 sm:mr-5">
+        <Header pageName={"adaptiveLearning"} />
+        <form onSubmit={handleSubmit}>
+          <label className="gap-10">
+            <textarea
+              name=""
+              id=""
+              value={paragraph}
+              onChange={(e) => setParagraph(e.target.value)}
+              style={{
+                width: "90%",
+                height: "400px",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                resize: "none",
+                fontFamily: "Arial, sans-serif",
+                fontSize: "16px",
+                color: "#000",
+                backgroundColor: "#fff",
+                justifyContent: "center",
+              }}
+              onSelect={(event) => {
+                const selectedText = event.target.value.substring(
+                  event.target.selectionStart,
+                  event.target.selectionEnd
+                );
+                handleWordSelection(selectedText);
+              }}
             />
-          ))}
-        </div>
-      )}
-      {/* <div className="flex justify-center">Confirm</div> */}
+          </label>
+          <br />
+          <div>Selected Highlights: {selectedWords.join(", ")}</div>
+
+          <div className="flex justify-center text-center gap-5 ">
+            <button
+              type="button"
+              className="bg-gray-300 h-[40px] px-5 flex items-center"
+              onClick={() => {
+                setEnableHighlight(!enableHighlight);
+              }}
+            >
+              {enableHighlight ? "Disable Highlight" : "Enable Highlight"}
+            </button>{" "}
+            <button
+              type="submit"
+              className="bg-gray-300 h-[40px] px-5 flex items-center"
+            >
+              Generate MCQ
+            </button>
+            <button
+              type="button"
+              className="bg-gray-300 h-[40px] px-5 flex items-center"
+              onClick={handleDeleteWordSelection}
+            >
+              Delete Latest Highlight
+            </button>
+          </div>
+        </form>
+
+        {mcqDataList.length > 0 && (
+          <div className="flex-col justify-center gap-10">
+            <h3>Generated MCQ Data:</h3>
+            {mcqDataList.map((mcqData, index) => (
+              <MCQ
+                key={index}
+                index={index}
+                ques_id={mcqData.random_id}
+                paragraph={paragraph}
+                question={mcqData.question}
+                options={mcqData.distractors}
+                answer={mcqData.answer}
+                onDelete={() => deleteQuestion(index, mcqData.random_id)}
+              />
+            ))}
+          </div>
+        )}
+        {/* <div className="flex justify-center">Confirm</div> */}
+      </div>
     </div>
   );
 }
